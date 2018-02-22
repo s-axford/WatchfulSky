@@ -1,0 +1,4 @@
+#Thu Feb 22 18:49:52 NST 2018
+base.0=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+path.0=classes.dex
+renamed.0=classes.dex

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "ca.mun.gazer.stargazer"
+        applicationId "ca.mun.engi5895.stargazer"
         minSdkVersion 26
         targetSdkVersion 26
         versionCode 1

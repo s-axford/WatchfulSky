@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.mun.gazer.stargazer">
+    package="ca.mun.engi5895.stargazer">
 
     <application
         android:allowBackup="true"
@@ -15,6 +15,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".GeocentricActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".HeliocentricActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 
