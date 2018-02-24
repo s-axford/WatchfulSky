@@ -5,31 +5,32 @@
     build-mode="COLD"
     density="xxhdpi"
     format="10"
+    ir-eligibility="COMPATIBLE"
     plugin-version="3.0.1"
-    timestamp="1519338964658"
+    timestamp="1519490363997"
     token="-1648138109063304761"
     verifier="COLD_SWAP_REQUESTED" >
 
     <task
         name="javac"
-        duration="1940" />
+        duration="241" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="47" />
     <task
         name="verifier"
-        duration="0" />
+        duration="11" />
 
     <artifact
-        location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\outputs\apk\debug\app-debug.apk"
-        type="SPLIT_MAIN" />
+        location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
+        type="SPLIT" />
 
     <build
         build-mode="FULL"
-        timestamp="1519337954989"
+        timestamp="1519443648337"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
@@ -70,11 +71,42 @@
     </build>
     <build
         build-mode="COLD"
-        timestamp="1519338964658"
+        ir-eligibility="R_CLASS_CHANGE"
+        timestamp="1519489418490"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="METHOD_DELETED"
+        timestamp="1519490164539"
         verifier="COLD_SWAP_REQUESTED" >
         <artifact
             location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\outputs\apk\debug\app-debug.apk"
             type="SPLIT_MAIN" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="COMPATIBLE"
+        timestamp="1519490363997"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="C:\Users\john\AndroidStudioProjects\StarGazer\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            type="SPLIT" />
     </build>
 
 </instant-run>

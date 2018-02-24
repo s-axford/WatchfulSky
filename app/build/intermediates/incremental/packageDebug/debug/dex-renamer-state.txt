@@ -1,4 +1,4 @@
-#Thu Feb 22 18:59:48 NST 2018
+#Sat Feb 24 13:06:20 NST 2018
 path.1=classes.dex
 path.0=classes.dex
 renamed.5=classes6.dex
@@ -7,12 +7,12 @@ renamed.3=classes4.dex
 renamed.2=classes3.dex
 renamed.1=classes2.dex
 renamed.0=classes.dex
-base.5=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\14
-base.4=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11
-base.3=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\16
-base.2=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\13
-base.1=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\15
-base.0=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
+base.5=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\50
+base.4=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\52
+base.3=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\49
+base.2=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\54
+base.1=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\51
+base.0=C\:\\Users\\john\\AndroidStudioProjects\\StarGazer\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\53
 path.5=classes.dex
 path.4=classes.dex
 path.3=classes.dex
