@@ -5,7 +5,8 @@ package ca.mun.engi5895.stargazer;
  */
 import android.nfc.TagLostException;
 import java.util.calendar;
-import org.orekit.propagation.analytical.tle;
+import org.orekit.propagation.analytical.tle.TLE;
+import org.orekit.propagation.analytical.tle.TLEPropagator;
 
 public class Entity {
 
