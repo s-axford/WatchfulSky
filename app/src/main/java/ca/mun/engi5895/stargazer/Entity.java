@@ -26,10 +26,10 @@ import java.util.GregorianCalendar;
 
 public class Entity {
 
-    int avgMass = 200;
-    TLE entity;
-    Calendar calendar;
-    TLEPropagator calc;
+    private int avgMass = 200;
+    private TLE entity;
+    private Calendar calendar;
+    private TLEPropagator calc;
 
     Entity(String line1, String line2){
 
@@ -56,7 +56,9 @@ public class Entity {
     }
     public double getPeriod(){
 
-        return 0;
+        double meanMotion = entity.getMeanMotion();
+        double period = 1 / meanMotion;
+        return period;
     }
 
     public double getHeight(){
