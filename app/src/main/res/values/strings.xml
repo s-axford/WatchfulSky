@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StarGazer</string>
+    <string name="btn_go">Heliocentric</string>
 </resources>

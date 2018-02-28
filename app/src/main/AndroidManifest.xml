@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.mun.gazer.stargazer">
-
+    package="ca.mun.engi5895.stargazer">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:icon="@drawable/rocketcol">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GeocentricActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".HeliocentricActivity"
+            android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <service android:name="ca.mun.engi5895.stargazer.saveFileIntent" >
+        </service>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
