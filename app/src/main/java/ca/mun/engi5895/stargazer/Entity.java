@@ -4,11 +4,12 @@ package ca.mun.engi5895.stargazer;
  * Created by noahg on 2/28/2018.
  */
 import android.nfc.TagLostException;
-
+import java.util.calendar;
+import org.orekit.propagation.analytical.tle.TLE;
+import org.orekit.propagation.analytical.tle.TLEPropagator;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.orekit.propagation.analytical.tle;
 
 public class Entity {
