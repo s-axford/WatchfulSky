@@ -10,6 +10,7 @@ import org.orekit.propagation.analytical.tle;
 public class Entity {
 
     int avgMass = 200;
+  
     Entity(){
 
         TLE entity = new TLE(string line1, string line2);
@@ -19,7 +20,35 @@ public class Entity {
         AbsoluteDate initialDate = new AbsoluteDate(year, month, day, hour, min, sec, timeZone);
         TLEPropagator calc = new TLEPropagator(entity, ,avgMass);
 
-
     }
 
+    public double getVelocity(){
+
+        return 0;
+    }
+    public double getPeriod(){
+
+        return 0;
+    }
+
+    public double getHieght(){
+
+        return 0;
+    }
+
+    public double getPerigee(){
+
+        return 0;
+    }
+
+    public double getApogee() {
+
+        return 0;
+    }
+
+
+    public double getInclination(){
+
+        return 0;
+    }
 }
