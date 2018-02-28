@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="ca.mun.engi5895.stargazer.MainActivity" >
+        <activity
+            android:name="ca.mun.engi5895.stargazer.MainActivity"
+            android:icon="@drawable/rocketcol" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,6 +42,9 @@
         <service android:name="ca.mun.engi5895.stargazer.saveFileIntent" >
         </service>
 
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="android.support.VERSION"
             android:value="26.1.0" />

@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\4bb7e5b40a54f5f18b97e0d2db11aaa0\AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\john\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\504f769aae5a16ad0b87de4c74f668c9\AndroidManifest.xml:2:1-11:12
 MERGED from [com.android.support:animated-vector-drawable:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.1.0.aar\688c66a20d49bf86a76f44fb9b38d62a\AndroidManifest.xml:17:1-28:12
@@ -15,20 +15,20 @@ MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\john\.gradl
 MERGED from [com.android.support:support-core-ui:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.1.0.aar\32ef975cd4d803e81d32ffc2d411360b\AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:support-compat:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\b0a32c6886767cc0f53565724b8cf8f3\AndroidManifest.xml:17:1-31:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\2796a5efc7c4299712c5fdc2c438ac2a\AndroidManifest.xml:17:1-30:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
-INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
+INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
 	package
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:3:5-40
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-31:12
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:1-36:12
 		INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:2:11-69
@@ -37,7 +37,7 @@ ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidMan
 	android:name
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:4:22-64
 application
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:5:5-29:19
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:5:5-34:19
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\4bb7e5b40a54f5f18b97e0d2db11aaa0\AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support:appcompat-v7:26.1.0] C:\Users\john\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.1.0.aar\4bb7e5b40a54f5f18b97e0d2db11aaa0\AndroidManifest.xml:25:5-29:19
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\john\.gradle\caches\transforms-1\files-1.1\constraint-layout-1.0.2.aar\504f769aae5a16ad0b87de4c74f668c9\AndroidManifest.xml:9:5-20
@@ -73,41 +73,49 @@ MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\john\.gradle\caches\
 	android:theme
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:11:9-40
 activity#ca.mun.engi5895.stargazer.MainActivity
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:12:9-18:20
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:12:9-20:20
+	android:icon
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:13:13-47
 	android:name
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:12:19-47
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:15:13-19:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:18:17-77
 	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:18:27-74
 activity#ca.mun.engi5895.stargazer.GeocentricActivity
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:19:9-20:57
-	android:parentActivityName
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:20:13-55
-	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:19:19-53
-activity#ca.mun.engi5895.stargazer.HeliocentricActivity
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:21:9-22:57
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:21:9-22:58
 	android:parentActivityName
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:22:13-55
 	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:21:19-55
-activity#ca.mun.engi5895.stargazer.SettingsActivity
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:23:9-25:20
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:21:19-53
+activity#ca.mun.engi5895.stargazer.HeliocentricActivity
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:23:9-24:57
 	android:parentActivityName
 		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:24:13-55
 	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:23:19-51
-service#ca.mun.engi5895.stargazer.saveFileIntent
-ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:27:9-28:19
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:23:19-55
+activity#ca.mun.engi5895.stargazer.SettingsActivity
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:25:9-27:20
+	android:parentActivityName
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:26:13-55
 	android:name
-		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:27:18-73
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:25:19-51
+service#ca.mun.engi5895.stargazer.saveFileIntent
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:29:9-30:19
+	android:name
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:29:18-73
+meta-data#preloaded_fonts
+ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:31:9-33:57
+	android:resource
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:33:13-54
+	android:name
+		ADDED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml:32:13-43
 uses-sdk
 INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\john\AndroidStudioProjects\StarGazer\app\src\main\AndroidManifest.xml

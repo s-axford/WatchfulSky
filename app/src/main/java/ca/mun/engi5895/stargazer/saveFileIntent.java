@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -61,6 +63,14 @@ public class saveFileIntent extends IntentService {
             }
             // successfully finished
             result = Activity.RESULT_OK;
+
+            Handler mHandler = new Handler(getMainLooper());
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Files Downloaded", Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

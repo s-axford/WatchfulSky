@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:icon="@drawable/rocketcol">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".GeocentricActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".HeliocentricActivity"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".SettingsActivity"
@@ -26,6 +28,9 @@
 
         <service android:name="ca.mun.engi5895.stargazer.saveFileIntent" >
         </service>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
