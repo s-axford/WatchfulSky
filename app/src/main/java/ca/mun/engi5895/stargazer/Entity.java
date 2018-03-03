@@ -13,6 +13,7 @@ import org.orekit.orbits.PositionAngle;
 import org.orekit.propagation.analytical.tle.TLE;
 import org.orekit.propagation.analytical.tle.TLEPropagator;
 import org.orekit.propagation.conversion.TLEPropagatorBuilder;
+import org.orekit.propagation.Propagator;
 import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
@@ -34,19 +35,16 @@ import java.util.GregorianCalendar;
 
 public class Entity {
 
-    int avgMass = 200;
-    TLE entity;
-    Calendar calendar;
-    Attitude att;
-    PVCoordinates currentPV;
-
+    private double[] array;
     private int avgMass = 200;
     private TLE entity;
     private Calendar calendar;
-    private TLEPropagator tleProp;
+    private Propagator tleProp;
+    private Attitude att;
+    private PVCoordinates currentPV;
+    private TLEPropagatorBuilder builder;
 
-
-    Entity(String line1, String line2){
+    Entity(String line1, String line2) throws OrekitException{
 
         entity = new TLE(line1, line2);
 
@@ -55,7 +53,7 @@ public class Entity {
         calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
         Frame frame = FramesFactory.getGCRF();
-        TLEPropagatorBuilder builder = new TLEPropagatorBuilder(entity, MEAN,1);
+        builder = new TLEPropagatorBuilder(entity, PositionAngle.MEAN,1);
 
         Ellipsoid el = new Ellipsoid(frame, 1,1,1);
         AngularCoordinates orientation = new AngularCoordinates();
@@ -63,10 +61,9 @@ public class Entity {
 
         currentPV = new PVCoordinates();
         att = new Attitude(initialDate, frame, orientation);
-        KeplerianPropagator tleProp = new TLEPropagator(entity, att, avgMass);
 
-        Attitude att = AttitudeProvider( , date, frame);
-        tleProp = new TLEPropagator(entity, att,avgMass);
+        Attitude att = new Attitude( initialDate, frame, orientation);
+        tleProp = builder.buildPropagator(array);
 
 
     }
