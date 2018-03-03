@@ -100,7 +100,10 @@ public class Entity {
         return period; //returns period
     }
 
-    public double getHeight(){
+    //gets Height of satellite from ground
+    public double getHeight() throws OrekitException{
+        PVCoordinates coord =this.getPVCoordinates(); //gets up to date coordinates
+        Vector3D position = coord.getPosition();
 
         return 0;
     }
