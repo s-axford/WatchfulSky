@@ -1,5 +1,6 @@
 package ca.mun.engi5895.stargazer;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class GeocentricActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
 
     public void loadStations(View v) throws IOException {
 
