@@ -12,24 +12,26 @@ package ca.mun.engi5895.stargazer;
  to execute correctly and for entity to be able to access the required information.
  */
 
-import org.orekit.attitudes.Attitude;
+
 import org.orekit.errors.OrekitException;
 import org.orekit.frames.FramesFactory;
-import org.orekit.orbits.PositionAngle;
 import org.orekit.propagation.analytical.tle.TLE;
 import org.orekit.propagation.analytical.tle.TLEPropagator;
-import org.orekit.propagation.conversion.TLEPropagatorBuilder;
-import org.orekit.propagation.Propagator;
 import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.frames.Frame;
-import org.orekit.bodies.Ellipsoid;
 import org.orekit.utils.PVCoordinates;
-import org.orekit.utils.AngularCoordinates;
-
 import org.hipparchus.geometry.euclidean.threed.Vector3D; //may need hipparchus core
 import org.orekit.utils.TimeStampedPVCoordinates;
+/*
+import org.orekit.propagation.conversion.TLEPropagatorBuilder;
+import org.orekit.propagation.Propagator;
+import org.orekit.attitudes.Attitude;
+import org.orekit.orbits.PositionAngle;
+import org.orekit.bodies.Ellipsoid;
+import org.orekit.utils.AngularCoordinates;
+*/
 
 import java.util.Date;
 import java.util.Calendar;
@@ -39,7 +41,7 @@ import java.util.GregorianCalendar;
 public class Entity {
 
     private static TLE entity; //TLE object for satellite
-    private static Propagator tleProp;
+    private static TLEPropagator tleProp; //orbit propagator
     /*
     private Calendar calendar;
     private double[] array;
@@ -108,18 +110,19 @@ public class Entity {
     }
 
     public double getPerigee(){
-
-        return 0;
+        double period = 1 / entity.getMeanMotion(); //returns period
+        double semiMajorAxis = Math.pow(((period/(2*Math.PI)*(2*Math.PI))*TLEPropagator.getMU()), (double) 1/3); //semi major axis of rotation
+        return semiMajorAxis*(1 - entity.getE()) - 6371; //returns perigee (6371 is earths means radius)
     }
 
     public double getApogee() {
-
-        return 0;
+        double period = 1 / entity.getMeanMotion(); //returns period
+        double semiMajorAxis = Math.pow(((period/(2*Math.PI)*(2*Math.PI))*TLEPropagator.getMU()), (double) 1/3); //semi major axis of rotation
+        return semiMajorAxis*(1 + entity.getE()) - 6371; //returns apogee (6371 is earths means radius)
     }
 
 
     public double getInclination(){
-
-        return 0;
+        return entity.getI(); //return inclination angle
     }
 }
