@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView) findViewById(R.id.status);
-        linearLayout = (LinearLayout) findViewById(R.id.linearLay);
     }
 
     public void geoGo(View view) {
@@ -50,51 +48,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
-
-
-    private TextView textView;
-    private LinearLayout linearLayout;
-
-    /*private BroadcastReceiver receiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                String string = bundle.getString(saveFileIntent.FILEPATH);
-                int resultCode = bundle.getInt(saveFileIntent.RESULT);
-                if (resultCode == RESULT_OK) {
-                    Toast.makeText(MainActivity.this,
-                            "Download complete. Download URI: " + string,
-                            Toast.LENGTH_LONG).show();
-                    textView.setText("Download done");
-                } else {
-                    Toast.makeText(MainActivity.this, "Download failed",
-                            Toast.LENGTH_LONG).show();
-                    textView.setText("Download failed");
-                }
-            }
-        }
-    };
-
-
-  /*  @Override
-   protected void onResume() {
-        super.onResume();
-        registerReceiver(receiver, new IntentFilter(
-                saveFileIntent.NOTIFICATION));
-    }
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(receiver);
-    }*/
-
-
-
-
-
-
-
-
 }

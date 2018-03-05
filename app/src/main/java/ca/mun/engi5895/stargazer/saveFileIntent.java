@@ -22,12 +22,10 @@ import java.net.URL;
 
 public class saveFileIntent extends IntentService {
 
-    private int result = Activity.RESULT_CANCELED;
+    //These are like parameters. See SettingsActivity onClick() method to see how they are used
     public static final String URL = "urlpath";
     public static final String FILENAME = "filename";
     public static final String FILEPATH = "filepath";
-    public static final String RESULT = "result";
-    public static final String NOTIFICATION = "ca.mun.engi5895.stargazer.";
 
 
 
@@ -48,7 +46,6 @@ public class saveFileIntent extends IntentService {
             output.delete();
         }
 
-
         InputStream stream = null;
         FileOutputStream fos = null;
 
@@ -62,8 +59,8 @@ public class saveFileIntent extends IntentService {
                 fos.write(next);
             }
             // successfully finished
-            result = Activity.RESULT_OK;
 
+            //Handler thing is to let you make a toast on a dead thread, has to be in for toast to work
             Handler mHandler = new Handler(getMainLooper());
             mHandler.post(new Runnable() {
                 @Override
@@ -82,15 +79,5 @@ public class saveFileIntent extends IntentService {
                 }
             }
         }
-        publishResults(output.getAbsolutePath(), result);
     }
-
-
-    private void publishResults(String outputPath, int result) {
-        Intent intent = new Intent(NOTIFICATION);
-        intent.putExtra(FILEPATH, outputPath);
-        intent.putExtra(RESULT, result);
-        sendBroadcast(intent);
-    }
-
 }

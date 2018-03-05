@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout1" />
 
+
     <LinearLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
