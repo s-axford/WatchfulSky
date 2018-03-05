@@ -1,6 +1,5 @@
 package ca.mun.engi5895.stargazer;
 
-import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,7 +47,6 @@ public class GeocentricActivity extends AppCompatActivity {
         }
     }
 
-
     public void loadStations(View v) throws IOException {
 
         FileInputStream stream = openFileInput("stations.txt");
@@ -60,16 +58,11 @@ public class GeocentricActivity extends AppCompatActivity {
 
         while ((line = breader.readLine()) != null) {
             sb.append(line + System.getProperty("line.separator"));
-
         }
 
         String fileString = sb.toString();
         String testString = sb.substring(0, 10);
         Toast.makeText(getApplicationContext(), testString, 1);
-        System.out.println(fileString);
-
-
-
     }
 
     //used with button
@@ -107,17 +100,13 @@ public class GeocentricActivity extends AppCompatActivity {
         InputStreamReader sreader = new InputStreamReader(stream);
         BufferedReader breader = new BufferedReader(sreader);
 
-        // StringBuilder sb = new StringBuilder();
-
         String line;
         int lineNumber = 0;
 
         while ((line = breader.readLine()) != null) {
             if ((lineNumber%3 == 0) || (lineNumber == 0)) {
                 list.add(line);
-                System.out.println(line);
             }
-            //sb.append(line + System.getProperty("line.separator"));
             lineNumber++;
         }
 
