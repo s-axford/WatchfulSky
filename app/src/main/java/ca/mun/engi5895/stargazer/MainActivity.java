@@ -26,12 +26,23 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.orekit.data.DataProvidersManager;
+import org.orekit.data.DirectoryCrawler;
+import org.orekit.errors.OrekitException;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        File orekitData = new File("/app/orekit-data");
+        DataProvidersManager manager = DataProvidersManager.getInstance();
+        try {
+            manager.addProvider(new DirectoryCrawler(orekitData));
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
     }
 
     public void geoGo(View view) {

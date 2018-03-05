@@ -21,6 +21,7 @@ import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.frames.Frame;
 import org.orekit.utils.PVCoordinates;
+import org.orekit.time.UTCScale;
 
 import org.orekit.utils.TimeStampedPVCoordinates;
 /*
