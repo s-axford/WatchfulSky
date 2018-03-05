@@ -137,10 +137,10 @@ public class GeocentricActivity extends AppCompatActivity {
                 outSat.setText(o.toString());
                 outSat.setVisibility(View.VISIBLE);
 
-                String line1 = ;
-                String line2 = ;
+                //String line1 = ;
+                //String line2 = ;
 
-                Entity newSat = new Entity(line1, line2);
+                //Entity newSat = new Entity(line1, line2);
 
             }
 
