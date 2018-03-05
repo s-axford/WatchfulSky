@@ -48,16 +48,14 @@ public class Entity {
 
         // tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
 
-       TimeScale timeZone = TimeScalesFactory.getUTC();
-       Date date = new Date();
-       calendar = GregorianCalendar.getInstance();
-       calendar.setTime(date);
+       TimeScale timeZone = TimeScalesFactory.getUTC();     //Creates a new UTC time scale
+       Date date = new Date();      //Gets the current date and time
+       calendar = GregorianCalendar.getInstance();  //Creates a calendar
+       calendar.setTime(date);  //Sets the created calendar to the current date and time
        //Frame frame = FramesFactory.getGCRF();
 
        //BUILD TLEPropagator Builder
-       builder = new TLEPropagatorBuilder(entity.getSatelliteNumber(), entity.getClassification(), entity.getLaunchYear(), entity.getLaunchNumber(), entity.getLaunchPiece(), entity.getElementNumber(), entity.getRevolutionNumberAtEpoch());
-
-       //BUILD TLEPropagator
+       builder = new TLEPropagatorBuilder(entity.getSatelliteNumber(), entity.getClassification(), entity.getLaunchYear(), entity.getLaunchNumber(), entity.getLaunchPiece(), entity.getElementNumber(), entity.getRevolutionNumberAtEpoch());//BUILD TLEPropagator
 
 
        //Ellipsoid el = new Ellipsoid(frame, 1,1,1);
@@ -67,7 +65,7 @@ public class Entity {
        //att = new Attitude(initialDate, frame, orientation);
        //Attitude att = new Attitude( initialDate, frame, orientation);
 
-        Propagator propagator = builder.buildPropagator(initialDate, array);
+        Propagator propagator = builder.buildPropagator(initialDate, array);        //Creates a new TLEPropagator
 
     }
 
