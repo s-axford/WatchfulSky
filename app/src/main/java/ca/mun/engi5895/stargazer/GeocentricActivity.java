@@ -47,6 +47,7 @@ public class GeocentricActivity extends AppCompatActivity {
         }
     }
 
+
     public void loadStations(View v) throws IOException {
 
         FileInputStream stream = openFileInput("stations.txt");
@@ -58,11 +59,16 @@ public class GeocentricActivity extends AppCompatActivity {
 
         while ((line = breader.readLine()) != null) {
             sb.append(line + System.getProperty("line.separator"));
+
         }
 
         String fileString = sb.toString();
         String testString = sb.substring(0, 10);
         Toast.makeText(getApplicationContext(), testString, 1);
+        System.out.println(fileString);
+
+
+
     }
 
     //used with button
@@ -72,15 +78,15 @@ public class GeocentricActivity extends AppCompatActivity {
         InputStreamReader sreader = new InputStreamReader(stream);
         BufferedReader breader = new BufferedReader(sreader);
 
-       // StringBuilder sb = new StringBuilder();
+        // StringBuilder sb = new StringBuilder();
 
         String line;
         int lineNumber = 0;
 
         while ((line = breader.readLine()) != null) {
             if ((lineNumber%3 == 0) || (lineNumber == 0)) {
-            list.add(line);
-            System.out.println(line);
+                list.add(line);
+                System.out.println(line);
             }
             //sb.append(line + System.getProperty("line.separator"));
             lineNumber++;
@@ -100,13 +106,17 @@ public class GeocentricActivity extends AppCompatActivity {
         InputStreamReader sreader = new InputStreamReader(stream);
         BufferedReader breader = new BufferedReader(sreader);
 
+        // StringBuilder sb = new StringBuilder();
+
         String line;
         int lineNumber = 0;
 
         while ((line = breader.readLine()) != null) {
             if ((lineNumber%3 == 0) || (lineNumber == 0)) {
                 list.add(line);
+                System.out.println(line);
             }
+            //sb.append(line + System.getProperty("line.separator"));
             lineNumber++;
         }
 
@@ -117,7 +127,7 @@ public class GeocentricActivity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
-         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
+        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Object o = listView.getItemAtPosition(position);
                 System.out.println(o.toString());
@@ -127,15 +137,18 @@ public class GeocentricActivity extends AppCompatActivity {
                 outSat.setText(o.toString());
                 outSat.setVisibility(View.VISIBLE);
 
+                String line1 = ;
+                String line2 = ;
+
+                Entity newSat = new Entity(line1, line2);
 
             }
+
         };
+
 
         listView.setOnItemClickListener(mMessageClickedHandler);
     }
-
-
-
 
 
 
