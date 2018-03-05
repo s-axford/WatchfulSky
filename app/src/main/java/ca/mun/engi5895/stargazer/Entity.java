@@ -23,12 +23,14 @@ import org.orekit.frames.Frame;
 import org.orekit.utils.PVCoordinates;
 
 import org.orekit.utils.TimeStampedPVCoordinates;
+/*
 import org.orekit.propagation.conversion.TLEPropagatorBuilder;
 import org.orekit.propagation.Propagator;
 import org.orekit.attitudes.Attitude;
 import org.orekit.orbits.PositionAngle;
 import org.orekit.bodies.Ellipsoid;
 import org.orekit.utils.AngularCoordinates;
+*/
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
