@@ -18,38 +18,42 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
+    //lists all files in internal app storage
     public void checkFiles(View v) {
-        File folder = getFilesDir();
-        File[] listOfFiles = folder.listFiles();
+        File folder = getFilesDir(); //Internal storage
+        File[] listOfFiles = folder.listFiles(); //Array of files in storage
 
+        //If array is empty, there are no files
         if(listOfFiles.length == 0 ) {
             Toast toast = Toast.makeText(getApplicationContext(), "Directory is empty", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
 
-
+        //Iterate through file array and outputs each one's name as a toast
         for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                //  System.out.println("File " + listOfFiles[i].getName());
+            if (listOfFiles[i].isFile()) { //This checks and makes sure its a file and not folder, not necessary here but not bad to have
                 Toast toast = Toast.makeText(getApplicationContext(), "File " + listOfFiles[i].getName(), Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
     }
 
+    //Function that clears out internal app storage directory
     public void purgeFiles(View v) {
-        File folder = getFilesDir();
+        File folder = getFilesDir(); //Gets internal storage directory
 
-        for(File file: folder.listFiles())
+        for(File file: folder.listFiles()) //Iterates through files in folder and deletes them
             if (!file.isDirectory())
                 file.delete();
 
+        //Creates a toast saying its cleaned
         Toast toast = Toast.makeText(getApplicationContext(), "Directory Cleaned", Toast.LENGTH_SHORT);
         toast.show();
 
     }
 
+    //method that runs the saveFileIntent class, responsible for downloading file
     public void onClick(View view) {
 
         Intent intent = new Intent(this, saveFileIntent.class);
@@ -58,7 +62,5 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(saveFileIntent.URL,
                 "https://www.celestrak.com/NORAD/elements/stations.txt");
         startService(intent);
-        // textView.setText("Service started");
-        // linearLayout.setVisibility(View.INVISIBLE);
     }
 }
