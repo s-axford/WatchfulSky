@@ -95,13 +95,13 @@ public class Entity {
     }
     //Returns the magnitude of the velocity
     public double getVelocity() throws OrekitException {
-        PVCoordinates coord =this.getPVCoordinates(); //gets up to date coordinates
+        PVCoordinates coord = this.getPVCoordinates(); //gets up to date coordinates
         Vector3D velocity = coord.getVelocity(); //gets velocity vector
         //get components of vector as doubles
         double x = velocity.getX();
         double y = velocity.getY();
         double z = velocity.getZ();
-        return Math.sqrt(x*x + y*y + z*z); //returns magnitude
+        return 5.0; //return Math.sqrt(x*x + y*y + z*z); //returns magnitude
     }
     //returns orbital period of satellite
     public double getPeriod(){

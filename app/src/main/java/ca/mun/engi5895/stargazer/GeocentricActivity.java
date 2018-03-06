@@ -30,6 +30,11 @@ public class GeocentricActivity extends AppCompatActivity {
 
     private ListView listView;
     private TextView outSat;
+
+    private TextView velocity_txt;
+    private TextView period_txt;
+    private TextView height_txt;
+
     private  ArrayList<String> list = new ArrayList<String>();
 
 
@@ -91,6 +96,7 @@ public class GeocentricActivity extends AppCompatActivity {
                 outSat.setText(o.toString());
                 outSat.setVisibility(View.VISIBLE);
 
+
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
                 FileInputStream stream1 = null;
                 try {
@@ -120,14 +126,49 @@ public class GeocentricActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                double velocity = 0;
+                String velocity_string = "error";
 
+                double period = 0;
+                String period_string = "error";
+
+                double height = 0;
+                String height_string = "error";
                 //Creating new entity
+                Entity newSat;
                 try {
-                    Entity newSat = new Entity(TLE1, TLE2);
+                    newSat = new Entity(TLE1, TLE2);
+                    velocity = newSat.getVelocity();
+                    period = newSat.getPeriod();
+                    height = newSat.getHeight();
+
                 } catch (OrekitException e) {
                     e.printStackTrace();
                 }
 
+                velocity_string = Double.toString(velocity);
+                period_string = Double.toString(period);
+                height_string = Double.toString(height);
+
+                //SET VELOCITY ON UI
+                velocity_txt = (TextView) findViewById(R.id.VelocityText);
+                velocity_txt.setText(velocity_string);
+                velocity_txt.setVisibility(View.VISIBLE);
+
+                //SET PERIOD ON UI
+                period_txt = (TextView) findViewById(R.id.PeriodText);
+                period_txt.setText(period_string);
+                period_txt.setVisibility(View.VISIBLE);
+
+                //SET HEIGHT ON UI
+                height_txt = (TextView) findViewById(R.id.HeightText);
+                height_txt.setText(height_string);
+                height_txt.setVisibility(View.VISIBLE);
+
+                //SET ... ON UI
+
+
+                //SET ... ON UI
             }
 
         };
