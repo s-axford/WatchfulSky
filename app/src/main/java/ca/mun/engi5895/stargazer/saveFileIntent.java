@@ -9,12 +9,15 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by john on 2018-02-24.
@@ -26,8 +29,6 @@ public class saveFileIntent extends IntentService {
     public static final String URL = "urlpath";
     public static final String FILENAME = "filename";
     public static final String FILEPATH = "filepath";
-
-
 
 
     public saveFileIntent() {
@@ -71,13 +72,69 @@ public class saveFileIntent extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (stream!= null) {
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private boolean dirChecker(String pathname) {
+
+    File theDir = new File("new folder");
+
+    boolean result = false;
+    // if the directory does not exist, create it
+    if(!theDir.exists())
+
+    {
+        System.out.println("creating directory: " + theDir.getName());
+        //result = false;
+
+        try {
+            theDir.mkdir();
+            result = true;
+        } catch (SecurityException se) {
+            //handle it
+        }
+        if (result) {
+            System.out.println("DIR created");
+        }
+    }
+    return result;
+}
+
+    public void unzip(String _zipFile, String _targetLocation) {
+
+        //create target location folder if not exist
+        dirChecker(_targetLocation);
+
+        try {
+            FileInputStream fin = new FileInputStream(_zipFile);
+            ZipInputStream zin = new ZipInputStream(fin);
+            ZipEntry ze = null;
+            while ((ze = zin.getNextEntry()) != null) {
+
+                //create dir if required while unzipping
+                if (ze.isDirectory()) {
+                    dirChecker(ze.getName());
+                } else {
+                    FileOutputStream fout = new FileOutputStream(_targetLocation + ze.getName());
+                    for (int c = zin.read(); c != -1; c = zin.read()) {
+                        fout.write(c);
+                    }
+
+                    zin.closeEntry();
+                    fout.close();
+                }
+
+            }
+            zin.close();
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 }

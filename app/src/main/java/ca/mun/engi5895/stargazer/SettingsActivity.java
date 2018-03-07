@@ -62,5 +62,12 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(saveFileIntent.URL,
                 "https://www.celestrak.com/NORAD/elements/stations.txt");
         startService(intent);
+
+        Intent orekit = new Intent(this, saveFileIntent.class);
+        // add infos for the service which file to download and where to store
+        orekit.putExtra(saveFileIntent.FILENAME, "orekit-data");
+        orekit.putExtra(saveFileIntent.URL,
+                "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
+        startService(orekit);
     }
 }

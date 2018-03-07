@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        File orekitData = new File("/app/orekit-data");
+        File orekitData = new File("C:\\Users\\Chair\\AndroidStudioProjects\\StarGazer\\app\\orekit-data");
         DataProvidersManager manager = DataProvidersManager.getInstance();
         try {
             manager.addProvider(new DirectoryCrawler(orekitData));
