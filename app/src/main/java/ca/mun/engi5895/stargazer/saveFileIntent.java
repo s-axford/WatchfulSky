@@ -34,8 +34,6 @@ public class saveFileIntent extends IntentService {
     public static final String NOTIFICATION = "ca.mun.engi5895.stargazer.";
 
 
-
-
     public saveFileIntent() {
         super("ca.mun.engi5895.stargazer.saveFileIntent");
     }
@@ -78,7 +76,7 @@ public class saveFileIntent extends IntentService {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (stream!= null) {
+            if (stream != null) {
                 try {
                     stream.close();
                 } catch (IOException e) {

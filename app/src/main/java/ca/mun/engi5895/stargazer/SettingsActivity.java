@@ -35,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         File[] listOfFiles = folder.listFiles(); //Array of files in storage
 
         //If array is empty, there are no files
-        if(listOfFiles.length == 0 ) {
+        if (listOfFiles.length == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Directory is empty", Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -54,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void purgeFiles(View v) {
         File folder = getFilesDir(); //Gets internal storage directory
 
-        for(File file: folder.listFiles()) //Iterates through files in folder and deletes them
+        for (File file : folder.listFiles()) //Iterates through files in folder and deletes them
             if (!file.isDirectory())
                 file.delete();
 
@@ -73,8 +73,12 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(saveFileIntent.URL,
                 "https://www.celestrak.com/NORAD/elements/stations.txt");
         startService(intent);
+
         // textView.setText("Service started");
         // linearLayout.setVisibility(View.INVISIBLE);
+
+
+
         /*
         Intent orekit = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store
@@ -93,4 +97,5 @@ public class SettingsActivity extends AppCompatActivity {
         }
         */
     }
+
 }

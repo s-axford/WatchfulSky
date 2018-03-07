@@ -34,10 +34,6 @@ import org.orekit.data.DataProvidersManager;
 import org.orekit.data.DirectoryCrawler;
 import org.orekit.errors.OrekitException;
 
-import org.orekit.data.DataProvidersManager;
-import org.orekit.data.DirectoryCrawler;
-import org.orekit.errors.OrekitException;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
