@@ -82,9 +82,9 @@ public class saveFileIntent extends IntentService {
         }
     }
 
-    private boolean dirChecker(String pathname) {
+    private static boolean dirChecker(String pathname) {
 
-    File theDir = new File("new folder");
+    File theDir = new File(pathname);
 
     boolean result = false;
     // if the directory does not exist, create it
@@ -107,12 +107,13 @@ public class saveFileIntent extends IntentService {
     return result;
 }
 
-    public void unzip(String _zipFile, String _targetLocation) {
+    public static void unzip(String _zipFile, String _targetLocation) {
 
         //create target location folder if not exist
         dirChecker(_targetLocation);
 
         try {
+            System.out.println(new File(".").getAbsolutePath());
             FileInputStream fin = new FileInputStream(_zipFile);
             ZipInputStream zin = new ZipInputStream(fin);
             ZipEntry ze = null;
@@ -134,7 +135,7 @@ public class saveFileIntent extends IntentService {
             }
             zin.close();
         } catch (Exception e) {
-            System.out.println(e);
+           System.out.println(e);
         }
     }
 }
