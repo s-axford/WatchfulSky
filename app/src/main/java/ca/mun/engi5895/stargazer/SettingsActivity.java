@@ -10,7 +10,14 @@ import org.orekit.data.DataProvidersManager;
 import org.orekit.data.DirectoryCrawler;
 import org.orekit.errors.OrekitException;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,7 +35,7 @@ public class SettingsActivity extends AppCompatActivity {
         File[] listOfFiles = folder.listFiles(); //Array of files in storage
 
         //If array is empty, there are no files
-        if(listOfFiles.length == 0 ) {
+        if (listOfFiles.length == 0) {
             Toast toast = Toast.makeText(getApplicationContext(), "Directory is empty", Toast.LENGTH_SHORT);
             toast.show();
             return;
@@ -47,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
     public void purgeFiles(View v) {
         File folder = getFilesDir(); //Gets internal storage directory
 
-        for(File file: folder.listFiles()) //Iterates through files in folder and deletes them
+        for (File file : folder.listFiles()) //Iterates through files in folder and deletes them
             if (!file.isDirectory())
                 file.delete();
 
@@ -85,4 +92,5 @@ public class SettingsActivity extends AppCompatActivity {
         }
         */
     }
+
 }
