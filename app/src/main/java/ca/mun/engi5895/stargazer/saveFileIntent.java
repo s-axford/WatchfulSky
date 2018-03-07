@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -84,30 +85,33 @@ public class saveFileIntent extends IntentService {
 
     private static boolean dirChecker(String pathname) {
 
-    File theDir = new File(pathname);
+        File theDir = new File(pathname);
 
-    boolean result = false;
-    // if the directory does not exist, create it
-    if(!theDir.exists())
+        boolean result = false;
+        // if the directory does not exist, create it
+        if (!theDir.exists())
 
-    {
-        System.out.println("creating directory: " + theDir.getName());
-        //result = false;
+        {
+            System.out.println("creating directory: " + theDir.getName());
+            //result = false;
 
-        try {
-            theDir.mkdir();
-            result = true;
-        } catch (SecurityException se) {
-            //handle it
+            try {
+                theDir.mkdir();
+                result = true;
+            } catch (SecurityException se) {
+                //handle it
+            }
+            if (result) {
+                System.out.println("DIR created");
+            }
         }
-        if (result) {
-            System.out.println("DIR created");
-        }
+        return result;
     }
-    return result;
 }
 
-    public static void unzip(String _zipFile, String _targetLocation) {
+
+
+    /*public static void unzip(String _zipFile, String _targetLocation) {
 
         //create target location folder if not exist
         dirChecker(_targetLocation);
@@ -138,4 +142,4 @@ public class saveFileIntent extends IntentService {
            System.out.println(e);
         }
     }
-}
+} */
