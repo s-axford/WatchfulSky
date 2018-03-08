@@ -30,8 +30,6 @@ public class saveFileIntent extends IntentService {
     public static final String URL = "urlpath";
     public static final String FILENAME = "filename";
     public static final String FILEPATH = "filepath";
-    public static final String RESULT = "result";
-    public static final String NOTIFICATION = "ca.mun.engi5895.stargazer.";
 
 
     public saveFileIntent() {
@@ -63,7 +61,6 @@ public class saveFileIntent extends IntentService {
                 fos.write(next);
             }
             // successfully finished
-            result = Activity.RESULT_OK;
 
             //Handler thing is to let you make a toast on a dead thread, has to be in for toast to work
             Handler mHandler = new Handler(getMainLooper());
@@ -85,64 +82,5 @@ public class saveFileIntent extends IntentService {
             }
         }
     }
-
-    private static boolean dirChecker(String pathname) {
-
-        File theDir = new File(pathname);
-
-        boolean result = false;
-        // if the directory does not exist, create it
-        if (!theDir.exists())
-
-        {
-            System.out.println("creating directory: " + theDir.getName());
-            //result = false;
-
-            try {
-                theDir.mkdir();
-                result = true;
-            } catch (SecurityException se) {
-                //handle it
-            }
-            if (result) {
-                System.out.println("DIR created");
-            }
-        }
-        return result;
-    }
 }
 
-
-
-    /*public static void unzip(String _zipFile, String _targetLocation) {
-
-        //create target location folder if not exist
-        dirChecker(_targetLocation);
-
-        try {
-            System.out.println(new File(".").getAbsolutePath());
-            FileInputStream fin = new FileInputStream(_zipFile);
-            ZipInputStream zin = new ZipInputStream(fin);
-            ZipEntry ze = null;
-            while ((ze = zin.getNextEntry()) != null) {
-
-                //create dir if required while unzipping
-                if (ze.isDirectory()) {
-                    dirChecker(ze.getName());
-                } else {
-                    FileOutputStream fout = new FileOutputStream(_targetLocation + ze.getName());
-                    for (int c = zin.read(); c != -1; c = zin.read()) {
-                        fout.write(c);
-                    }
-
-                    zin.closeEntry();
-                    fout.close();
-                }
-
-            }
-            zin.close();
-        } catch (Exception e) {
-           System.out.println(e);
-        }
-    }
-} */

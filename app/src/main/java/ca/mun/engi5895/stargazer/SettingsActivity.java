@@ -74,11 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
                 "https://www.celestrak.com/NORAD/elements/stations.txt");
         startService(intent);
 
-        // textView.setText("Service started");
-        // linearLayout.setVisibility(View.INVISIBLE);
-
-
-
         /*
         Intent orekit = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store

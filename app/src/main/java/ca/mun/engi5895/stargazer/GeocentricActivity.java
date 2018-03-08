@@ -51,59 +51,8 @@ public class GeocentricActivity extends AppCompatActivity {
         }
     }
 
-
-    public void loadStations(View v) throws IOException {
-
-        FileInputStream stream = openFileInput("stations.txt");
-        InputStreamReader sreader = new InputStreamReader(stream);
-        BufferedReader breader = new BufferedReader(sreader);
-
-        StringBuilder sb = new StringBuilder();
-        String line;
-
-        while ((line = breader.readLine()) != null) {
-            sb.append(line + System.getProperty("line.separator"));
-
-        }
-
-        String fileString = sb.toString();
-        String testString = sb.substring(0, 10);
-        Toast.makeText(getApplicationContext(), testString, 1);
-        System.out.println(fileString);
-
-
-
-    }
-
-    //used with button
-    public void getSats(View v) throws IOException {
-
-        FileInputStream stream = openFileInput("stations.txt");
-        InputStreamReader sreader = new InputStreamReader(stream);
-        BufferedReader breader = new BufferedReader(sreader);
-
-        // StringBuilder sb = new StringBuilder();
-
-        String line;
-        int lineNumber = 0;
-
-        while ((line = breader.readLine()) != null) {
-            if ((lineNumber%3 == 0) || (lineNumber == 0)) {
-                list.add(line);
-                System.out.println(line);
-            }
-            //sb.append(line + System.getProperty("line.separator"));
-            lineNumber++;
-        }
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                list );
-
-        listView.setAdapter(arrayAdapter);
-    }
-
+    //Creates list of satellites from file and does all the shit to them
+    //Should end up splitting up i think, too many responsibilities
     public void getSatsCreate() throws IOException {
         //open file stations.txt
         FileInputStream stream = openFileInput("stations.txt");
@@ -120,9 +69,7 @@ public class GeocentricActivity extends AppCompatActivity {
         while ((line = breader.readLine()) != null) {
             if ((lineNumber%3 == 0) || (lineNumber == 0)) {
                 list.add(line);
-                System.out.println(line);
             }
-            //sb.append(line + System.getProperty("line.separator"));
             lineNumber++;
         }
         //Needed to convert it to a ListView
@@ -149,8 +96,6 @@ public class GeocentricActivity extends AppCompatActivity {
                 outSat.setText(o.toString());
                 outSat.setVisibility(View.VISIBLE);
 
-                //String line1 = ;
-                //String line2 = ;
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
                 FileInputStream stream1 = null;
