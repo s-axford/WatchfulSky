@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,10 @@ public class GeocentricActivity extends AppCompatActivity {
     private TextView velocity_txt;
     private TextView period_txt;
     private TextView height_txt;
+    private TextView perigee_txt;
+    private TextView apogee_txt;
+    private TextView inclination_txt;
+    private ImageView earthMap;
 
     private  ArrayList<String> list = new ArrayList<String>();
 
@@ -189,21 +194,40 @@ public class GeocentricActivity extends AppCompatActivity {
 
                 double height = 0;
                 String height_string = "error";
+
+                double perigee = 0;
+                String perigee_string = "error";
+
+                double apogee = 0;
+                String apogee_string = "error";
+
+                double inclination = 0;
+                String inclination_string = "error";
+
                 //Creating new entity
                 Entity newSat;
                 try {
                     newSat = new Entity(TLE1, TLE2);
-                    velocity = newSat.getVelocity();
-                    period = newSat.getPeriod();
-                    height = newSat.getHeight();
+                    //velocity = newSat.getVelocity();
+                    //period = newSat.getPeriod();
+                    //height = newSat.getHeight();
+                    //perigee = newSat.getPerigee();
+                    //apogee = newSat.getApogee();
+                    //inclination = newSat.getInclination();
 
                 } catch (OrekitException e) {
                     e.printStackTrace();
                 }
 
-                velocity_string = Double.toString(velocity);
-                period_string = Double.toString(period);
-                height_string = Double.toString(height);
+                velocity_string = "Velocity: " + Double.toString(velocity);
+                period_string = "Period: " + Double.toString(period);
+                height_string = "Height: " + Double.toString(height);
+                perigee_string = "Perigee: " + Double.toString(perigee);
+                apogee_string = "Apogee: " + Double.toString(apogee);
+                inclination_string = "Inclination: " + Double.toString(inclination);
+
+                earthMap = (ImageView) findViewById(R.id.imageView);
+                earthMap.setVisibility(View.VISIBLE);
 
                 //SET VELOCITY ON UI
                 velocity_txt = (TextView) findViewById(R.id.VelocityText);
@@ -220,10 +244,21 @@ public class GeocentricActivity extends AppCompatActivity {
                 height_txt.setText(height_string);
                 height_txt.setVisibility(View.VISIBLE);
 
-                //SET ... ON UI
+                //SET PERIGEE ON UI
+                perigee_txt = (TextView) findViewById(R.id.PerigeeText);
+                perigee_txt.setText(perigee_string);
+                perigee_txt.setVisibility(View.VISIBLE);
 
+                //SET APOGEE ON UI
+                apogee_txt = (TextView) findViewById(R.id.ApogeeText);
+                apogee_txt.setText(apogee_string);
+                apogee_txt.setVisibility(View.VISIBLE);
 
-                //SET ... ON UI
+                //SET INCLINATION ON UI
+                inclination_txt = (TextView) findViewById(R.id.InclinationText);
+                inclination_txt.setText(inclination_string);
+                inclination_txt.setVisibility(View.VISIBLE);
+
             }
 
         };

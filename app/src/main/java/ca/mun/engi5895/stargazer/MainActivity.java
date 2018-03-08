@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +28,9 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -40,6 +44,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent orekit = new Intent(this, saveFileIntent.class);
+
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/orekit-data/");
+        System.out.println(file);
+
+
+        //File[] flist = file.listFiles();
+        /*
+        for (File filep : flist) {
+            if (filep.isFile()) {
+                System.out.println(file.getName());
+            }
+        }
+        */
+
+        File orekitData = file;
+        DataProvidersManager manager = DataProvidersManager.getInstance();
+
+        try {
+            manager.addProvider(new DirectoryCrawler(orekitData));
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
         //File orekitData = new File("C:\\Users\\Chair\\AndroidStudioProjects\\StarGazer\\app\\orekit-data");
         //DataProvidersManager manager = DataProvidersManager.getInstance();
         //try {
@@ -47,22 +74,21 @@ public class MainActivity extends AppCompatActivity {
         //} catch (OrekitException e) {
         //    e.printStackTrace();
         //}
-        Intent orekit = new Intent(this, saveFileIntent.class);
+
+        //Intent orekit = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store
-        orekit.putExtra(saveFileIntent.FILENAME, "orekit-data.zip");
-        orekit.putExtra(saveFileIntent.URL,
-                "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
-        startService(orekit);
+        //orekit.putExtra(saveFileIntent.FILENAME, "orekit-data.zip");
+        //orekit.putExtra(saveFileIntent.URL,
+        //        "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
+        //startService(orekit);
         //String target = getFilesDir().getName() + "orekit-data";
-        unpackZip(getFilesDir().getName(), "orekit-data.zip");
-        File orekitData = new File(getFilesDir().getName() + "/orekit-data");
-        DataProvidersManager manager = DataProvidersManager.getInstance();
-        try {
-            manager.addProvider(new DirectoryCrawler(orekitData));
-        } catch (OrekitException e) {
-            e.printStackTrace();
-        }
+        //unpackZip(getFilesDir().getName(), "orekit-data.zip");
+
+
+
     }
+
+    /*
     private void unpackZip(String path, String zipname) {
         InputStream is;
         ZipInputStream zis;
@@ -105,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         //return true;
     }
+    */
 
     public void geoGo(View view) {
         Intent intent = new Intent(this, GeocentricActivity.class);

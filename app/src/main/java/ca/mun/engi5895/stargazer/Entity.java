@@ -55,8 +55,10 @@ public class Entity {
     //constructor
     Entity(String line1, String line2) throws OrekitException{
 
-        entity = new TLE(line1, line2); //creates TLE object
-        tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
+        System.out.println(line1);
+        System.out.println(line2);
+        //entity = new TLE(line1, line2); //creates TLE object
+        //tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
 
        //TimeScale timeZone = TimeScalesFactory.getUTC();
        //Date date = new Date();
@@ -106,8 +108,8 @@ public class Entity {
     //returns orbital period of satellite
     public double getPeriod(){
 
-        double meanMotion = entity.getMeanMotion(); //gets mean motion
-        return 1 / meanMotion; //returns period
+        //double meanMotion = entity.getMeanMotion(); //gets mean motion
+        return 1 ;// meanMotion; //returns period
     }
 
     //gets Height of satellite from ground
