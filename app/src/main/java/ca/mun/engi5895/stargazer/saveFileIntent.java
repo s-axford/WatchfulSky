@@ -30,8 +30,6 @@ public class saveFileIntent extends IntentService {
     public static final String URL = "urlpath";
     public static final String FILENAME = "filename";
     public static final String FILEPATH = "filepath";
-    public static final String RESULT = "result";
-    public static final String NOTIFICATION = "ca.mun.engi5895.stargazer.";
 
 
     public saveFileIntent() {
@@ -63,7 +61,10 @@ public class saveFileIntent extends IntentService {
                 fos.write(next);
             }
             // successfully finished
+
             //result = Activity.RESULT_OK;
+
+
 
             //Handler thing is to let you make a toast on a dead thread, has to be in for toast to work
             Handler mHandler = new Handler(getMainLooper());
@@ -85,6 +86,7 @@ public class saveFileIntent extends IntentService {
             }
         }
     }
+
 /*
     private static boolean dirChecker(String pathname) {
 
@@ -177,3 +179,6 @@ public class saveFileIntent extends IntentService {
     }
     */
 }
+
+
+
