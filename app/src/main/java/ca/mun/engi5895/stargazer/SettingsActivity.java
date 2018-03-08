@@ -1,6 +1,7 @@
 package ca.mun.engi5895.stargazer;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,8 +17,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import com.jcraft.jsch.UserInfo;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.Channel;
+
+
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -69,10 +80,27 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store
-        intent.putExtra(saveFileIntent.FILENAME, "stations.txt");
-        intent.putExtra(saveFileIntent.URL,
-                "https://www.celestrak.com/NORAD/elements/stations.txt");
+        intent.putExtra(saveFileIntent.FILENAME,"stations.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/stations.txt");
         startService(intent);
+
+
+/*
+        Intent orekit = new Intent(this, saveFileIntent.class);
+
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/orekit-data/");
+        System.out.println(file);
+
+        File orekitData = file;
+        DataProvidersManager manager = DataProvidersManager.getInstance();
+
+        try {
+            manager.addProvider(new DirectoryCrawler(orekitData));
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+*/
+
 
         /*
         Intent orekit = new Intent(this, saveFileIntent.class);
@@ -81,9 +109,17 @@ public class SettingsActivity extends AppCompatActivity {
         orekit.putExtra(saveFileIntent.URL,
                 "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
         startService(orekit);
+
         //String target = getFilesDir().getName() + "orekit-data";
-        saveFileIntent.unzip("orekit-data.zip", getFilesDir().getName() + "/orekit-data");
+        //saveFileIntent.unzip("orekit-data.zip", getFilesDir().getName());
+
+
+
+
+        /*
         File orekitData = new File(getFilesDir().getName() + "/orekit-data");
+
+
         DataProvidersManager manager = DataProvidersManager.getInstance();
         try {
             manager.addProvider(new DirectoryCrawler(orekitData));
