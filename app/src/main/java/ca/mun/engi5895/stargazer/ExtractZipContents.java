@@ -28,7 +28,7 @@ package ca.mun.engi5895.stargazer;
         import java.io.BufferedOutputStream;
         import java.io.FileInputStream;
         import java.util.zip.ZipInputStream;
-        import org.apache.commons.io.FileSystemUtils;
+        //import org.apache.commons.io.FileSystemUtils;
 
 
 public class ExtractZipContents {

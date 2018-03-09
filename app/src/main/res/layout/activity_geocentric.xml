@@ -10,24 +10,27 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="202dp"
+        android:layout_marginTop="44dp"
         android:scaleType="fitCenter"
         android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/earthmap"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="62dp" />
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="264dp"
         android:text="TextView"
         android:textSize="24sp"
         android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/PeriodText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/layout1" />
 
@@ -38,11 +41,11 @@
         android:layout_height="19dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="376dp"
+        android:layout_marginTop="372dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/layout1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -103,24 +106,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ApogeeText" />
 
-    <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
 
-        <ListView
-            android:id="@+id/lvid2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
