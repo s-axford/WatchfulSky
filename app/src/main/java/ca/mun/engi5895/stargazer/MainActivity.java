@@ -175,7 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 //ze = zin.getNextEntry();
                 */
                 //create dir if required while unzipping
-                if (!ze.isDirectory()) {
+    /*
+    if (!ze.isDirectory()) {
                     dirChecker(ze.getName());
                     System.out.println("went into if statement");
                }else if(ze.isDirectory()) {
@@ -200,7 +201,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
+        */
+
 
 
     /*private void unpackZip(String path, String zipname) {
@@ -251,11 +253,11 @@ public class MainActivity extends AppCompatActivity {
 
     */
 
-     */
+
 
 
     public void geoGo(View view) {
-        Intent intent = new Intent(this, GeocentricActivity.class);
+        Intent intent = new Intent(this, activity_satellite_sel.class);
         startActivity(intent);
     }
 

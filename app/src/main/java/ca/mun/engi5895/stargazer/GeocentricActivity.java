@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import org.orekit.errors.OrekitException;
 
+import ca.mun.engi5895.stargazer.activity_satellite_sel;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -48,12 +50,19 @@ public class GeocentricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geocentric);
         setTitle("Geocentric Orbit");
-        listView = (ListView) findViewById(R.id.lvid2);
+        //listView = (ListView) findViewById(R.id.lvid2);
+
         try {
             getSatsCreate();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    public void onBackPressed() {
+        activity_satellite_sel.clearSatsList();
+        this.finish();
     }
 
     //Creates list of satellites from file and does all the shit to them
@@ -82,19 +91,18 @@ public class GeocentricActivity extends AppCompatActivity {
                 this,
                 android.R.layout.simple_list_item_1,
                 list );
-        //se the adapter
-        listView.setAdapter(arrayAdapter);
+        //set the adapter
+        //listView.setAdapter(arrayAdapter);
         //close streams
         breader.close();
         sreader.close();
         stream.close();
 
-        //Class that handles clicking on a list item
-        AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Object o = listView.getItemAtPosition(position); //Gets clicked option as java object
+                ArrayList<Object> sats = activity_satellite_sel.getSelectedSats();
+                Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
                 System.out.println(o.toString()); //Output to console as string
-                listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
+                //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
+
 
                 //Updates textview to the picked satellite name. Used for testing.
                 outSat = (TextView) findViewById(R.id.textView2);
@@ -206,12 +214,5 @@ public class GeocentricActivity extends AppCompatActivity {
 
             }
 
-        };
+        }
 
-        //Set the onclick listener to the listview
-        listView.setOnItemClickListener(mMessageClickedHandler);
-    }
-
-
-
-}
