@@ -32,8 +32,8 @@ import java.util.ArrayList;
 public class GeocentricActivity extends AppCompatActivity {
 
     private ListView listView;
-    private TextView outSat;
 
+    private TextView outSat;
     private TextView velocity_txt;
     private TextView period_txt;
     private TextView height_txt;

@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import org.orekit.errors.OrekitException;
 
 import java.io.BufferedReader;
@@ -32,6 +34,7 @@ public class activity_satellite_sel extends AppCompatActivity {
     private ProgressBar progressBar;
     private ArrayList<String> list = new ArrayList<String>();
     private static ArrayList<Object> selectedSats = new ArrayList<Object>();
+    private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -115,7 +118,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 Object o = listView.getItemAtPosition(position); //Gets clicked option as java object
                 selectedSats.add(o);
                 System.out.println(o.toString()); //Output to console as string
-                Intent intent = new Intent(getApplicationContext(), GeocentricActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
                 //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
 
@@ -162,15 +165,27 @@ public class activity_satellite_sel extends AppCompatActivity {
         listView.setOnItemClickListener(mMessageClickedHandler);
     }
 
-    public static ArrayList<Object> getSelectedSats(){
-        return selectedSats;
+    public static ArrayList<Object> getSelectedSats(){return selectedSats;}
+    public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
+
+    public static void removeFavSat() {
+        boolean found = false;
+
+        for (int i = 0; i < favoriteSats.size(); i++){
+
+        }
+
+        if(found == false){
+            //create dialog box
+        }
     }
+
     public static void clearSatsList() {
         selectedSats.clear();
     }
 
     public void geoGo(View view) {
-        Intent intent = new Intent(this, activity_satellite_sel.class);
+        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 }

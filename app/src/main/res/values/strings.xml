@@ -11,4 +11,8 @@
     <string name="title_satellites">Satellites</string>
     <string name="title_favorites">Favorites</string>
     <string name="title_nearby">Nearby</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="satellite_name"></string>
+
+
 </resources>
