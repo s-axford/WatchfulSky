@@ -27,4 +27,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation files('libs/commons-compress-1.16.1.jar')
+    implementation files('libs/zt-zip-1.12.jar')
+    implementation files('libs/slf4j-simple-1.6.99.jar')
+    implementation files('libs/slf4j-api-2.0.99.jar')
+    implementation files('libs/junit-3.8.1.jar')
+    implementation files('libs/commons-io-2.6.jar')
 }
