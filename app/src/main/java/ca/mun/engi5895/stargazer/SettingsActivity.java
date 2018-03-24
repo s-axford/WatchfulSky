@@ -10,6 +10,7 @@ import android.widget.Toast;
 import org.orekit.data.DataProvidersManager;
 import org.orekit.data.DirectoryCrawler;
 import org.orekit.errors.OrekitException;
+import org.zeroturnaround.zip.ZipUtil;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -81,6 +82,10 @@ public class SettingsActivity extends AppCompatActivity {
         startService(intent);
 
 
+        /*ZipUtil.explode(new File(getFilesDir().getName() + File.separator + "orekit-data.zip"));
+        File orekitData = new File(getFilesDir().getName() + "/orekit-data");
+        DataProvidersManager manager = DataProvidersManager.getInstance();
+
 /*
         Intent orekit = new Intent(this, saveFileIntent.class);
 
@@ -90,13 +95,13 @@ public class SettingsActivity extends AppCompatActivity {
         File orekitData = file;
         DataProvidersManager manager = DataProvidersManager.getInstance();
 
+
         try {
             manager.addProvider(new DirectoryCrawler(orekitData));
         } catch (OrekitException e) {
             e.printStackTrace();
         }
 */
-
 
         /*
         Intent orekit = new Intent(this, saveFileIntent.class);
