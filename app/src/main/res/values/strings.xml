@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">StarGazer</string>
     <string name="btn_go">Heliocentric</string>
+    <string name="error_installing_orekit_default_data">Installation of the default Orekit data failed.</string>
+    <string name="error_installing_orekit_default_data_external_storage_not_accessible">Installation of the default Orekit data failed due to external storage not accessible.</string>
+    <string name="error_initializing_orekit">Error initializing simulator, is the needed data installed correctly?</string>
+    <string name="dialog_error">Error</string>
+    <string name="dialog_exit">Exit</string>
+    <string name="dialog_ignore">Ignore</string>
 </resources>

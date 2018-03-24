@@ -1,41 +1,66 @@
 package ca.mun.engi5895.stargazer;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import ca.mun.engi5895.stargazer.ErrorDialogFragment;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.io.FilenameUtils;
 import org.orekit.data.DataProvidersManager;
 import org.orekit.data.DirectoryCrawler;
 import org.orekit.errors.OrekitException;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
+import org.zeroturnaround.zip.ZipUtil;
+//import org.zeroturnaround.zip.commons.FilenameUtils;
+//import org.zeroturnaround.zip.commons.FilenameUtils;
+import org.apache.commons.io.FilenameUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        Intent orekit = new Intent(this, saveFileIntent.class);
+        //Intent orekit = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store
-        orekit.putExtra(saveFileIntent.FILENAME, "orekit-data.zip");
+       // orekit.putExtra(saveFileIntent.FILENAME, "orekit-data.zip");
         //orekit.putExtra(saveFileIntent.URL,
         //        "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
-        orekit.putExtra(saveFileIntent.URL,
-                "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
-        startService(orekit);
+        //orekit.putExtra(saveFileIntent.URL,
+        //        "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
+        //startService(orekit);
+        Install.installApkData(this);
+
+        //Initialize Orekit with the data files
+        OrekitInit.init(Install.getOrekitDataRoot(this));
+
+        setContentView(R.layout.activity_main);
+    }
 
         //String target = getFilesDir().getName() + "orekit-data";
-        unzip("orekit-data.zip", getFilesDir().getName());
+        //unzip("orekit-data.zip", getFilesDir().getName());
+        //ZipUtil.explode(new File(getFilesDir().getName() + File.separator + "orekit-data.zip"));
+       /* try {
+            extractFolder(getFilesDir(), new File(getFilesDir(), "orekit-data.zip"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         File orekitData = new File(getFilesDir().getName() + "/orekit-data");
         DataProvidersManager manager = DataProvidersManager.getInstance();
         try {
@@ -45,6 +70,46 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean extractFolder(File destination, File zipFile) throws ZipException, IOException, IOException {
+        int BUFFER = 8192;
+        File file = zipFile;
+        //This can throw ZipException if file is not valid zip archive
+        ZipFile zip = new ZipFile(file);
+        String newPath = destination.getAbsolutePath() + File.separator + FilenameUtils.removeExtension(zipFile.getName());
+        //Create destination directory
+        new File(newPath).mkdir();
+        Enumeration zipFileEntries = zip.entries();
+
+        //Iterate overall zip file entries
+        while (zipFileEntries.hasMoreElements())
+        {
+            ZipEntry entry = (ZipEntry) zipFileEntries.nextElement();
+            String currentEntry = entry.getName();
+            File destFile = new File(newPath, currentEntry);
+            File destinationParent = destFile.getParentFile();
+            //If entry is directory create sub directory on file system
+            destinationParent.mkdirs();
+
+            if (!entry.isDirectory())
+            {
+                //Copy over data into destination file
+                BufferedInputStream is = new BufferedInputStream(zip
+                        .getInputStream(entry));
+                int currentByte;
+                byte data[] = new byte[BUFFER];
+                //orthodox way of copying file data using streams
+                FileOutputStream fos = new FileOutputStream(destFile);
+                BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
+                while ((currentByte = is.read(data, 0, BUFFER)) != -1) {
+                    dest.write(data, 0, currentByte);
+                }
+                dest.flush();
+                dest.close();
+                is.close();
+            }
+        }
+        return true;//some error codes etc.
+    }
 
     private static void dirChecker(String pathname) {
 
@@ -81,14 +146,16 @@ public class MainActivity extends AppCompatActivity {
             System.out.println(new File(_targetLocation).getAbsolutePath());
             File zip = new File(getFilesDir(), _zipFile);
             FileInputStream fin = new FileInputStream(zip);
-            System.out.println("Got to 2");
+            System.out.print(fin.available());
+
+            System.out.println("\nGot to 2");
             ZipArchiveInputStream zin = new ZipArchiveInputStream(fin);
             System.out.println("Got to 3");
             ArchiveEntry ze = null;
             System.out.println("Got to 4");
             while ((ze = zin.getNextEntry()) != null) {
 
-               /* String fileName = ze.getName();
+                String fileName = ze.getName();
                 System.out.print(fileName);
                 File newFile = new File( _targetLocation + File.separator + fileName);
                 System.out.println("file unzip : "+ newFile.getAbsoluteFile());
@@ -106,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fos.close();
                 //ze = zin.getNextEntry();
-                */
+
                 //create dir if required while unzipping
                 if (!ze.isDirectory()) {
                     dirChecker(ze.getName());
@@ -122,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println("weeeeeee for loop");
                         System.out.print(forlooptest);
                     }
-                    System.out.println("out of the while loop");
+                    System.out.println("\nout of the while loop");
                     //zin.closeEntry();
                     fout.close();
                     System.out.println("closed stuff");
@@ -136,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /*private void unpackZip(String path, String zipname) {
+    private void unpackZip(String path, String zipname) {
         InputStream is;
         ZipInputStream zis;
         try {
@@ -181,6 +248,17 @@ public class MainActivity extends AppCompatActivity {
         //return true;
     }
      */
+
+    /**
+     * Displays an error dialog
+     * @param message
+     * @param canIgnore
+     */
+    public void showErrorDialog(String message, boolean canIgnore) {
+        DialogFragment newFragment = ErrorDialogFragment.newInstance(message, canIgnore);
+        newFragment.setCancelable(false);
+        newFragment.show(getFragmentManager(), "error");
+    }
 
     public void geoGo(View view) {
         Intent intent = new Intent(this, GeocentricActivity.class);
