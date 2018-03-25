@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.content.Intent;
 
 import android.content.IntentFilter;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +55,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        /*File orekitData = new File("");
+        DataProvidersManager manager = DataProvidersManager.getInstance();
+        try {
+            manager.addProvider(new DirectoryCrawler(orekitData));
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }*/
+
+       /* AssetManager assetManager = getAssets();
+        try {
+            System.out.println("about to print files");
+            String[] files = assetManager.list("orekit-data");
+            System.out.println(files.toString());
+            for(String f : files) {
+            System.out.println(f);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
 
 
         //STAVOR CODE
