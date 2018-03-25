@@ -65,7 +65,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //selectedSat = activity_satellite_sel.getSelectedSat();
+        selectedSat = activity_satellite_sel.getSelectedSat();
 
         /*
         try {
@@ -107,11 +107,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case R.id.actionbar_fav:
 
-                //Favorites favorite = new Favorites(MapsActivity.this);
-                //list = activity_satellite_sel.getSelectedSat();
+                Favorites favorite = new Favorites(MapsActivity.this);
+                list = activity_satellite_sel.getSelectedSat();
 
-                //String line1 = selectedSat.get(1).toString();
-                //String line2 = selectedSat.get(2).toString();
+                //Object line1 = selectedSat.get(0);
+                //Object line2 = selectedSat.get(1);
 
                 //favorite.addFavorite(name, line1, line2);
 
