@@ -109,9 +109,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Favorites favorite = new Favorites(MapsActivity.this);
                 list = activity_satellite_sel.getSelectedSat();
-                  for (int i = 0 ; i < selectedSat.size() ; i++)
+
+                  for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
-                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2());
+                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2()); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
                         e.printStackTrace();
