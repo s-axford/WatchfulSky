@@ -67,7 +67,9 @@ public class GeocentricActivity extends AppCompatActivity {
 
     //Creates list of satellites from file and does all the shit to them
     //Should end up splitting up i think, too many responsibilities
+
     public void getSatsCreate() throws IOException {
+    /*
         //open file stations.txt
         FileInputStream stream = openFileInput("stations.txt");
         InputStreamReader sreader = new InputStreamReader(stream);
@@ -101,7 +103,7 @@ public class GeocentricActivity extends AppCompatActivity {
                 ArrayList<Object> sats = activity_satellite_sel.getSelectedSat();
                 Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
                 System.out.println(o.toString()); //Output to console as string
-                //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
+                listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
 
 
                 //Updates textview to the picked satellite name. Used for testing.
@@ -211,7 +213,7 @@ public class GeocentricActivity extends AppCompatActivity {
                 inclination_txt = (TextView) findViewById(R.id.InclinationText);
                 inclination_txt.setText(inclination_string);
                 inclination_txt.setVisibility(View.VISIBLE);
-
+            */
             }
 
         }
