@@ -66,6 +66,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = activity_satellite_sel.getSelectedSat();
+        System.out.println(selectedSat.get(0).getName());
+        sat_Name = (TextView) findViewById(R.id.textView5);
+        sat_Name.setText(selectedSat.get(0).getName());
+        //boolean is = selectedSat.isEmpty();
+
+        /*
+        try {
+            sat_Name.setText(selectedSat.getLine1());
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+        */
 
         /*
         try {
@@ -108,7 +120,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.actionbar_fav:
 
                 Favorites favorite = new Favorites(MapsActivity.this);
-                list = activity_satellite_sel.getSelectedSat();
+                selectedSat = activity_satellite_sel.getSelectedSat();
+                /*
                   for (int i = 0 ; i < selectedSat.size() ; i++)
                     try {
                         favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2());
@@ -116,6 +129,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     } catch (OrekitException e) {
                         e.printStackTrace();
                     }
+                */
         }
         return super.onOptionsItemSelected(item);
     }
