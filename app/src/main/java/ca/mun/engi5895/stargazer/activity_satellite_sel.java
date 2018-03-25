@@ -36,11 +36,12 @@ public class activity_satellite_sel extends AppCompatActivity {
     private ArrayList<String> list = new ArrayList<String>();
     private ArrayAdapter<String> adapterList;
     private ArrayAdapter<String> favoriteList;
-    private static ArrayList<Object> selectedSats = new ArrayList<Object>();
+    public static ArrayList<Entity> selectedSats = new ArrayList<Entity>();
+    private static ArrayList<Object> satList = new ArrayList<Object>();
     private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
     private static String TLE1;
     private static String TLE2;
-
+    private static Entity currentEntity = null;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -142,12 +143,14 @@ public class activity_satellite_sel extends AppCompatActivity {
         //Class that handles clicking on a list item
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
+
                 Object o = listView.getItemAtPosition(position); //Gets clicked option as java object
-                selectedSats.add(o);
+                satList.add(o);
                 System.out.println(o.toString()); //Output to console as string
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("CHOSEN_SAT_NAME", o.toString());
                 startActivity(intent);
+
                 //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
 
                 //Updates textview to the picked satellite name. Used for testing.
@@ -155,8 +158,8 @@ public class activity_satellite_sel extends AppCompatActivity {
                 //outSat.setText(o.toString());
                 //outSat.setVisibility(View.VISIBLE);
 
-
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
+
                 FileInputStream stream1 = null;
                 try {
                     stream1 = openFileInput("stations.txt"); //openFileInput auto opens from getFilesDir() directory
@@ -164,6 +167,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
 
                 InputStreamReader sreader1 = new InputStreamReader(stream1);
                 BufferedReader breader1 = new BufferedReader(sreader1);
@@ -173,17 +177,30 @@ public class activity_satellite_sel extends AppCompatActivity {
                 String TLE2 = new String();
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
+
+
                 try {
                     while ((line1 = breader1.readLine()) != null) {
                         if (line1.equals(o.toString())) { //If the current line is the one we chose from the list
                             TLE1 = breader1.readLine();
                             TLE2 = breader1.readLine();
+
                             break;
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
+                try {
+                    currentEntity = new Entity(o.toString(), TLE1, TLE2);
+                    selectedSats.add(currentEntity);
+                    activity_satellite_sel.getSelectedSat();
+                } catch (OrekitException e) {
+                    e.printStackTrace();
+                }
+
 
                 //Creating new entity
 
@@ -194,12 +211,10 @@ public class activity_satellite_sel extends AppCompatActivity {
     }
 
 
-    public static ArrayList<Object> getSelectedSat() { //ArrayList<String> getSelectedSat(){
-        ArrayList<Object> list = null;
-        //list.add(selectedSats.toString());
-        //list.add(TLE1);
-        //list.add(TLE2);
-        return list;
+    public static ArrayList<Entity> getSelectedSat() { //ArrayList<String> getSelectedSat(){
+        System.out.println(selectedSats.size());
+
+        return selectedSats;
     }
 
     public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
@@ -216,10 +231,11 @@ public class activity_satellite_sel extends AppCompatActivity {
         }
     }
 
+    /*
     public static void clearSatsList() {
         selectedSats.clear();
     }
-
+    */
     public void geoGo(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);

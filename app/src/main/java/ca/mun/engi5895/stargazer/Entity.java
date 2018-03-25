@@ -43,6 +43,7 @@ public class Entity {
 
     private static TLE entity; //TLE object for satellite
     private static TLEPropagator tleProp; //orbit propagator
+    private static String entity_name;
 
     //private Calendar calendar;
     //private double[] array;
@@ -53,13 +54,13 @@ public class Entity {
 
 
     //constructor
-    Entity(String line1, String line2) throws OrekitException{
+    Entity(String name, String line1, String line2) throws OrekitException{
 
-        System.out.println(line1);
-        System.out.println(line2);
+        //System.out.println(line1);
+        //System.out.println(line2);
         //entity = new TLE(line1, line2); //creates TLE object
         //tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
-
+        entity_name = name;
        //TimeScale timeZone = TimeScalesFactory.getUTC();
        //Date date = new Date();
        //calendar = GregorianCalendar.getInstance();
@@ -136,4 +137,9 @@ public class Entity {
         return entity.getI(); //return inclination angle
     }
 
+    public String getLine1() throws OrekitException {return entity.getLine1();}
+
+    public String getLine2() throws OrekitException {return entity.getLine2();}
+
+    public String getName() {return entity_name;}
 }

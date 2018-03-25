@@ -50,7 +50,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView perigee_txt;
     private TextView apogee_txt;
     private TextView inclination_txt;
-    private ArrayList<Object> selectedSat;
+    private ArrayList<Entity> selectedSat;
 
     private  ArrayList<Object> list = new ArrayList<Object>();
 
@@ -65,7 +65,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //selectedSat = activity_satellite_sel.getSelectedSat();
+        selectedSat = activity_satellite_sel.getSelectedSat();
+        System.out.println(selectedSat.get(0).getName());
+        sat_Name = (TextView) findViewById(R.id.textView5);
+        sat_Name.setText(selectedSat.get(0).getName());
+        //boolean is = selectedSat.isEmpty();
+
+        /*
+        try {
+            sat_Name.setText(selectedSat.getLine1());
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+        */
 
 
         try {
@@ -107,15 +119,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case R.id.actionbar_fav:
 
-                //Favorites favorite = new Favorites(MapsActivity.this);
-                //list = activity_satellite_sel.getSelectedSat();
-
-                //String line1 = selectedSat.get(1).toString();
-                //String line2 = selectedSat.get(2).toString();
-
-                //favorite.addFavorite(name, line1, line2);
-
-                return true;
+                Favorites favorite = new Favorites(MapsActivity.this);
+                selectedSat = activity_satellite_sel.getSelectedSat();
+                /*
+                  for (int i = 0 ; i < selectedSat.size() ; i++)
+                    try {
+                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2());
+                        return true;
+                    } catch (OrekitException e) {
+                        e.printStackTrace();
+                    }
+                */
         }
         return super.onOptionsItemSelected(item);
     }
