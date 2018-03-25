@@ -2,16 +2,20 @@ package ca.mun.engi5895.stargazer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -23,7 +27,7 @@ public class Favorites {
 
     private ArrayList<String> list = new ArrayList<String>();
     private ArrayAdapter adapterList;
-    private Context context;
+    private static Context context;
     private ListView listView;
 
     Favorites(Context inContext){
@@ -132,10 +136,24 @@ public class Favorites {
 
     public ArrayAdapter<String> getFavorites(){return adapterList;}
 
-    public void addFavorite(String name, String line1, String line2){
+    public static void addFavorite(String name, String line1, String line2){
+        try {
+            FileOutputStream fostream = new FileOutputStream("favoriteSats.txt");
+            OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
+            BufferedWriter bwriter = new BufferedWriter(oswriter);
 
+            bwriter.newLine();
+            bwriter.write(name);
+            bwriter.newLine();
+            bwriter.write(line1);
+            bwriter.newLine();
+            bwriter.write(line2);
 
-
+            bwriter.close(); oswriter.close(); fostream.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
     /*

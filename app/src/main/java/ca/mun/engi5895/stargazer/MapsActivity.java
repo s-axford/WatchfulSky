@@ -50,7 +50,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView perigee_txt;
     private TextView apogee_txt;
     private TextView inclination_txt;
-    private ArrayList<Object> selectedSat;
+    private ArrayList<Entity> selectedSat;
 
     private  ArrayList<Object> list = new ArrayList<Object>();
 
@@ -109,13 +109,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Favorites favorite = new Favorites(MapsActivity.this);
                 list = activity_satellite_sel.getSelectedSat();
-
-                //Object line1 = selectedSat.get(0);
-                //Object line2 = selectedSat.get(1);
-
-                //favorite.addFavorite(name, line1, line2);
-
-                return true;
+                  for (int i = 0 ; i < selectedSat.size() ; i++)
+                    try {
+                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2());
+                        return true;
+                    } catch (OrekitException e) {
+                        e.printStackTrace();
+                    }
         }
         return super.onOptionsItemSelected(item);
     }
