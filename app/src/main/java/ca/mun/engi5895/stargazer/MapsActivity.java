@@ -27,13 +27,21 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
 
 import org.orekit.errors.OrekitException;
+import org.orekit.time.AbsoluteDate;
+import org.orekit.time.TimeScale;
+import org.orekit.time.TimeScalesFactory;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static ca.mun.engi5895.stargazer.activity_satellite_sel.getSelectedSat;
 
@@ -67,7 +75,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = activity_satellite_sel.getSelectedSat();
-          int  i = 0;
+        System.out.println(selectedSat.get(0).getName());
+        sat_Name = (TextView) findViewById(R.id.textView5);
+        double inclination = selectedSat.get(0).getInclination();
+        sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
+      
+        int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
                 System.out.println(selectedSat.get(i).getName());
@@ -83,8 +96,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
                 sat_Perigee_Title.setText("Satellite Perigee");
 
-
-
         //boolean is = selectedSat.isEmpty();
 
         /*
@@ -95,9 +106,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         */
 
-
         try {
-            getSatsCreate();
+            getSatLocation();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -205,172 +215,75 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        double a = 43.5;
-        double b = -54.5;
+        AbsoluteDate date = getTime();
+        ArrayList<LatLng> points = new ArrayList<>();
+
+        for (int i = 0; i < selectedSat.size(); i++) {
+            double a = selectedSat.get(i).getX(date);
+            double b = selectedSat.get(i).getY(date);
+            points.add(new LatLng(a, b));
+            System.out.println(a);
+            System.out.println(b);
+        }
+
+        for (int j = 0; j < points.size(); j++) {
+
+        }
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(47.58, -52.71);
+        //LatLng sydney = new LatLng(a, b);
 
-        LatLng pointa = new LatLng(a+5,b*2);
-        LatLng pointb = new LatLng(a,b*3);
-        LatLng pointc = new LatLng(a-10,b);
-        LatLng pointd = new LatLng(a,-b/3);
-        LatLng pointe = new LatLng(a,b/9);
-        LatLng pointf = new LatLng(a-5,-b*9);
+        //LatLng pointa = new LatLng(a+5,b*2);
+        //LatLng pointb = new LatLng(a,b*3);
+        //LatLng pointc = new LatLng(a-10,b);
+        //LatLng pointd = new LatLng(a,-b/3);
+        //LatLng pointe = new LatLng(a,b/9);
+        //LatLng pointf = new LatLng(a-5,-b*9);
 
+        /*
         Polyline line = googleMap.addPolyline(new PolylineOptions()
             .add(sydney)
-                .add(pointa)
-                .add(pointb)
-                .add(pointc)
+                //.add(pointa)
+                //.add(pointb)
+                //.add(pointc)
                 .width(5)
             .color(Color.RED)
         );
+        */
 
         //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         //mMap.addMarker(new MarkerOptions().position(pointa).title("Marker a"));
-        mMap.addMarker(new MarkerOptions().position(pointb).title("Marker b"));
+        //mMap.addMarker(new MarkerOptions().position(pointb).title("Marker b"));
         //mMap.addMarker(new MarkerOptions().position(pointc).title("Marker c"));
         //mMap.addMarker(new MarkerOptions().position(pointd).title("Marker d"));
         //mMap.addMarker(new MarkerOptions().position(pointe).title("Marker e"));
         //mMap.addMarker(new MarkerOptions().position(pointf).title("Marker f"));
 
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(pointb));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    public void getSatsCreate() throws IOException {
-        /*
-        //open file stations.txt
-        FileInputStream stream = openFileInput("stations.txt");
-        InputStreamReader sreader = new InputStreamReader(stream);
-        BufferedReader breader = new BufferedReader(sreader);
+    private AbsoluteDate getTime(){
 
-        // StringBuilder sb = new StringBuilder();
+        TimeScale timeZone = null;
 
-        String line;
-        int lineNumber = 0;
-
-        //While the next line exists, check to see if it is the 0th line or every 3rd line (satellite names)
-        //If it is a name, add it to the list ArrayList
-        while ((line = breader.readLine()) != null) {
-            if ((lineNumber%3 == 0) || (lineNumber == 0)) {
-                list.add(line);
-            }
-            lineNumber++;
-        }
-        //Needed to convert it to a ListView
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                list );
-        //set the adapter
-        //listView.setAdapter(arrayAdapter);
-        //close streams
-        breader.close();
-        sreader.close();
-        stream.close();
-
-        ArrayList<Object> sats = activity_satellite_sel.getSelectedSats();
-        Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
-        System.out.println(o.toString()); //Output to console as string
-        //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
-*/
-        String sat_name = getIntent().getStringExtra("CHOSEN_SAT_NAME");
-        System.out.println("From other activity, sat name is: " + sat_name);
-        //Updates textview to the picked satellite name. Used for testing.
-       // outSat = (TextView) findViewById(R.id.textView5);
-     //   outSat.setText(sat_name);
-       // outSat.setVisibility(View.VISIBLE);
-
-
-        //Start the re-parsing of the text file for the TLE data for chosen satellite
-        FileInputStream stream1 = null;
         try {
-            stream1 = openFileInput("stations.txt"); //openFileInput auto opens from getFilesDir() directory
-            // getFilesDir() is directory of internal app storage
-        } catch (FileNotFoundException e) {
+            timeZone = TimeScalesFactory.getUTC(); // get UTC time scale
+        } catch (OrekitException e) {
             e.printStackTrace();
         }
 
-        InputStreamReader sreader1 = new InputStreamReader(stream1);
-        BufferedReader breader1 = new BufferedReader(sreader1);
+        Date date = new Date(); //creates date
+        Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
+        calendar.setTime(date); //updates date and time
+        AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
 
-        String line1;
-        String TLE1 = new String();
-        String TLE2 = new String();
+        System.out.println();
 
-        //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
-        try {
-            while ((line1 = breader1.readLine()) != null) {
-                if (line1.equals(sat_name)) { //If the current line is the one we chose from the list
-                    TLE1 = breader1.readLine();
-                    TLE2 = breader1.readLine();
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return abDate;
+    }
 
-        double velocity = 0;
-        String velocity_string = "error";
-
-        double period = 0;
-        String period_string = "error";
-
-        double height = 0;
-        String height_string = "error";
-
-        double perigee = 0;
-        String perigee_string = "error";
-
-        double apogee = 0;
-        String apogee_string = "error";
-
-        double inclination = 0;
-        String inclination_string = "error";
-
-        //Creating new entity
-        Entity newSat;
-
-        velocity_string = "Velocity: " + Double.toString(velocity);
-        period_string = "Period: " + Double.toString(period);
-        height_string = "Height: " + Double.toString(height);
-        perigee_string = "Perigee: " + Double.toString(perigee);
-        apogee_string = "Apogee: " + Double.toString(apogee);
-        inclination_string = "Inclination: " + Double.toString(inclination);
-
-
-        //SET VELOCITY ON UI
-       /* velocity_txt = (TextView) findViewById(R.id.VelocityText);
-        velocity_txt.setText(velocity_string);
-        velocity_txt.setVisibility(View.VISIBLE);
-
-        //SET PERIOD ON UI
-        period_txt = (TextView) findViewById(R.id.PeriodText);
-        period_txt.setText(period_string);
-        period_txt.setVisibility(View.VISIBLE);
-
-        //SET HEIGHT ON UI
-        height_txt = (TextView) findViewById(R.id.HeightText);
-        height_txt.setText(height_string);
-        height_txt.setVisibility(View.VISIBLE);
-
-        //SET PERIGEE ON UI
-        perigee_txt = (TextView) findViewById(R.id.PerigeeText);
-        perigee_txt.setText(perigee_string);
-        perigee_txt.setVisibility(View.VISIBLE);
-
-        //SET APOGEE ON UI
-        apogee_txt = (TextView) findViewById(R.id.ApogeeText);
-        apogee_txt.setText(apogee_string);
-        apogee_txt.setVisibility(View.VISIBLE);
-
-        //SET INCLINATION ON UI
-        inclination_txt = (TextView) findViewById(R.id.InclinationText);
-        inclination_txt.setText(inclination_string);
-        inclination_txt.setVisibility(View.VISIBLE);*/
+    private void getSatLocation() throws IOException {
 
     }
 

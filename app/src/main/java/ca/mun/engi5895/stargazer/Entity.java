@@ -60,6 +60,7 @@ public class Entity {
         //System.out.println(line2);
         entity = new TLE(line1, line2); //creates TLE object
         tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
+
         entity_name = name;
        //TimeScale timeZone = TimeScalesFactory.getUTC();
        //Date date = new Date();
@@ -94,8 +95,37 @@ public class Entity {
         AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
         Frame frame = FramesFactory.getGCRF();
         return tleProp.getPVCoordinates(abDate, frame); //returns coordinates
-
     }
+
+    private TimeStampedPVCoordinates getTimeSpecificPVCoordinates(AbsoluteDate date) throws OrekitException {
+
+        Frame frame = FramesFactory.getGCRF();
+
+        return tleProp.getPVCoordinates(date, frame); //returns coordinates
+    }
+    private Vector3D getVector(AbsoluteDate date){
+        TimeStampedPVCoordinates pv = null;
+        try {
+            pv = this.getTimeSpecificPVCoordinates(date);
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+
+        return pv.getPosition();
+    }
+    public double getX(AbsoluteDate date){
+        double xVal = 0;
+        //xVal = getVector(date).getX();
+
+        return xVal;
+    }
+    public double getY(AbsoluteDate date){
+        double yVal = 0;
+        //yVal = getVector(date).getY();
+
+        return yVal;
+    }
+
     //Returns the magnitude of the velocity
     public double getVelocity() throws OrekitException {
         PVCoordinates coord = this.getPVCoordinates(); //gets up to date coordinates
