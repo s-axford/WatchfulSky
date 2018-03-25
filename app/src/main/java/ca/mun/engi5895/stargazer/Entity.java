@@ -58,8 +58,8 @@ public class Entity {
 
         //System.out.println(line1);
         //System.out.println(line2);
-        entity = new TLE(line1, line2); //creates TLE object
-        tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
+        //entity = new TLE(line1, line2); //creates TLE object
+        //tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
         entity_name = name;
        //TimeScale timeZone = TimeScalesFactory.getUTC();
        //Date date = new Date();

@@ -59,12 +59,12 @@ public class GeocentricActivity extends AppCompatActivity {
         }
 
     }
-
+/*
     public void onBackPressed() {
         activity_satellite_sel.clearSatsList();
         this.finish();
     }
-
+*/
     //Creates list of satellites from file and does all the shit to them
     //Should end up splitting up i think, too many responsibilities
 
