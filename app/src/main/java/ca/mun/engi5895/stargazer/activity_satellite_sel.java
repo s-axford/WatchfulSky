@@ -77,7 +77,7 @@ public class activity_satellite_sel extends AppCompatActivity {
 
 
 
-                    listView.setVisibility(View.VISIBLE);
+                    listView.setVisibility(View.INVISIBLE);
                     //progressBar.setProgress(1);
                     //progressBar.setVisibility(View.VISIBLE);
                     //progressBar.setActivated(true);
@@ -195,7 +195,7 @@ public class activity_satellite_sel extends AppCompatActivity {
 
     public static ArrayList<Object> getSelectedSat() { //ArrayList<String> getSelectedSat(){
         ArrayList<Object> list = null;
-        list.add(selectedSats.toString());
+        //list.add(selectedSats.toString());
         //list.add(TLE1);
         //list.add(TLE2);
         return list;
