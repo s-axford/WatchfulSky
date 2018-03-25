@@ -39,7 +39,7 @@ public class HeliocentricActivity extends AppCompatActivity {
         } catch (OrekitException e) {
             e.printStackTrace();
         }
-
+        //CelestialBody SolarSystem[8] = new CelestialBody[]{};
 
     }
 

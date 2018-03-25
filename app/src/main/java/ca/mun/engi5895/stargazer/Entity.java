@@ -97,7 +97,7 @@ public class Entity {
         return tleProp.getPVCoordinates(abDate, frame); //returns coordinates
     }
 
-    private TimeStampedPVCoordinates getTimeSpecificPVCoordinates(AbsoluteDate date) throws OrekitException {
+    private TimeStampedPVCoordinates getPVCoordinates(AbsoluteDate date) throws OrekitException {
 
         Frame frame = FramesFactory.getGCRF();
 
@@ -106,7 +106,7 @@ public class Entity {
     private Vector3D getVector(AbsoluteDate date){
         TimeStampedPVCoordinates pv = null;
         try {
-            pv = this.getTimeSpecificPVCoordinates(date);
+            pv = this.getPVCoordinates(date);
         } catch (OrekitException e) {
             e.printStackTrace();
         }
