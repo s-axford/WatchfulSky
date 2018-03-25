@@ -50,7 +50,7 @@ public class GeocentricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geocentric);
         setTitle("Geocentric Orbit");
-        //listView = (ListView) findViewById(R.id.lvid2);
+        listView = (ListView) findViewById(R.id.lvid2);
 
         try {
             getSatsCreate();
@@ -161,12 +161,12 @@ public class GeocentricActivity extends AppCompatActivity {
                 Entity newSat;
                 try {
                     newSat = new Entity(TLE1, TLE2);
-                    //velocity = newSat.getVelocity();
-                    //period = newSat.getPeriod();
-                    //height = newSat.getHeight();
-                    //perigee = newSat.getPerigee();
-                    //apogee = newSat.getApogee();
-                    //inclination = newSat.getInclination();
+                    velocity = newSat.getVelocity();
+                    period = newSat.getPeriod();
+                    height = newSat.getHeight();
+                    perigee = newSat.getPerigee();
+                    apogee = newSat.getApogee();
+                    inclination = newSat.getInclination();
 
                 } catch (OrekitException e) {
                     e.printStackTrace();

@@ -67,13 +67,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //selectedSat = activity_satellite_sel.getSelectedSat();
 
-        /*
+
         try {
             getSatsCreate();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+
 
     }
 
@@ -242,12 +242,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
         System.out.println(o.toString()); //Output to console as string
         //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
-
-
+*/
+        String sat_name = getIntent().getStringExtra("CHOSEN_SAT_NAME");
+        System.out.println("From other activity, sat name is: " + sat_name);
         //Updates textview to the picked satellite name. Used for testing.
-        outSat = (TextView) findViewById(R.id.textView2);
-        outSat.setText(o.toString());
-        outSat.setVisibility(View.VISIBLE);
+       // outSat = (TextView) findViewById(R.id.textView5);
+     //   outSat.setText(sat_name);
+       // outSat.setVisibility(View.VISIBLE);
 
 
         //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -269,7 +270,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
         try {
             while ((line1 = breader1.readLine()) != null) {
-                if (line1.equals(o.toString())) { //If the current line is the one we chose from the list
+                if (line1.equals(sat_name)) { //If the current line is the one we chose from the list
                     TLE1 = breader1.readLine();
                     TLE2 = breader1.readLine();
                     break;
@@ -301,10 +302,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Entity newSat;
         try {
             newSat = new Entity(TLE1, TLE2);
-            //velocity = newSat.getVelocity();
+           // velocity = newSat.getVelocity();
             //period = newSat.getPeriod();
             //height = newSat.getHeight();
-            //perigee = newSat.getPerigee();
+            perigee = newSat.getPerigee();
             //apogee = newSat.getApogee();
             //inclination = newSat.getInclination();
 
@@ -321,7 +322,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //SET VELOCITY ON UI
-        velocity_txt = (TextView) findViewById(R.id.VelocityText);
+       /* velocity_txt = (TextView) findViewById(R.id.VelocityText);
         velocity_txt.setText(velocity_string);
         velocity_txt.setVisibility(View.VISIBLE);
 
@@ -348,8 +349,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //SET INCLINATION ON UI
         inclination_txt = (TextView) findViewById(R.id.InclinationText);
         inclination_txt.setText(inclination_string);
-        inclination_txt.setVisibility(View.VISIBLE);
-        */
+        inclination_txt.setVisibility(View.VISIBLE);*/
+
     }
 
 }
