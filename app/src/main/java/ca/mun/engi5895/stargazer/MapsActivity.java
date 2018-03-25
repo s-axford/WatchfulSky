@@ -55,6 +55,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private  ArrayList<Object> list = new ArrayList<Object>();
 
     TextView sat_Name;
+    TextView sat_Perigee_Title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +67,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = activity_satellite_sel.getSelectedSat();
-        System.out.println(selectedSat.get(0).getName());
-        sat_Name = (TextView) findViewById(R.id.textView5);
-        sat_Name.setText(selectedSat.get(0).getName());
+          int  i = 0;
+        //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
+
+                System.out.println(selectedSat.get(i).getName());
+                sat_Name = (TextView) findViewById(R.id.textView5);
+                sat_Name.setText(selectedSat.get(i).getName());
+
+        try {
+            System.out.println("Velocity:");
+            System.out.println(selectedSat.get(i).getVelocity());
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+        sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
+                sat_Perigee_Title.setText("Satellite Perigee");
+
+
+
         //boolean is = selectedSat.isEmpty();
 
         /*
@@ -121,7 +137,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Favorites favorite = new Favorites(MapsActivity.this);
 
-                list = activity_satellite_sel.getSelectedSat();
+                //list = activity_satellite_sel.getSelectedSat();
 
                 selectedSat = activity_satellite_sel.getSelectedSat();
                
@@ -317,18 +333,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Creating new entity
         Entity newSat;
-        try {
-            newSat = new Entity(TLE1, TLE2);
-           // velocity = newSat.getVelocity();
-            //period = newSat.getPeriod();
-            //height = newSat.getHeight();
-            perigee = newSat.getPerigee();
-            //apogee = newSat.getApogee();
-            //inclination = newSat.getInclination();
-
-        } catch (OrekitException e) {
-            e.printStackTrace();
-        }
 
         velocity_string = "Velocity: " + Double.toString(velocity);
         period_string = "Period: " + Double.toString(period);
