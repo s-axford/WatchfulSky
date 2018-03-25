@@ -138,10 +138,12 @@ public class Favorites {
 
     public static void addFavorite(String name, String line1, String line2){
         try {
+            //Creates buffered Writer to add new sat to list
             FileOutputStream fostream = new FileOutputStream("favoriteSats.txt");
             OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
             BufferedWriter bwriter = new BufferedWriter(oswriter);
 
+            //added each element of data to list
             bwriter.newLine();
             bwriter.write(name);
             bwriter.newLine();
@@ -149,6 +151,7 @@ public class Favorites {
             bwriter.newLine();
             bwriter.write(line2);
 
+            //close all streams
             bwriter.close(); oswriter.close(); fostream.close();
         }
         catch (IOException e) {

@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://C:\Users\john\AndroidStudioProjects\StarGazer_mar25\StarGazer.iml" filepath="C:\Users\john\AndroidStudioProjects\StarGazer_mar25\StarGazer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/StarGazer_mar25.iml" filepath="$PROJECT_DIR$/StarGazer_mar25.iml" />
+      <module fileurl="file://$PROJECT_DIR$/StarGazer.iml" filepath="$PROJECT_DIR$/StarGazer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

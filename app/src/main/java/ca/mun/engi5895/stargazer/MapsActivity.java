@@ -63,6 +63,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private  ArrayList<Object> list = new ArrayList<Object>();
 
     TextView sat_Name;
+    TextView sat_Perigee_Title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sat_Name = (TextView) findViewById(R.id.textView5);
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
+      
+        int  i = 0;
+        //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
+
+                System.out.println(selectedSat.get(i).getName());
+                sat_Name = (TextView) findViewById(R.id.textView5);
+                sat_Name.setText(selectedSat.get(i).getName());
+
+        try {
+            System.out.println("Velocity:");
+            System.out.println(selectedSat.get(i).getVelocity());
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+        sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
+                sat_Perigee_Title.setText("Satellite Perigee");
+
         //boolean is = selectedSat.isEmpty();
 
         /*
@@ -128,16 +146,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.actionbar_fav:
 
                 Favorites favorite = new Favorites(MapsActivity.this);
+
+                //list = activity_satellite_sel.getSelectedSat();
+
                 selectedSat = activity_satellite_sel.getSelectedSat();
-                /*
-                  for (int i = 0 ; i < selectedSat.size() ; i++)
+               
+                  for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
-                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2());
+                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2()); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
                         e.printStackTrace();
                     }
-                */
+            
         }
         return super.onOptionsItemSelected(item);
     }
@@ -263,8 +284,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void getSatLocation() throws IOException {
-
-
 
     }
 
