@@ -185,7 +185,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 }
 
                 //Creating new entity
-
+                Entity newEntity = Entity();
             }
 
         };
@@ -195,9 +195,9 @@ public class activity_satellite_sel extends AppCompatActivity {
 
     public static ArrayList<Object> getSelectedSat() { //ArrayList<String> getSelectedSat(){
         ArrayList<Object> list = null;
-        //list.add(selectedSats.toString());
-        //list.add(TLE1);
-        //list.add(TLE2);
+        list.add(selectedSats);
+        list.add(TLE1);
+        list.add(TLE2);
         return list;
     }
 
