@@ -148,6 +148,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 satList.add(o);
                 System.out.println(o.toString()); //Output to console as string
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("CHOSEN_SAT_NAME", o.toString());
                 startActivity(intent);
 
                 //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed

@@ -40,6 +40,32 @@ public class SettingsActivity extends AppCompatActivity {
     //lists all files in internal app storage
     public void checkFiles(View v) {
         File folder = getFilesDir(); //Internal storage
+        String name = folder.getAbsolutePath();
+
+        File[] listOfFiles = folder.listFiles(); //Array of files in storage
+
+        //If array is empty, there are no files
+        if (listOfFiles.length == 0) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Directory is empty", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Iterate through file array and outputs each one's name as a toast
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) { //This checks and makes sure its a file and not folder, not necessary here but not bad to have
+                Toast toast = Toast.makeText(getApplicationContext(), "File " + listOfFiles[i].getName(), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    }
+
+    //redacted
+    public void checkExternalFiles(View v) {
+        File folder = getExternalFilesDir(null); //Internal storage
+        String name = folder.getAbsolutePath();
+
+        System.out.println("Filesdir: " +name);
         File[] listOfFiles = folder.listFiles(); //Array of files in storage
 
         //If array is empty, there are no files
