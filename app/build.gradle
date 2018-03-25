@@ -33,4 +33,5 @@ dependencies {
     implementation files('libs/slf4j-api-2.0.99.jar')
     implementation files('libs/junit-3.8.1.jar')
     implementation files('libs/commons-io-2.6.jar')
+    implementation files('libs/orekit.jar')
 }
