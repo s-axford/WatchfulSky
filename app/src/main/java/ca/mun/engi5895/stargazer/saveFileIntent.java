@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -85,6 +86,23 @@ public class saveFileIntent extends IntentService {
                 }
             }
         }
+
+
+
+        String filename = "favoriteSats.txt";
+        String fileContents = "Favorite Entities List";
+        File file = new File(this.getFilesDir(), filename);
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(fileContents.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 /*

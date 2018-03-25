@@ -98,7 +98,7 @@ public class GeocentricActivity extends AppCompatActivity {
         sreader.close();
         stream.close();
 
-                ArrayList<Object> sats = activity_satellite_sel.getSelectedSats();
+                ArrayList<Object> sats = activity_satellite_sel.getSelectedSat();
                 Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
                 System.out.println(o.toString()); //Output to console as string
                 //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
