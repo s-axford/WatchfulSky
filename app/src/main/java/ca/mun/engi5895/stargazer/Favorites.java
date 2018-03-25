@@ -1,24 +1,11 @@
 package ca.mun.engi5895.stargazer;
 
-
-
+import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import com.google.android.gms.maps.GoogleMap;
-
-import org.orekit.errors.OrekitException;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,65 +14,29 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class activity_satellite_sel extends AppCompatActivity {
+/**
+ * Created by noahg on 3/24/2018.
+ */
 
-    private TextView mTextMessage;
-    private ListView listView;
-    private ProgressBar progressBar;
+public class Favorites {
+
     private ArrayList<String> list = new ArrayList<String>();
-    private static ArrayList<Object> selectedSats = new ArrayList<Object>();
-    private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
+    Context context;
+    private ListView listView;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    Favorites(Context inContext){
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    //mTextMessage.setText(R.string.title_satellites);
-                    listView.setVisibility(View.VISIBLE);
-                    return true;
-                case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_favorites);
-                    listView.setVisibility(View.INVISIBLE);
-                    return true;
-                case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_nearby);
-                    listView.setVisibility(View.INVISIBLE);
-                    //progressBar.setProgress(1);
-                    //progressBar.setVisibility(View.VISIBLE);
-                    //progressBar.setActivated(true);
-                    return true;
-            }
-            return false;
-        }
-    };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_satellite_sel);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        listView = (ListView) findViewById(R.id.lvid2);
-        /*
+        context = inContext;
         try {
-            getSatsCreate();
+            this.getFavSats();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-    }
-/*
-    public void getSatsCreate() throws IOException {
 
+        }
+    }
+
+    private ArrayList<String> getFavSats() throws IOException {
         //open file stations.txt
-        FileInputStream stream = openFileInput("stations.txt");
+        FileInputStream stream = context.openFileInput("stations.txt");
         InputStreamReader sreader = new InputStreamReader(stream);
         BufferedReader breader = new BufferedReader(sreader);
 
@@ -104,7 +55,7 @@ public class activity_satellite_sel extends AppCompatActivity {
         }
         //Needed to convert it to a ListView
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
+                context,
                 android.R.layout.simple_list_item_1,
                 list);
         //se the adapter
@@ -114,6 +65,8 @@ public class activity_satellite_sel extends AppCompatActivity {
         sreader.close();
         stream.close();
 
+        return list;
+        /*
         //Class that handles clicking on a list item
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
@@ -165,30 +118,22 @@ public class activity_satellite_sel extends AppCompatActivity {
 
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
-    }
-*/
+        */
 
-    public static ArrayList<Object> getSelectedSats(){return selectedSats;}
-    public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
 
-    public static void removeFavSat() {
-        boolean found = false;
-
-        for (int i = 0; i < favoriteSats.size(); i++){
-
-        }
-
-        if(found == false){
-            //create dialog box
-        }
+        //Retrieve favorites file from memory
+        //Creates private list
     }
 
-    public static void clearSatsList() {
-        selectedSats.clear();
+    public ArrayList<String> getFavorites(){return list;}
+
+    public void addFavorite(){
+
     }
 
-    public void geoGo(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
+    public String getFavorite(){
+        return "0";
     }
+
+
 }
