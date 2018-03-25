@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -21,22 +22,23 @@ import java.util.ArrayList;
 public class Favorites {
 
     private ArrayList<String> list = new ArrayList<String>();
-    Context context;
+    private ArrayAdapter adapterList;
+    private Context context;
     private ListView listView;
 
     Favorites(Context inContext){
 
         context = inContext;
         try {
-            this.getFavSats();
+            adapterList = this.getFavSats();
         } catch (IOException e) {
 
         }
     }
 
-    private ArrayList<String> getFavSats() throws IOException {
+    private ArrayAdapter<String> getFavSats() throws IOException {
         //open file stations.txt
-        FileInputStream stream = context.openFileInput("stations.txt");
+        FileInputStream stream = context.openFileInput("favoriteSats.txt");
         InputStreamReader sreader = new InputStreamReader(stream);
         BufferedReader breader = new BufferedReader(sreader);
 
@@ -53,19 +55,22 @@ public class Favorites {
             }
             lineNumber++;
         }
+
+
         //Needed to convert it to a ListView
+
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 context,
                 android.R.layout.simple_list_item_1,
                 list);
         //se the adapter
-        listView.setAdapter(arrayAdapter);
+        //listView.setAdapter(arrayAdapter);
         //close streams
         breader.close();
         sreader.close();
         stream.close();
 
-        return list;
+        return arrayAdapter;
         /*
         //Class that handles clicking on a list item
         AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
@@ -125,15 +130,18 @@ public class Favorites {
         //Creates private list
     }
 
-    public ArrayList<String> getFavorites(){return list;}
+    public ArrayAdapter<String> getFavorites(){return adapterList;}
 
-    public void addFavorite(){
+    public void addFavorite(String name, String line1, String line2){
+
+
 
     }
 
+    /*
     public String getFavorite(){
         return "0";
     }
-
+    */
 
 }

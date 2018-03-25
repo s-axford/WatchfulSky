@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
         //Intent orekit = new Intent(this, saveFileIntent.class);
 
         //File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/orekit-data/");
@@ -92,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         //        "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
         //startService(orekit);
   
-        Install.installApkData(this);
+        //Install.installApkData(this);
 
         //Initialize Orekit with the data files
-        OrekitInit.init(Install.getOrekitDataRoot(this));
+        //OrekitInit.init(Install.getOrekitDataRoot(this));
 
-        setContentView(R.layout.activity_main);
+
   
         //String target = getFilesDir().getName() + "orekit-data";
         //unpackZip(getFilesDir().getName(), "orekit-data.zip");
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
      
 
 
-    }
+    //}
 
     /*
     private void unpackZip(String path, String zipname) {

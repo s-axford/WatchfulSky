@@ -35,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import static ca.mun.engi5895.stargazer.activity_satellite_sel.getSelectedSat;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -48,9 +50,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView perigee_txt;
     private TextView apogee_txt;
     private TextView inclination_txt;
+    private ArrayList<Object> selectedSat;
 
-
-    private  ArrayList<String> list = new ArrayList<String>();
+    private  ArrayList<Object> list = new ArrayList<Object>();
 
     TextView sat_Name;
 
@@ -63,6 +65,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        selectedSat = activity_satellite_sel.getSelectedSat();
 
         try {
             getSatsCreate();
@@ -93,7 +96,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //mTextMessage.setText(R.string.title_satellites);
                 View clock = findViewById(R.id.timePicker);
                 if (clock.getVisibility() == View.INVISIBLE) {
-
                     clock.setVisibility(View.VISIBLE);
                 } else {
                     clock.setVisibility(View.INVISIBLE);
@@ -103,9 +105,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 return true;
             case R.id.actionbar_fav:
-                //mTextMessage.setText(R.string.title_favorites);
-                findViewById(R.id.timePicker).setVisibility(View.INVISIBLE);
-                //listView.setVisibility(View.INVISIBLE);
+
+                Favorites favorite = new Favorites(MapsActivity.this);
+                list = activity_satellite_sel.getSelectedSat();
+
+                //String line1 = selectedSat.get(1).toString();
+                //String line2 = selectedSat.get(2).toString();
+
+                //favorite.addFavorite(name, line1, line2);
+
                 return true;
         }
         return super.onOptionsItemSelected(item);

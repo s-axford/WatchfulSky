@@ -2,6 +2,7 @@ package ca.mun.engi5895.stargazer;
 
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,8 +34,12 @@ public class activity_satellite_sel extends AppCompatActivity {
     private ListView listView;
     private ProgressBar progressBar;
     private ArrayList<String> list = new ArrayList<String>();
+    private ArrayAdapter<String> adapterList;
+    private ArrayAdapter<String> favoriteList;
     private static ArrayList<Object> selectedSats = new ArrayList<Object>();
     private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
+    private static String TLE1;
+    private static String TLE2;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -44,15 +49,35 @@ public class activity_satellite_sel extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     //mTextMessage.setText(R.string.title_satellites);
+                    try {
+                        getSatsCreate();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     listView.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
-                    //mTextMessage.setText(R.string.title_favorites);
+
+                    Context context = activity_satellite_sel.this;
+                    Favorites fav = new Favorites(context);
+                    adapterList = fav.getFavorites();
+
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                            context,
+                            android.R.layout.simple_list_item_1,
+                            list);
+                    //se the adapter
+                    listView.setAdapter(favoriteList);
                     listView.setVisibility(View.INVISIBLE);
                     return true;
+
                 case R.id.navigation_notifications:
                     //mTextMessage.setText(R.string.title_nearby);
-                    listView.setVisibility(View.INVISIBLE);
+
+
+
+
+                    listView.setVisibility(View.VISIBLE);
                     //progressBar.setProgress(1);
                     //progressBar.setVisibility(View.VISIBLE);
                     //progressBar.setActivated(true);
@@ -72,7 +97,6 @@ public class activity_satellite_sel extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        listView = (ListView) findViewById(R.id.lvid2);
         /*
         try {
             getSatsCreate();
@@ -80,8 +104,9 @@ public class activity_satellite_sel extends AppCompatActivity {
             e.printStackTrace();
         }
         */
+        listView = (ListView) findViewById(R.id.lvid2);
     }
-/*
+
     public void getSatsCreate() throws IOException {
 
         //open file stations.txt
@@ -166,9 +191,16 @@ public class activity_satellite_sel extends AppCompatActivity {
         };
         listView.setOnItemClickListener(mMessageClickedHandler);
     }
-*/
 
-    public static ArrayList<Object> getSelectedSats(){return selectedSats;}
+
+    public static ArrayList<Object> getSelectedSat() { //ArrayList<String> getSelectedSat(){
+        ArrayList<Object> list = null;
+        list.add(selectedSats.toString());
+        //list.add(TLE1);
+        //list.add(TLE2);
+        return list;
+    }
+
     public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
 
     public static void removeFavSat() {
