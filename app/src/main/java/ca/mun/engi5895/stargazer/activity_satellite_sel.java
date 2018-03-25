@@ -61,7 +61,7 @@ public class activity_satellite_sel extends AppCompatActivity {
 
                     Context context = activity_satellite_sel.this;
                     Favorites fav = new Favorites(context);
-                    adapterList = fav.getFavorites();
+                    favoriteList = fav.getFavorites();
 
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                             context,
@@ -69,7 +69,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                             list);
                     //se the adapter
                     listView.setAdapter(favoriteList);
-                    listView.setVisibility(View.INVISIBLE);
+                    listView.setVisibility(View.VISIBLE);
                     return true;
 
                 case R.id.navigation_notifications:

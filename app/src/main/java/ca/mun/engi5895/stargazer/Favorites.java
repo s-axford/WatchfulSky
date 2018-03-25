@@ -144,7 +144,7 @@ public class Favorites {
             BufferedWriter bwriter = new BufferedWriter(oswriter);
 
             //added each element of data to list
-            bwriter.newLine();
+            //bwriter.newLine();
             bwriter.write(name);
             bwriter.newLine();
             bwriter.write(line1);
