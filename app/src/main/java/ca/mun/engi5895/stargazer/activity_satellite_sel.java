@@ -40,7 +40,7 @@ public class activity_satellite_sel extends AppCompatActivity {
     private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
     private static String TLE1;
     private static String TLE2;
-
+    private static Entity currentEntity = null;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -177,15 +177,21 @@ public class activity_satellite_sel extends AppCompatActivity {
                         if (line1.equals(o.toString())) { //If the current line is the one we chose from the list
                             TLE1 = breader1.readLine();
                             TLE2 = breader1.readLine();
+
                             break;
                         }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                try {
+                    currentEntity = new Entity(TLE1, TLE2);
+                } catch (OrekitException e) {
+                    e.printStackTrace();
+                }
 
                 //Creating new entity
-                Entity newEntity = Entity();
+
             }
 
         };
@@ -193,11 +199,13 @@ public class activity_satellite_sel extends AppCompatActivity {
     }
 
 
-    public static ArrayList<Object> getSelectedSat() { //ArrayList<String> getSelectedSat(){
-        ArrayList<Object> list = null;
-        list.add(selectedSats);
-        list.add(TLE1);
-        list.add(TLE2);
+    public static ArrayList<Entity> getSelectedSat() { //ArrayList<String> getSelectedSat(){
+        ArrayList<Entity> list = null;
+        if (currentEntity != null) {
+            list.add(currentEntity);
+        }
+
+
         return list;
     }
 
