@@ -34,7 +34,6 @@ public class HeliocentricActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
     }
-
-
 }
