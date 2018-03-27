@@ -14,6 +14,8 @@ package ca.mun.engi5895.stargazer;
 
 import org.orekit.errors.OrekitException;
 import org.orekit.frames.FramesFactory;
+import org.orekit.orbits.Orbit;
+import org.orekit.propagation.SpacecraftState;
 import org.orekit.propagation.analytical.tle.TLE;
 import org.orekit.propagation.analytical.tle.TLEPropagator;
 import org.orekit.time.AbsoluteDate;
@@ -93,17 +95,22 @@ public class Entity {
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
         AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
-        Frame frame = FramesFactory.getGCRF();
+        Frame frame = FramesFactory.getTEME();
+        tleProp.propagate(abDate);
         return tleProp.getPVCoordinates(abDate, frame); //returns coordinates
     }
 
     private TimeStampedPVCoordinates getPVCoordinates(AbsoluteDate date) throws OrekitException {
 
-        Frame frame = FramesFactory.getGCRF();
+        Frame frame = FramesFactory.getTEME();
+        //SpacecraftState state = tleProp.propagate(date);
+        //Orbit orbit = state.getOrbit();
+        //TimeStampedPVCoordinates coordinates = orbit.getPVCoordinates();
+        tleProp.propagate(date);
 
         return tleProp.getPVCoordinates(date, frame); //returns coordinates
     }
-    private Vector3D getVector(AbsoluteDate date){
+    public Vector3D getVector(AbsoluteDate date){
         TimeStampedPVCoordinates pv = null;
         try {
             pv = this.getPVCoordinates(date);
@@ -115,15 +122,29 @@ public class Entity {
     }
     public double getX(AbsoluteDate date){
         double xVal = 0;
-        //xVal = getVector(date).getX();
+        xVal = getVector(date).getX();
 
         return xVal;
     }
     public double getY(AbsoluteDate date){
         double yVal = 0;
-        //yVal = getVector(date).getY();
+        yVal = getVector(date).getY();
 
         return yVal;
+    }
+    public double getZ(AbsoluteDate date){
+        double zVal = 0;
+        zVal = getVector(date).getZ();
+
+        return zVal;
+    }
+    public SpacecraftState getOrbit(AbsoluteDate date){
+
+        try {
+            return tleProp.propagate(date);
+        } catch (OrekitException e) {
+            return null;
+        }
     }
 
     //Returns the magnitude of the velocity
@@ -140,7 +161,8 @@ public class Entity {
     public double getPeriod(){
 
         double meanMotion = entity.getMeanMotion(); //gets mean motion
-        return 1 / meanMotion; //returns period
+        System.out.println("Mean Motion: " + meanMotion);
+        return 2*Math.PI / meanMotion; //returns period
     }
 
     //gets Height of satellite from ground

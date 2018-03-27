@@ -42,6 +42,7 @@ public class activity_satellite_sel extends AppCompatActivity {
     private static String TLE1;
     private static String TLE2;
     private static Entity currentEntity = null;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -61,7 +62,7 @@ public class activity_satellite_sel extends AppCompatActivity {
 
                     Context context = activity_satellite_sel.this;
                     Favorites fav = new Favorites(context);
-                    adapterList = fav.getFavorites();
+                    favoriteList = fav.getFavorites();
 
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                             context,
@@ -69,14 +70,11 @@ public class activity_satellite_sel extends AppCompatActivity {
                             list);
                     //se the adapter
                     listView.setAdapter(favoriteList);
-                    listView.setVisibility(View.INVISIBLE);
+                    listView.setVisibility(View.VISIBLE);
                     return true;
 
                 case R.id.navigation_notifications:
                     //mTextMessage.setText(R.string.title_nearby);
-
-
-
 
                     listView.setVisibility(View.INVISIBLE);
                     //progressBar.setProgress(1);
@@ -97,14 +95,15 @@ public class activity_satellite_sel extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        listView = findViewById(R.id.lvid2);
 
-        /*
         try {
             getSatsCreate();
+            listView.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
+
         listView = (ListView) findViewById(R.id.lvid2);
     }
 
