@@ -31,10 +31,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class activity_satellite_sel extends AppCompatActivity {
 
-   // private TextView mTextMessage;
+    private TextView mTextMessage;
     private ListView listView;
 
     private ProgressBar progressBar;
@@ -55,6 +56,18 @@ public class activity_satellite_sel extends AppCompatActivity {
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
 
+    ExpandableListView expandableListView_fav;
+    ExpandableListAdapter expandableListAdapter_fav;
+    List<String> expandableListTitle_fav;
+    HashMap<String, List<String>> expandableListDetail_fav;
+
+   // Favorites fav = new Favorites(activity_satellite_sel.this);
+  //  favoriteList = fav.getFavorites();\
+
+  //  Context context = activity_satellite_sel.this;
+  //  Favorites fav = new Favorites(context);
+   // favoriteList = fav.getFavorites();
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -62,21 +75,31 @@ public class activity_satellite_sel extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+
                     //mTextMessage.setText(R.string.title_satellites);
-                    try {
+                  /*  try {
                         getSatsCreate();
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
-                  //  listView.setVisibility(View.VISIBLE);
+                    }*/
+                    expandableListView.setVisibility(View.VISIBLE);
+                    expandableListView_fav.setVisibility(View.INVISIBLE);
+
+
+                    //  listView.setVisibility(View.VISIBLE);
                     return true;
                 case R.id.navigation_dashboard:
+                    System.out.println("Clicked Favourites");
 
-                    Context context = activity_satellite_sel.this;
-                    Favorites fav = new Favorites(context);
-                    favoriteList = fav.getFavorites();
+                   //Context context = activity_satellite_sel.this;
+                 //  Favorites fav = new Favorites(context);
+                //    favoriteList = fav.getFavorites();
 
-                 //   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    expandableListView.setVisibility(View.INVISIBLE);
+
+                    getFavData();
+
+                    //   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                    //         context,
                     //        android.R.layout.simple_list_item_1,
              //               list);
@@ -104,13 +127,15 @@ public class activity_satellite_sel extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_satellite_sel);
 
-        //mTextMessage = (TextView) findViewById(R.id.message);
+      //  mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-       // navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+       navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //listView = findViewById(R.id.lvid2);
 
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView_fav = (ExpandableListView) findViewById(R.id.expandableListView_fav);
+
         try {
             expandableListDetail = celestrakData.getSatData(getApplicationContext());
         } catch (IOException e) {
@@ -119,15 +144,114 @@ public class activity_satellite_sel extends AppCompatActivity {
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new MyListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
+        //expandableListView.setVisibility(View.VISIBLE);
 
         try {
             getSatsCreate();
-           // listView.setVisibility(View.VISIBLE);
+            expandableListView.setVisibility(View.VISIBLE);
+
+            // listView.setVisibility(View.VISIBLE);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
       //  listView = (ListView) findViewById(R.id.lvid2);
+    }
+
+    public void getFavData() {
+
+        try {
+            expandableListDetail_fav = celestrakData.getSatDataFavorites(getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        expandableListTitle_fav = new ArrayList<String>(expandableListDetail_fav.keySet());
+        expandableListAdapter_fav = new MyListAdapter(this, expandableListTitle_fav, expandableListDetail_fav);
+        expandableListView_fav.setAdapter(expandableListAdapter_fav);
+        expandableListView_fav.setVisibility(View.VISIBLE);
+
+        expandableListView_fav.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                //NEW HANDLING THE CLICK OF SOMETHING
+                String satType = expandableListTitle_fav.get(groupPosition);
+                String satChosen = expandableListDetail_fav.get(expandableListTitle_fav.get(groupPosition)).get(childPosition);
+                satList.add(satChosen);
+                System.out.println("Type of satellite: " + satType);
+                System.out.println("Chosen sat: " + satChosen); // nEED TO START NEW INTENT WITH SATELLITE NAME
+                String fileName = null;
+
+
+                if (satType == "Space Stations") {
+                    fileName = "favorites_stations.txt";
+                } else if (satType == "Newly Launched Satellites")
+                    fileName = "favorites_tle-new.txt";
+                else if (satType == "GPS Satellites")
+                    fileName = "favorites_gps-ops.txt";
+                else if (satType == "Communications Satellites")
+                    fileName = "favorites_geo.txt";
+                else if (satType == "Intelsat Satellites")
+                    fileName = "favorites_intelsat.txt";
+                else if (satType == "Science Satellites")
+                    fileName = "favorites_science.txt";
+
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
+                intent.putExtra("filename", fileName);
+                startActivity(intent);
+
+
+                //Start the re-parsing of the text file for the TLE data for chosen satellite
+
+                FileInputStream stream1 = null;
+                try {
+                    stream1 = openFileInput(fileName); //openFileInput auto opens from getFilesDir() directory
+                    // getFilesDir() is directory of internal app storage
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+
+                InputStreamReader sreader1 = new InputStreamReader(stream1);
+                BufferedReader breader1 = new BufferedReader(sreader1);
+
+                String line1;
+                String TLE1 = new String();
+                String TLE2 = new String();
+
+                //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
+
+
+                try {
+                    while ((line1 = breader1.readLine()) != null) {
+                        if (line1.equals(satChosen)) { //If the current line is the one we chose from the list
+                            TLE1 = breader1.readLine();
+                            TLE2 = breader1.readLine();
+
+                            break;
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    currentEntity = new Entity(satChosen, TLE1, TLE2);
+                    selectedSats.add(currentEntity);
+                    activity_satellite_sel.getSelectedSat();
+                } catch (OrekitException e) {
+                    e.printStackTrace();
+                }
+
+                return false;
+
+            }
+
+        });
+
+
     }
 
     public void getSatsCreate() throws IOException {
@@ -193,10 +317,6 @@ public class activity_satellite_sel extends AppCompatActivity {
                 System.out.println("Chosen sat: " + satChosen); // nEED TO START NEW INTENT WITH SATELLITE NAME
                 String fileName = null;
 
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
-                startActivity(intent);
-
 
                 if (satType == "Space Stations") {
                     fileName = "stations.txt";
@@ -210,6 +330,11 @@ public class activity_satellite_sel extends AppCompatActivity {
                     fileName = "intelsat.txt";
                 else if (satType == "Science Satellites")
                     fileName = "science.txt";
+
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
+                intent.putExtra(MapsActivity.FILENAME, fileName);
+                startActivity(intent);
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -269,6 +394,7 @@ public class activity_satellite_sel extends AppCompatActivity {
 
         return selectedSats;
     }
+
     public static void clearSelectedSats() {
         selectedSats.clear();
         satList.clear();

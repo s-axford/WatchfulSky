@@ -75,6 +75,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private int hour;
     private int minute;
 
+    public static final String FILENAME = "filename";
+
     private TextView outSat;
     private TextView velocity_txt;
     private TextView period_txt;
@@ -85,6 +87,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<Entity> selectedSat;
 
     private  ArrayList<Object> list = new ArrayList<Object>();
+
 
     TextView sat_Name;
     TextView sat_Perigee_Title;
@@ -99,6 +102,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = activity_satellite_sel.getSelectedSat();
+        Entity satChosen = selectedSat.get(0);
+
         System.out.println(selectedSat.get(0).getName());
         sat_Name = (TextView) findViewById(R.id.textView5);
         double inclination = selectedSat.get(0).getInclination();
@@ -162,15 +167,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
             case R.id.actionbar_fav:
 
-                Favorites favorite = new Favorites(MapsActivity.this);
 
              //   list = activity_satellite_sel.getSelectedSat();
 
                 selectedSat = activity_satellite_sel.getSelectedSat();
-               
-                  for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
+                String fileName = getIntent().getStringExtra(FILENAME);
+
+                Favorites favorite = new Favorites(this);
+
+                for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
-                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2()); //adds the Entity info to the list of favorite satellites
+                        System.out.println(selectedSat.get(i).getName());
+                        System.out.println(selectedSat.get(i).getLine1());
+                        System.out.println(selectedSat.get(i).getLine2());
+                        System.out.println(fileName);
+                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
                         e.printStackTrace();

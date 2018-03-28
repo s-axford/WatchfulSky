@@ -3,6 +3,7 @@ package ca.mun.engi5895.stargazer;
 import android.content.Context;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -59,6 +60,78 @@ public class celestrakData {
         for (String s : scienceList) {
             science.add(s);
         }
+
+
+        celestrakMap.put("Space Stations", stations);
+        celestrakMap.put("Newly Launched Satellites", thirtyDays);
+        celestrakMap.put("GPS Satellites", gps);
+        celestrakMap.put("Communications Satellites", geo);
+        celestrakMap.put("Intelsat Satellites", intelsat);
+        celestrakMap.put("Science Satellites", science);
+        return celestrakMap;
+    }
+
+    public static HashMap<String, List<String>> getSatDataFavorites(Context aContext) throws IOException {
+
+        c = aContext;
+        HashMap<String, List<String>> celestrakMap = new HashMap<String, List<String>>();
+
+        File test1 = new File(c.getFilesDir() + System.lineSeparator() + "favorites_stations.txt");
+        File test2 = new File(c.getFilesDir() + "favorites_tle-new.txt");
+        File test3 = new File(c.getFilesDir() + "favorites_gps-ops.txt");
+        File test4 = new File(c.getFilesDir() + "favorites_intelsat.txt");
+        File test5 = new File(c.getFilesDir() + "favorites_geo.txt");
+        File test6 = new File(c.getFilesDir() + "favorites_science.txt");
+
+        List<String> stations = new ArrayList<String>();
+        if (test1.exists()) {
+        List<String> stationsList = getNames("favorites_stations.txt", c);
+        for (String s : stationsList) {
+            stations.add(s);
+        }} else
+            System.out.println(test1.getAbsolutePath() + " does not exist");
+            stations.add(" No data");
+
+
+        List<String> thirtyDays = new ArrayList<String>();
+        if (test2.exists()) {
+        List<String> thirtyDaysList = getNames("favorites_tle-new.txt", c);
+        for (String s : thirtyDaysList) {
+            thirtyDays.add(s);
+        }} else
+            thirtyDays.add(" No data");
+
+        List<String> gps = new ArrayList<String>();
+        if (test3.exists()) {
+        List<String> gpsList = getNames("favorites_gps-ops.txt", c);
+        for (String s : gpsList) {
+            gps.add(s);
+        }} else
+            gps.add(" No data");
+
+        List<String> intelsat = new ArrayList<String>();
+        if (test4.exists()) {
+        List<String> intelsatList = getNames("favorites_intelsat.txt", c);
+        for (String s : intelsatList) {
+            intelsat.add(s);
+        }} else
+            intelsat.add(" No data");
+
+        List<String> geo = new ArrayList<String>();
+        if (test5.exists()) {
+        List<String> geoList = getNames("favorites_geo.txt", c);
+        for (String s : geoList) {
+            geo.add(s);
+        }} else
+            geo.add(" No data");
+
+        List<String> science = new ArrayList<String>();
+        if (test6.exists()) {
+        List<String> scienceList = getNames("favorites_science.txt", c);
+        for (String s : scienceList) {
+            science.add(s);
+        }} else
+            science.add(" No data");
 
 
         celestrakMap.put("Space Stations", stations);
