@@ -228,6 +228,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Date getCreatedTime(){
         Date date = new Date(); //creates date
         date.getTime();
+
         return date;
     }
 
@@ -264,8 +265,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 int period = (int) Math.round(satPeriod);
                 int periodMin = (period / 100);
                 System.out.println("Interval: " + periodMin);
+                calendar.setTime(dateTime);     //Shifts the time
+                date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
+                this.initializeFrames(date);        //Updates satellites orbit
 
-                for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
+            for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
 
                     if (dateTime.getMonth() > 8){
                         System.out.println("ERROR IN POINT PLACEMENT: ");
@@ -275,8 +279,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
 
                     date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-                    this.initializeFrames(date);        //Updates satellites orbit
-                    //this.updatePosition(date);
+                    //this.initializeFrames(date);        //Updates satellites orbit
+                    this.updatePosition(date);
                     longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude
                     latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
                     LatLng point_a = new LatLng(latitude, longitude);           //Creates map points
@@ -323,8 +327,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
 
-        //}
-        //private void updatePosition(Absolute date){
+        }
+        private void updatePosition(AbsoluteDate date){
 
         scs = selectedSat.get(0).getOrbit(date);
         System.out.println(scs);
@@ -333,7 +337,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         System.out.println(earthFixedFrame);
 
         try {
-            pointPlot = earth.transform(scs.getPVCoordinates(earthFixedFrame).getPosition(), earthFixedFrame, scs.getDate());
+            pointPlot = earth.transform(scs.getPVCoordinates(scs.getFrame()).getPosition(), earthFixedFrame, scs.getDate());
         }  catch (OrekitException e){
             System.out.println("FAILED PLOTTING POINT");
             e.printStackTrace();
