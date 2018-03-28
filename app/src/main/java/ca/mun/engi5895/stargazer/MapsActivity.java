@@ -120,23 +120,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
                 sat_Perigee_Title.setText("Satellite Perigee");
 
-        //boolean is = selectedSat.isEmpty();
-
-        /*
-        try {
-            sat_Name.setText(selectedSat.getLine1());
-        } catch (OrekitException e) {
-            e.printStackTrace();
-        }
-        */
-
+           /*
         try {
             getSatLocation();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+*/
     }
 
     @Override
@@ -149,17 +139,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        //Button but = (Button) findViewById(R.id.actionbar_clock);
+    public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
 
         switch (item.getItemId()) {
-            case R.id.actionbar_clock:
-                //mTextMessage.setText(R.string.title_satellites);
-                View clock = findViewById(R.id.timePicker);
+            case R.id.actionbar_clock:      //Clock icon selected
+
+                View clock = findViewById(R.id.timePicker);         //Sets a view to the clock
                 if (clock.getVisibility() == View.INVISIBLE) {
-                    clock.setVisibility(View.VISIBLE);
+                    clock.setVisibility(View.VISIBLE);      //If the clock is invisible, make it different
                 } else {
                     clock.setVisibility(View.INVISIBLE);
                 }
@@ -208,24 +195,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return currentTime;
     }
 
-
-    /*
-    private TimePickerDialog.OnTimeSetListener timePickerListener =
-            new TimePickerDialog.OnTimeSetListener() {
-                @Override
-                public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                    hour = i;
-                    minute = i1;
-                    findViewById(R.id.timePicker).setVisibility(View.INVISIBLE);
-
-                    TextView name = (TextView) findViewById(R.id.textView5);
-
-                    name.setText(hour);
-
-                }
-            };
-    */
-
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -235,137 +204,109 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
-    private Frame sunFrame;
-    private Frame earthFixedFrame;
-    private OneAxisEllipsoid earth;
-    private TimeScale utc;
-    SpacecraftState scs;
+    private Frame sunFrame;             //Declares a frame of the sun
+    private Frame earthFixedFrame;      //Declares a frame of the earth
+    private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
+    private TimeScale utc;              //Sets the timescale used to utc
+    SpacecraftState scs;                //Declares variable to hold state of the current entity
     GeodeticPoint pointPlot = null;
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                //updateMap();
-
-            }
-        }, 0, 30000);//put here time 1000 milliseconds=1 second
+        updateMap(getCreatedTime());    //Plots the orbit for the given time period
 
     }
 
-        private void updateMap(){
-            //mMap;
+    private Date getCreatedTime(){
+        Date date = new Date(); //creates date
+        date.getTime();
+        return date;
+    }
 
-            Date dateTime = new Date(); //creates date
-            dateTime.getTime();
-            dateTime.setMonth(dateTime.getMonth() + 1);
-            Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
-            calendar.setTime(dateTime);
-            try {
-                utc = TimeScalesFactory.getUTC();
-            } catch (OrekitException e){
-                e.printStackTrace();
+    private void updateMap(Date dateTime){
+
+        AbsoluteDate date;
+
+        for (int i = 0; i < selectedSat.size(); i++) {
+
+            for (int j = 0; j < 10; j++) {
+
+                dateTime.setMonth(dateTime.getMonth() + 1);
+
+                //DETERMINES NECESSARY TIME
+                try {
+                    utc = TimeScalesFactory.getUTC();       //Creates new timeScale
+                } catch (OrekitException e) {
+                    e.printStackTrace();
+                }
+
+                //Declares Latitude and Longitude
+                double longitude;
+                double latitude;
+
+                //Creates info for multiple points
+                ArrayList<LatLng> plotPoints = new ArrayList<>();       //Holds values to later create polyline
+                Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
+
+                double satPeriod = selectedSat.get(i).getPeriod();      //Finds the satellites period of orbiting earth
+                int period = (int) Math.round(satPeriod);
+                int periodMin = (period / 100);
+                System.out.println("Interval: " + periodMin);
+
+                for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
+
+                    calendar.setTime(dateTime);     //Shifts the time
+                    date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
+                    this.initializeFrames(date);        //Updates satellites orbit
+                    //this.updatePosition(date);
+                    longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude
+                    latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
+                    LatLng point_a = new LatLng(latitude, longitude);           //Creates map points
+                    System.out.println(point_a);
+                    MarkerOptions pointA = new MarkerOptions().position(point_a);   //Creates a marker
+                    if (k == 0) {
+                        pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
+                        mMap.addMarker(pointA);       //DOESN'T add marker to map
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
+                    }
+                    plotPoints.add(point_a);        //Adds point to polyline
+                    System.out.println("Latitude: " + latitude);
+                    System.out.println("Longitude: " + longitude);
+                    dateTime.setSeconds(dateTime.getSeconds() + periodMin);     //Moves to the next location
+                }
+                Polyline line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
+                line.setWidth(5);       //Sets width of polyline
+                line.setColor(Color.RED);   //Sets color of polyline
+                try {
+                    wait(30000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
-        AbsoluteDate date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-
-        //date = date.shiftedBy(3600);
-        System.out.println(date.getDate());
-        this.initializeFrames(date);
-
-        double satPeriod = selectedSat.get(0).getPeriod();
-        System.out.println("Sat Period: " + satPeriod);
-        int period = (int)Math.round(satPeriod);
-        //dateTime.setMinutes(dateTime.getMinutes() - period);
-
-        calendar.setTime(dateTime);
-        date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-
-        if (pointPlot == null) {
-                System.out.println("VALUE IS NULL!!!");
-                return;
-            }
-
-            this.initializeFrames(date);
-
-            double longitude = pointPlot.getLongitude() * 180 / Math.PI;
-            double latitude = pointPlot.getLatitude() * 180 / Math.PI;
-
-            //System.out.println("TESTING: " + height);
-            System.out.println("Latitude: " + latitude);
-            System.out.println("Longitude: " + longitude);
-            LatLng sydney = new LatLng(latitude, longitude);
-            System.out.println(sydney);
-            MarkerOptions options = new MarkerOptions().position(sydney).title("CURRENT POSITION");
-            System.out.println(options.getPosition());
-            System.out.println(mMap);
-            mMap.addMarker(options);
-
-            ArrayList<LatLng> plotPoints = new ArrayList<>();
-            plotPoints.add(sydney);
-            int periodMin = (period / 100);
-            System.out.println("Interval: " + periodMin);
-
-        for (int i = 0; i < 100; i++) {
-            dateTime.setSeconds(dateTime.getSeconds() + periodMin);
-            calendar.setTime(dateTime);
-            date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-            this.initializeFrames(date);
-            longitude = pointPlot.getLongitude() * 180 / Math.PI;
-            latitude = pointPlot.getLatitude() * 180 / Math.PI;
-            LatLng point_a = new LatLng(latitude, longitude);
-            System.out.println(point_a);
-            MarkerOptions pointA = new MarkerOptions().position(point_a);
-            //mMap.addMarker(pointA);
-            plotPoints.add(point_a);
-
         }
-        Polyline line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));
-        line.setWidth(5);
-        line.setColor(Color.RED);
-
-
 
     }
 
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     private void initializeFrames(AbsoluteDate date) {
 
         try {
-            /*
-            if (sunFrame == null) {
-                sunFrame = CelestialBodyFactory.getSun().getInertiallyOrientedFrame();
-            }
-            */
-            //if (earthFixedFrame == null) {
-                earthFixedFrame = CelestialBodyFactory.getEarth().getInertiallyOrientedFrame();
-            //}
-            //if (earth == null && earthFixedFrame == null) {
-                earth = new OneAxisEllipsoid(
-                        Constants.WGS84_EARTH_EQUATORIAL_RADIUS,
-                        Constants.WGS84_EARTH_FLATTENING,
-                        earthFixedFrame);
-            //}
 
-            //if (utc == null) {
-                //utc = TimeScalesFactory.getUTC();
-            //}
+            earthFixedFrame = CelestialBodyFactory.getEarth().getInertiallyOrientedFrame();
+
+            earth = new OneAxisEllipsoid(
+                    Constants.WGS84_EARTH_EQUATORIAL_RADIUS,
+                    Constants.WGS84_EARTH_FLATTENING,
+                    earthFixedFrame);
 
         } catch (OrekitException e) {
             e.printStackTrace();
         }
 
-/*
-        Date dateTime = new Date(); //creates date
-        Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
-        dateTime.setMonth(dateTime.getMonth() + 1);
-        calendar.setTime(dateTime);
+        //}
+        //private void updatePosition(Absolute date){
 
-        AbsoluteDate date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-  */
         scs = selectedSat.get(0).getOrbit(date);
         System.out.println(scs);
         System.out.println(scs.getPVCoordinates().getPosition());
@@ -379,41 +320,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
 
-
-
     }
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(a, b);
-
-        //LatLng pointa = new LatLng(a+5,b*2);
-        //LatLng pointb = new LatLng(a,b*3);
-        //LatLng pointc = new LatLng(a-10,b);
-        //LatLng pointd = new LatLng(a,-b/3);
-        //LatLng pointe = new LatLng(a,b/9);
-        //LatLng pointf = new LatLng(a-5,-b*9);
-
-        /*
-        Polyline line = googleMap.addPolyline(new PolylineOptions()
-            .add(sydney)
-                //.add(pointa)
-                //.add(pointb)
-                //.add(pointc)
-                .width(5)
-            .color(Color.RED)
-        );
-        */
-
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.addMarker(new MarkerOptions().position(pointa).title("Marker a"));
-        //mMap.addMarker(new MarkerOptions().position(pointb).title("Marker b"));
-        //mMap.addMarker(new MarkerOptions().position(pointc).title("Marker c"));
-        //mMap.addMarker(new MarkerOptions().position(pointd).title("Marker d"));
-        //mMap.addMarker(new MarkerOptions().position(pointe).title("Marker e"));
-        //mMap.addMarker(new MarkerOptions().position(pointf).title("Marker f"));
-
-
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
 
     private AbsoluteDate getTime(){
 
@@ -433,10 +340,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         return abDate;
-    }
-
-    private void getSatLocation() throws IOException {
-
     }
 
 }
