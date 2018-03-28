@@ -50,7 +50,7 @@ public class GeocentricActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_geocentric);
         setTitle("Geocentric Orbit");
-        listView = (ListView) findViewById(R.id.lvid2);
+        //listView = (ListView) findViewById(R.id.lvid2);
 
         try {
             getSatsCreate();
