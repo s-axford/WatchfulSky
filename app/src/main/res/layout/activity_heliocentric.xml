@@ -1,19 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ca.mun.engi5895.stargazer.HeliocentricActivity">
 
-    <RadioGroup
-        android:id="@+id/rg"
-        android:layout_width="wrap_content"
+    <ca.mun.engi5895.stargazer.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ap="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.androidplot.xy.XYPlot
+            android:id="@+id/plot"
+            style="@style/APDefacto.Dark"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            ap:domainTitle="domain"
+            ap:lineLabelRotationBottom="-90"
+            ap:lineLabels="left|bottom"
+            ap:rangeTitle="range"
+            ap:title="A Simple XY Plot" />
+
+    </ca.mun.engi5895.stargazer.SquareLayout>
+
+    <RelativeLayout
+        android:id="@+id/topButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/layout"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonMercury"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickMercury"
+                    android:text="Mercury" />
+
+                <Button
+                    android:id="@+id/buttonJupiter"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickJupiter"
+                    android:text="Jupiter" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonVenus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickVenus"
+                    android:text="Venus" />
+
+                <Button
+                    android:id="@+id/buttonSaturn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickSaturn"
+                    android:text="Saturn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonEarth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickEarth"
+                    android:text="Earth" />
+
+                <Button
+                    android:id="@+id/buttonUranus"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickUranus"
+                    android:text="Uranus" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/buttonMars"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickMars"
+                    android:text="Mars" />
+
+                <Button
+                    android:id="@+id/buttonNeptune"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="clickNeptune"
+                    android:text="Neptune" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/PlanetInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/PlanetName"
+                android:layout_centerHorizontal = "true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Name"/>
+
+            <TextView
+                android:id="@+id/PlanetPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/PlanetName"
+                android:layout_weight="1"
+                android:text="Distance from Sun" />
+
+            <TextView
+                android:id="@+id/PlanetPositionValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/PlanetName"
+                android:layout_alignParentRight="true"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/PlanetVelocity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/PlanetPosition"
+                android:layout_weight="1"
+                android:text="Velocity" />
+
+            <TextView
+                android:id="@+id/PlanetVelocityValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/PlanetPositionValue"
+                android:layout_weight="1"
+                android:text="TextView" />
+
+            
+                <Button
+                    android:id="@+id/back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/PlanetVelocityValue"
+                    android:onClick="clickBack"
+                    android:text="back" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
+
+
