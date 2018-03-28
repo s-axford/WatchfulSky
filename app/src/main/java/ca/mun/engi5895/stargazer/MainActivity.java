@@ -91,4 +91,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+
+    public void areoGo(View view) {
+        Intent intent = new Intent(this, AreocentricActivity.class);
+        startActivity(intent);
+    }
 }

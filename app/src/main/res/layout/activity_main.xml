@@ -51,6 +51,7 @@
         android:layout_marginTop="2dp"
         android:background="@color/buttonCust"
         android:fontFamily="@font/actor"
+        android:onClick="areoGo"
         android:text="Areocentric      "
         android:textAlignment="textEnd"
         android:textColor="@color/buttonText"
@@ -58,6 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
+
 
     <Button
         android:id="@+id/button6"

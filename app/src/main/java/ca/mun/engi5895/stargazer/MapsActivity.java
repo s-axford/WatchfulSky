@@ -158,7 +158,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 Favorites favorite = new Favorites(MapsActivity.this);
 
-                //list = activity_satellite_sel.getSelectedSat();
+             //   list = activity_satellite_sel.getSelectedSat();
 
                 selectedSat = activity_satellite_sel.getSelectedSat();
                
