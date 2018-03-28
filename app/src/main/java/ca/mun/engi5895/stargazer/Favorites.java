@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -33,11 +34,11 @@ public class Favorites {
     Favorites(Context inContext){
 
         context = inContext;
-        try {
+        /*try {
             adapterList = this.getFavSats();
         } catch (IOException e) {
 
-        }
+        }*/
     }
 
     private ArrayAdapter<String> getFavSats() throws IOException {
@@ -136,10 +137,13 @@ public class Favorites {
 
     public ArrayAdapter<String> getFavorites(){return adapterList;}
 
-    public static void addFavorite(String name, String line1, String line2){
+    public static void addFavorite(String name, String line1, String line2, String fileName){
         try {
             //Creates buffered Writer to add new sat to list
-            FileOutputStream fostream = new FileOutputStream("favoriteSats.txt");
+            System.out.println("about to write to: "+ "favorites_" + fileName );
+
+            FileOutputStream fostream = context.openFileOutput( "favorites_" + fileName, Context.MODE_PRIVATE);
+
             OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
             BufferedWriter bwriter = new BufferedWriter(oswriter);
 
@@ -153,6 +157,15 @@ public class Favorites {
 
             //close all streams
             bwriter.close(); oswriter.close(); fostream.close();
+
+            File test1 = new File(context.getFilesDir() + System.lineSeparator() + "favorites_" + fileName);
+            if (test1.exists()) {
+                System.out.println("Successfully wrote file: " + "favorites_" + fileName );
+            } else
+                System.out.println("DID NTO success wrote file: " + "favorites_" + fileName );
+
+
+
         }
         catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
