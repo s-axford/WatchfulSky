@@ -269,7 +269,11 @@ public class activity_satellite_sel extends AppCompatActivity {
 
         return selectedSats;
     }
+    public static void clearSelectedSats() {
+        selectedSats.clear();
+        satList.clear();
 
+    }
     public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
 
     public static void removeFavSat() {
