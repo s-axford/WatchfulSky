@@ -76,9 +76,9 @@ public class celestrakData {
         c = aContext;
         HashMap<String, List<String>> celestrakMap = new HashMap<String, List<String>>();
 
-        File test1 = new File(c.getFilesDir() + System.lineSeparator() + "favorites_stations.txt");
-        File test2 = new File(c.getFilesDir() + "favorites_tle-new.txt");
-        File test3 = new File(c.getFilesDir() + "favorites_gps-ops.txt");
+        File test1 = new File(c.getFilesDir(), "favorites_stations.txt");
+        File test2 = new File(c.getFilesDir(), "favorites_tle-new.txt");
+        File test3 = new File(c.getFilesDir(), "favorites_gps-ops.txt");
         File test4 = new File(c.getFilesDir() + "favorites_intelsat.txt");
         File test5 = new File(c.getFilesDir() + "favorites_geo.txt");
         File test6 = new File(c.getFilesDir() + "favorites_science.txt");
@@ -90,7 +90,7 @@ public class celestrakData {
             stations.add(s);
         }} else
             System.out.println(test1.getAbsolutePath() + " does not exist");
-            stations.add(" No data");
+            stations.add("No data");
 
 
         List<String> thirtyDays = new ArrayList<String>();

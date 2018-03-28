@@ -147,18 +147,24 @@ public class Favorites {
             OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
             BufferedWriter bwriter = new BufferedWriter(oswriter);
 
+
+
             //added each element of data to list
             //bwriter.newLine();
+            //oswriter.write(name);
+            //oswriter.write(line1);
+           // oswriter.write(line2);
             bwriter.write(name);
             bwriter.newLine();
             bwriter.write(line1);
             bwriter.newLine();
-            bwriter.write(line2);
+           bwriter.write(line2);
 
             //close all streams
-            bwriter.close(); oswriter.close(); fostream.close();
+            bwriter.close();
+            oswriter.close(); fostream.close();
 
-            File test1 = new File(context.getFilesDir() + System.lineSeparator() + "favorites_" + fileName);
+            File test1 = new File(context.getFilesDir(), "favorites_" + fileName);
             if (test1.exists()) {
                 System.out.println("Successfully wrote file: " + "favorites_" + fileName );
             } else
