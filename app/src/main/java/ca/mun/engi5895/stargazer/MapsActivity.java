@@ -129,6 +129,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 */
     }
 
+    public void onBackPressed() {
+        //activity_satellite_sel.clearSelectedSats();
+        selectedSat.clear();
+        System.out.println("DONE WITH THE MAP");
+        this.finish();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -227,18 +233,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void updateMap(Date dateTime){
 
+        if (dateTime == null){
+            dateTime = getCreatedTime();
+        }
         AbsoluteDate date;
 
-        for (int i = 0; i < selectedSat.size(); i++) {
+        //for (int i = 0; i <= selectedSat.size(); i++) {
+        int i = 0;
+            //for (int j = 0; j < 10; j++) {
 
-            for (int j = 0; j < 10; j++) {
-
-                dateTime.setMonth(dateTime.getMonth() + 1);
+                //dateTime.setMonth(dateTime.getMonth() + 1);
 
                 //DETERMINES NECESSARY TIME
                 try {
                     utc = TimeScalesFactory.getUTC();       //Creates new timeScale
                 } catch (OrekitException e) {
+                    System.out.println("ERROR IN UPDATE MAP");
                     e.printStackTrace();
                 }
 
@@ -257,7 +267,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
 
-                    calendar.setTime(dateTime);     //Shifts the time
+                    if (dateTime.getMonth() > 8){
+                        System.out.println("ERROR IN POINT PLACEMENT: ");
+                        System.out.println("Value of K: " + k);
+                    } else {
+                        calendar.setTime(dateTime);     //Shifts the time
+                    }
+
                     date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
                     this.initializeFrames(date);        //Updates satellites orbit
                     //this.updatePosition(date);
@@ -279,13 +295,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Polyline line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
                 line.setWidth(5);       //Sets width of polyline
                 line.setColor(Color.RED);   //Sets color of polyline
+                /*
                 try {
                     wait(30000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-        }
+                */
+            //}
+        //}
 
     }
 
@@ -301,6 +319,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     earthFixedFrame);
 
         } catch (OrekitException e) {
+            System.out.println("ERROR IN INITIALIZE FRAMES");
             e.printStackTrace();
         }
 
