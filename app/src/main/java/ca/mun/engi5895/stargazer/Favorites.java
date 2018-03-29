@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -142,11 +143,26 @@ public class Favorites {
         try {
             //Creates buffered Writer to add new sat to list
             System.out.println("about to write to: "+ "favorites_" + fileName );
-            System.out.println("Printing previous Contents of File");
+            System.out.println("Name: " + name);
+            System.out.println("Tle1: " + line1);
+            System.out.println("Tle2: " + line2);
 
-            FileInputStream stream1 = null;
+           /*File favTest = new File(context.getFilesDir(), "favorites_" + fileName);
+
+            if (!favTest.exists()) {
+                try {
+                    favTest.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (favTest.exists()) {
+                System.out.println(fileName+ " favorites file still doesnt exist");
+            }*/
+            /*FileInputStream stream1 = null;
             try {
-                stream1 = context.openFileInput("favorites"+fileName); //openFileInput auto opens from getFilesDir() directory
+                stream1 = context.openFileInput("favorites_"+fileName); //openFileInput auto opens from getFilesDir() directory
                 // getFilesDir() is directory of internal app storage
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -163,18 +179,29 @@ public class Favorites {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            stream1.close(); sreader1.close();breader1.close();
+            stream1.close(); sreader1.close();breader1.close();*/
+
+           /* System.out.println("Printing previous Contents of File: " + "favorites_" + fileName);
 
 
-            File stat = new File(context.getFilesDir(), "favorites_" + fileName);
+            try (BufferedReader br = new BufferedReader(new FileReader(context.getFilesDir() + System.lineSeparator() + "favorites_" + fileName))) {
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();}*/
 
-            FileOutputStream fostream = context.openFileOutput( "favorites_" + fileName, Context.MODE_PRIVATE);
+
+           // File stat = new File(context.getFilesDir(), "favorites_" + fileName);
+
+            FileOutputStream fostream = context.openFileOutput( "favorites_" + fileName, Context.MODE_APPEND);
 
             OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
-          //  BufferedWriter bwriter = new BufferedWriter(oswriter);
+           BufferedWriter bwriter = new BufferedWriter(oswriter);
 
-            FileWriter w = new FileWriter(stat, true);
-            BufferedWriter bwriter = new BufferedWriter(w);
+            //FileWriter w = new FileWriter(stat, true);
+           // BufferedWriter bwriter = new BufferedWriter(w);
 
 
             //added each element of data to list
@@ -183,14 +210,18 @@ public class Favorites {
             //oswriter.write(line1);
            // oswriter.write(line2);
             bwriter.write(name);
-            bwriter.newLine();
+            bwriter.write("\n");
+           // bwriter.newLine();
             bwriter.write(line1);
-            bwriter.newLine();
+            bwriter.write("\n");
+           // bwriter.newLine();
            bwriter.write(line2);
+            bwriter.write("\n");
+
+           bwriter.flush();
 
             //close all streams
-            bwriter.close();
-            oswriter.close(); fostream.close();
+
 
             File test1 = new File(context.getFilesDir(), "favorites_" + fileName);
             if (test1.exists()) {
@@ -198,11 +229,18 @@ public class Favorites {
             } else
                 System.out.println("DID NTO success wrote file: " + "favorites_" + fileName );
 
-            System.out.println("Printing new Contents of File");
+           /* System.out.println("Printing new Contents of File");
+
+            try (BufferedReader br = new BufferedReader(new FileReader(context.getFilesDir() + System.lineSeparator() + "favorites_" + fileName))) {
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    System.out.println(line);
+                }
+            }
 
             FileInputStream stream2 = null;
             try {
-                stream2 = context.openFileInput("favorites"+fileName); //openFileInput auto opens from getFilesDir() directory
+                stream2 = context.openFileInput("favorites_"+fileName); //openFileInput auto opens from getFilesDir() directory
                 // getFilesDir() is directory of internal app storage
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -219,11 +257,11 @@ public class Favorites {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
 
 
-            stream1.close(); sreader1.close();breader1.close();
+           // stream1.close(); sreader1.close();breader1.close();
 
 
 

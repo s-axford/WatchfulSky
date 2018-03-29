@@ -342,10 +342,12 @@ public class activity_satellite_sel extends AppCompatActivity {
                 else if (satType == "Science Satellites")
                     fileName = "science.txt";
 
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                System.out.println("Filename: "+ fileName);
+
+                /*Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("CHOSEN_SAT_NAME", satChosen);
                 intent.putExtra(MapsActivity.FILENAME, fileName);
-                startActivity(intent);
+                startActivity(intent);*/
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -382,13 +384,22 @@ public class activity_satellite_sel extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                System.out.println("Tle 1: " + TLE1);
+                System.out.println("Tle 2: " + TLE2);
+
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
+                intent.putExtra(MapsActivity.FILENAME, fileName);
+                startActivity(intent);
 
 
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
                     activity_satellite_sel.getSelectedSat();
+                    System.out.println("Adding entity big success");
                 } catch (OrekitException e) {
+                    System.out.println("Fucking up with making new entity");
                     e.printStackTrace();
                 }
 

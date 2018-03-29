@@ -176,7 +176,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 selectedSat = activity_satellite_sel.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
-                Favorites favorite = new Favorites(this);
+                Favorites favorite = new Favorites(getApplicationContext());
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
@@ -300,7 +300,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 calendar.setTime(dateTime);     //Shifts the time
 
                 //calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-                date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
+                date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
 
                 Date endDate = new Date();
                 endDate.getTime();
@@ -403,7 +403,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Date date = new Date(); //creates date
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
-        AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
+        AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
 
 
 
