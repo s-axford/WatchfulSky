@@ -2,6 +2,7 @@ package ca.mun.engi5895.stargazer;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -77,6 +78,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     TextView sat_Name;
     TextView sat_Perigee_Title;
 
+    MenuItem favBtn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +90,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        // Global class
+
+
+
+
         selectedSat = activity_satellite_sel.getSelectedSat();
         //Entity satChosen = selectedSat.get(0);
 
@@ -93,6 +102,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sat_Name = (TextView) findViewById(R.id.satName);
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
+
+
+        GlobalClass globe = ((GlobalClass) getApplicationContext());
+
+        Favorites favorite = globe.getGlobalFavorites();
+
+        if(favorite.getListOfFavs().contains(sat_Name)) {
+            favBtn.setIcon(R.drawable.favoritesicon_filled);
+        }
       
         int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
@@ -123,6 +141,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater item = getMenuInflater();
+        favBtn = menu.getItem(R.id.actionbar_fav);
         item.inflate(R.menu.actionbar, menu);
         setTitle("StarGazer");
         return super.onCreateOptionsMenu(menu);
@@ -138,8 +157,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
              d1 = getCreatedTime();
                 timePickerTime = getCurrentTime(date);
 
-                sat_Name = findViewById(R.id.textView5);
-                sat_Name.setText(timePickerTime);
+               // sat_Name = findViewById(R.id.textView5);
+             //   sat_Name.setText(timePickerTime);
 
                 View s = findViewById(R.id.actionbar_clock);
 
@@ -155,7 +174,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 sat_Name = findViewById(R.id.satName);
-                sat_Name.setText(getCurrentTime());
+                sat_Name.setText(timePickerTime);
 
 
                 if (date == d1) {
@@ -175,7 +194,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 selectedSat = activity_satellite_sel.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
-                Favorites favorite = new Favorites(getApplicationContext());
+              //  Favorites favorite = new Favorites(getApplicationContext());
+                GlobalClass globe = ((GlobalClass) getApplicationContext());
+
+                Favorites favorite = globe.getGlobalFavorites();
 
                 item.setIcon(R.drawable.favoritesicon_filled);
 

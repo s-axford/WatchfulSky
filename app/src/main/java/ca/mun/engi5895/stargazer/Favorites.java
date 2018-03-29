@@ -28,7 +28,8 @@ import java.util.ArrayList;
 
 public class Favorites {
 
-    private ArrayList<String> list = new ArrayList<String>();
+    private static ArrayList<String> favList = new ArrayList<String>();
+    private static ArrayList<String> list = new ArrayList<String>();
     private ArrayAdapter adapterList;
     private static Context context;
     private ListView listView;
@@ -139,6 +140,8 @@ public class Favorites {
 
     public ArrayAdapter<String> getFavorites(){return adapterList;}
 
+    public ArrayList<String> getListOfFavs() {return favList;}
+
     public static void addFavorite(String name, String line1, String line2, String fileName){
         try {
             //Creates buffered Writer to add new sat to list
@@ -146,6 +149,8 @@ public class Favorites {
             System.out.println("Name: " + name);
             System.out.println("Tle1: " + line1);
             System.out.println("Tle2: " + line2);
+
+            favList.add(name);
 
            /*File favTest = new File(context.getFilesDir(), "favorites_" + fileName);
 

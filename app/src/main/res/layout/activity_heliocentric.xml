@@ -208,7 +208,7 @@
                 app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/earth" /> />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/mercury_icon"
                 android:layout_width="73dp"
                 android:layout_height="65dp"
@@ -276,7 +276,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/neptune" /> />
+                app:srcCompat="@drawable/neptune" /> />-->
 
 
         </RelativeLayout>
