@@ -126,15 +126,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
                 sat_Perigee_Title.setText("Satellite Perigee");
 
-
-
-           /*
-        try {
-            getSatLocation();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
     }
 
     public void onBackPressed() {
@@ -298,7 +289,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println("Interval: " + periodMin);
                 calendar.setTime(dateTime);     //Shifts the time
                 System.out.println(calendar.get(Calendar.YEAR));
-                //calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                 date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
 
                 Date endDate = new Date();

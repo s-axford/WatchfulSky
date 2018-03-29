@@ -89,8 +89,6 @@ public class Entity {
         for (int i = 0; i < forcesList.size(); i++){
 
         }
-
-
     }
 
     public SpacecraftState updateState(AbsoluteDate currentDate){
@@ -117,12 +115,6 @@ public class Entity {
         return tleProp.getPVCoordinates(abDate, frame); //returns coordinates
     }
 
-    public void getCurrentPosition(){
-
-        Frame eme = FramesFactory.getEME2000();
-
-
-    }
     private TimeStampedPVCoordinates getPVCoordinates(AbsoluteDate date) throws OrekitException {
 
         Frame frame = FramesFactory.getGCRF();

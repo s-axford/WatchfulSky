@@ -12,7 +12,8 @@
         android:id="@+id/button"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="8dp"
         android:background="@color/buttonCust"
         android:fontFamily="@font/actor"
         android:onClick="geoGo"
@@ -30,8 +31,8 @@
         android:id="@+id/button2"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="8dp"
         android:background="@color/buttonCust"
         android:fontFamily="@font/actor"
         android:onClick="helioGo"
@@ -40,58 +41,10 @@
         android:textColor="@color/buttonText"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
 
-    <Button
-        android:id="@+id/button3"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/buttonCust"
-        android:fontFamily="@font/actor"
-        android:onClick="areoGo"
-        android:text="Areocentric      "
-        android:textAlignment="textEnd"
-        android:textColor="@color/buttonText"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-
-    <Button
-        android:id="@+id/button6"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/buttonCust"
-        android:fontFamily="@font/actor"
-        android:text="Joviocentric      "
-        android:textAlignment="textEnd"
-        android:textColor="@color/buttonText"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/button7"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/buttonCust"
-        android:fontFamily="@font/actor"
-        android:text="Kronocentric      "
-        android:textAlignment="textEnd"
-        android:textColor="@color/buttonText"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
 
     <Button
         android:id="@+id/button8"
@@ -234,67 +187,33 @@
         app:layout_constraintBottom_toTopOf="@+id/button8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button7"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/button2"></LinearLayout>
 
     <ImageView
         android:id="@+id/earth_icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="73dp"
+        android:layout_height="65dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/earth" />
 
     <ImageView
         android:id="@+id/sun_icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="72dp"
+        android:layout_height="66dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/button2"
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toTopOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/sun" />
-
-    <ImageView
-        android:id="@+id/Mars_icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3"
-        app:srcCompat="@drawable/mars1" />
-
-    <ImageView
-        android:id="@+id/jupiter_icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button6"
-        app:layout_constraintStart_toStartOf="@+id/button6"
-        app:layout_constraintTop_toTopOf="@+id/button6"
-        app:srcCompat="@drawable/jupiter" />
-
-    <ImageView
-        android:id="@+id/saturn_icon"
-        android:layout_width="81dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button7"
-        app:layout_constraintStart_toStartOf="@+id/button7"
-        app:layout_constraintTop_toTopOf="@+id/button7"
-        app:srcCompat="@drawable/saturn1" />
 
 
 </android.support.constraint.ConstraintLayout>
