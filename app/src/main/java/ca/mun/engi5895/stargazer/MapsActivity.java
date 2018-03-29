@@ -15,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -36,6 +37,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -62,7 +66,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     SpacecraftState scs;                //Declares variable to hold state of the current entity
     GeodeticPoint pointPlot = null;
 
-
+    boolean initial = true;
     TextView sat_Name;
     TextView sat_Perigee_Title;
 
@@ -105,6 +109,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //activity_satellite_sel.clearSelectedSats();
         selectedSat.clear();
         System.out.println("DONE WITH THE MAP");
+        initial = false;
         this.finish();
     }
     @Override
@@ -197,21 +202,29 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mapUpdater();    //Plots the orbit for the given time period
 
     }
-
+    private int incr = 0;
     public void mapUpdater(){
-        /*
-        class updater extends TimerTask {
+                //updateMap(getCreatedTime());
 
+        new Thread() {
             public void run() {
-          */
-                updateMap(getCreatedTime());
-    /*
-    }
+                while (incr++ < 1000) {
+                    try {
+                        runOnUiThread(new Runnable() {
 
-        }
-        Timer timer = new Timer();
-        timer.schedule(new updater(), 0, 10000);
-    */
+                            @Override
+                            public void run() {
+                                updateMap(getCreatedTime());
+                            }
+                        });
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+
     }
 
 
@@ -221,7 +234,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return new Date();
     }
 
-    private void updateMap(Date dateTime){
+    private Runnable updateMap(Date dateTime){
 
         System.out.println("Entering update map");
         if (dateTime == null){
@@ -229,11 +242,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
         AbsoluteDate date;
 
-        //for (int i = 0; i <= selectedSat.size(); i++) {
-        int i = 0;
-            //for (int j = 0; j < 10; j++) {
-
-            //dateTime.setMonth(dateTime.getMonth() + 1);
+        for (int i = 0; i < selectedSat.size(); i++) {
+        //int i = 0;
 
             //DETERMINES NECESSARY TIME
                 try {
@@ -266,7 +276,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //endDate.getTime();
                 //endDate.getDate();
 
-        this.initializeFrames();        //Updates satellites orbit
+            this.initializeFrames();        //Updates satellites orbit
 
 
             for (int k = 0; k < 300; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
@@ -284,11 +294,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions pointA = new MarkerOptions().position(point_a);   //Creates a marker
 
                 if (k == 0) {
+                    mMap.clear();
                     pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
                     mMap.addMarker(pointA);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
+                    if (initial == true) {
+                        initial = false;
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
+                    }
                 }
-
                 plotPoints.add(point_a);        //Adds point to polyline
                 System.out.println("Latitude: " + latitude);
                 System.out.println("Longitude: " + longitude);
@@ -306,9 +319,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     e.printStackTrace();
                 }
                 */
-            //}
-        //}
-
+        }
+        return null;
     }
 
     private void initializeFrames(){//AbsoluteDate date, int i) {
