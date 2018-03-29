@@ -281,7 +281,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
                 this.initializeFrames(date);        //Updates satellites orbit
 
-            for (int k = 0; k < 99; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
+            for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
 
                     if (dateTime.getMonth() > 8){
                         System.out.println("ERROR IN POINT PLACEMENT: ");
