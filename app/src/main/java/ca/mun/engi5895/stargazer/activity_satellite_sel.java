@@ -118,8 +118,8 @@ public class activity_satellite_sel extends AppCompatActivity {
 
 
 
-
                     return true;
+
             }
             return false;
         }
