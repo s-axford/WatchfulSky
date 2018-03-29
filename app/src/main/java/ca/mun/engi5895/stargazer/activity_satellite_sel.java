@@ -37,6 +37,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+//"?android:attr/windowBackground"
+
 public class activity_satellite_sel extends AppCompatActivity {
 
     private TextView mTextMessage;
@@ -239,9 +241,11 @@ public class activity_satellite_sel extends AppCompatActivity {
                             break;
                         }
                     }
+                    breader1.close();  sreader1.close();stream1.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
 
 
                 try {
@@ -374,6 +378,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                             break;
                         }
                     }
+                    breader1.close();sreader1.close();stream1.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

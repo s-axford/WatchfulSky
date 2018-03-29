@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -141,12 +142,39 @@ public class Favorites {
         try {
             //Creates buffered Writer to add new sat to list
             System.out.println("about to write to: "+ "favorites_" + fileName );
+            System.out.println("Printing previous Contents of File");
+
+            FileInputStream stream1 = null;
+            try {
+                stream1 = context.openFileInput("favorites"+fileName); //openFileInput auto opens from getFilesDir() directory
+                // getFilesDir() is directory of internal app storage
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            InputStreamReader sreader1 = new InputStreamReader(stream1);
+            BufferedReader breader1 = new BufferedReader(sreader1);
+            String line;
+            //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
+            try {
+                while ((line = breader1.readLine()) != null) {
+                    System.out.println(breader1.readLine());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            stream1.close(); sreader1.close();breader1.close();
+
+
+            File stat = new File(context.getFilesDir(), "favorites_" + fileName);
 
             FileOutputStream fostream = context.openFileOutput( "favorites_" + fileName, Context.MODE_PRIVATE);
 
             OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
-            BufferedWriter bwriter = new BufferedWriter(oswriter);
+          //  BufferedWriter bwriter = new BufferedWriter(oswriter);
 
+            FileWriter w = new FileWriter(stat, true);
+            BufferedWriter bwriter = new BufferedWriter(w);
 
 
             //added each element of data to list
@@ -169,6 +197,33 @@ public class Favorites {
                 System.out.println("Successfully wrote file: " + "favorites_" + fileName );
             } else
                 System.out.println("DID NTO success wrote file: " + "favorites_" + fileName );
+
+            System.out.println("Printing new Contents of File");
+
+            FileInputStream stream2 = null;
+            try {
+                stream2 = context.openFileInput("favorites"+fileName); //openFileInput auto opens from getFilesDir() directory
+                // getFilesDir() is directory of internal app storage
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+
+            InputStreamReader sreader2 = new InputStreamReader(stream2);
+            BufferedReader breader2 = new BufferedReader(sreader2);
+            String linee;
+            //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
+            try {
+                while ((linee = breader2.readLine()) != null) {
+                    System.out.println(breader2.readLine());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+            stream1.close(); sreader1.close();breader1.close();
 
 
 

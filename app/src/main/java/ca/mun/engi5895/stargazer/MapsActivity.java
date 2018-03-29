@@ -1,19 +1,12 @@
 package ca.mun.engi5895.stargazer;
 
-import android.app.TimePickerDialog;
 import android.graphics.Color;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -22,53 +15,27 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.maps.model.VisibleRegion;
 
-import org.apache.commons.math3.analysis.function.Constant;
-import org.apache.commons.math3.geometry.euclidean.threed.Line;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.orekit.bodies.BodyShape;
 import org.orekit.bodies.CelestialBodyFactory;
-import org.orekit.bodies.Ellipsoid;
 import org.orekit.bodies.GeodeticPoint;
 import org.orekit.bodies.OneAxisEllipsoid;
 import org.orekit.errors.OrekitException;
-import org.orekit.forces.gravity.potential.GravityFieldFactory;
-import org.orekit.forces.gravity.potential.NormalizedSphericalHarmonicsProvider;
 import org.orekit.frames.Frame;
 import org.orekit.frames.FramesFactory;
-import org.orekit.models.earth.Geoid;
-import org.orekit.models.earth.ReferenceEllipsoid;
-import org.orekit.orbits.Orbit;
 import org.orekit.propagation.SpacecraftState;
 import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.Constants;
-import org.orekit.utils.IERSConventions;
-import org.orekit.utils.TimeStampedPVCoordinates;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static ca.mun.engi5895.stargazer.activity_satellite_sel.getSelectedSat;
-import static org.apache.commons.math3.analysis.FunctionUtils.add;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -89,6 +56,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private  ArrayList<Object> list = new ArrayList<Object>();
 
+    private Frame earthFixedFrame;      //Declares a frame of the earth
+    private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
+    private TimeScale utc;              //Sets the timescale used to utc
+    SpacecraftState scs;                //Declares variable to hold state of the current entity
+    GeodeticPoint pointPlot = null;
+
 
     TextView sat_Name;
     TextView sat_Perigee_Title;
@@ -103,7 +76,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = activity_satellite_sel.getSelectedSat();
-        Entity satChosen = selectedSat.get(0);
+        //Entity satChosen = selectedSat.get(0);
 
         System.out.println(selectedSat.get(0).getName());
         sat_Name = (TextView) findViewById(R.id.textView5);
@@ -155,7 +128,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else {
                     clock.setVisibility(View.INVISIBLE);
                 }
-                sat_Name = (TextView) findViewById(R.id.textView5);
+                sat_Name = findViewById(R.id.textView5);
                 sat_Name.setText(getCurrentTime());
 
                 return true;
@@ -216,11 +189,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
 
-    private Frame earthFixedFrame;      //Declares a frame of the earth
-    private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
-    private TimeScale utc;              //Sets the timescale used to utc
-    SpacecraftState scs;                //Declares variable to hold state of the current entity
-    GeodeticPoint pointPlot = null;
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -248,14 +216,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     private Date getCreatedTime(){
-        Date date = new Date(); //creates date
-        date.getTime();
+        //date.getTime();
 
-        return date;
+        return new Date();
     }
 
     private void updateMap(Date dateTime){
 
+        System.out.println("Entering update map");
         if (dateTime == null){
             dateTime = getCreatedTime();
         }
@@ -288,23 +256,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 int periodMin = (period / 100);
                 System.out.println("Interval: " + periodMin);
                 calendar.setTime(dateTime);     //Shifts the time
+
                 System.out.println(calendar.get(Calendar.YEAR));
                 calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
                 date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
 
+
                 Date endDate = new Date();
-                endDate.getTime();
+                //endDate.getTime();
                 //endDate.getDate();
 
+        this.initializeFrames();        //Updates satellites orbit
 
 
-
-            for (int k = 0; k < 100; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
+            for (int k = 0; k < 300; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
                 //calendar.setTime(dateTime);     //Shifts the time
                 //date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
                 //date = new AbsoluteDate(date, periodMin);
                 System.out.println("DATE: " + date);
-                this.initializeFrames(date, i);        //Updates satellites orbit
                    //this.initializeFrames(date);        //Updates satellites orbit
                 this.updatePosition(date, i);
                 System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());
@@ -342,18 +311,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    private void initializeFrames(AbsoluteDate date, int i) {
+    private void initializeFrames(){//AbsoluteDate date, int i) {
 
         try {
-            Frame gcrf;
-            gcrf = FramesFactory.getTEME();
+            Frame f;
+            f = CelestialBodyFactory.getEarth().getBodyOrientedFrame();
+            //f = FramesFactory.getTEME();
 
             earthFixedFrame = FramesFactory.getTEME();
 
             earth = new OneAxisEllipsoid(
                     Constants.WGS84_EARTH_EQUATORIAL_RADIUS,
                     Constants.WGS84_EARTH_FLATTENING,
-                    gcrf); //earthFixedFrame);
+                    f); //earthFixedFrame);
         }catch (OrekitException e) {
             e.printStackTrace();
         }
@@ -371,8 +341,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         try {
             gcrf = FramesFactory.getTEME();
-            Vector3D earthPoint = earth.projectToGround(selectedSat.get(i).getVector(date), date, gcrf);
-            pointPlot = earth.transform(earthPoint, earthFixedFrame, date);
+            //Vector3D earthPoint = earth.projectToGround(selectedSat.get(i).getVector(date), date, gcrf);
+            pointPlot = earth.transform(selectedSat.get(i).getVector(date), earthFixedFrame, date);
         }  catch (OrekitException e){
             System.out.println("FAILED PLOTTING POINT");
             e.printStackTrace();
@@ -393,7 +363,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Date date = new Date(); //creates date
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
+
         AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
+
 
 
 
