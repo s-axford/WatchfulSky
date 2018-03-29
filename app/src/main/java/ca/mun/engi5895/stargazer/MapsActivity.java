@@ -161,7 +161,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.actionbar_fav:
 
 
-                setTitle("StarGazer (Favorites)");
+               // setTitle("StarGazer (Favorites)");
 
              //   list = activity_satellite_sel.getSelectedSat();
 
@@ -169,6 +169,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String fileName = getIntent().getStringExtra(FILENAME);
 
                 Favorites favorite = new Favorites(getApplicationContext());
+
+                item.setIcon(R.drawable.favoritesicon_filled);
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
