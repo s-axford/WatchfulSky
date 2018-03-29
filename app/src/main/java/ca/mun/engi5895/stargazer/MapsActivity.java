@@ -138,7 +138,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
              d1 = getCreatedTime();
                 timePickerTime = getCurrentTime(date);
 
-                sat_Name = findViewById(R.id.textView5);
+                sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(timePickerTime);
 
                 View s = findViewById(R.id.actionbar_clock);
@@ -155,14 +155,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 sat_Name = findViewById(R.id.satName);
-                sat_Name.setText(getCurrentTime());
+                //sat_Name.setText();
 
 
                 if (date == d1) {
                     System.out.println("fuck finals");
                 }
 
-                updateMap(date);
+                updateMap();
 
                 return true;
             case R.id.actionbar_fav:
@@ -235,12 +235,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
 
-            mapUpdater();    //Plots the orbit for the given time period
+            mapUpdater(getCreatedTime());    //Plots the orbit for the given time period
 
     }
     private int incr = 0;
-    public void mapUpdater(){
+    public void mapUpdater(Date date){
                 //updateMap(getCreatedTime());
+
+        if(date == null){
+            dateTime = getCreatedTime();
+        } else{
+            dateTime = date;
+        }
 
         new Thread() {
             public void run() {
@@ -250,7 +256,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             @Override
                             public void run() {
-                                updateMap(getCreatedTime());
+                                updateMap();
                             }
                         });
                         Thread.sleep(10000);
@@ -270,7 +276,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return new Date();
     }
 
-    private Runnable updateMap(Date dateTime){
+    private Date dateTime = null;
+
+    private Runnable updateMap(){
 
         System.out.println("Entering update map");
         if (dateTime == null){
