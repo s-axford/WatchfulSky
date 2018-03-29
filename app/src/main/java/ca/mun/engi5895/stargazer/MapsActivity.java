@@ -57,6 +57,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private String timePickerTime;
 
+    Date date;
+    Date d1;
+
     private  ArrayList<Object> list = new ArrayList<Object>();
 
     private Frame earthFixedFrame;      //Declares a frame of the earth
@@ -125,10 +128,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch (item.getItemId()) {
             case R.id.actionbar_clock:      //Clock icon selected
 
-                timePickerTime = getCurrentTime();
+                date = getCreatedTime();
+             d1 = getCreatedTime();
+                timePickerTime = getCurrentTime(date);
 
                 sat_Name = findViewById(R.id.textView5);
-                sat_Name.setText(getCurrentTime());
+                sat_Name.setText(timePickerTime);
 
                 View s = findViewById(R.id.actionbar_clock);
 
@@ -143,11 +148,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     clock.setVisibility(View.INVISIBLE);
                 }
 
-                Date date = getCreatedTime();
+                if (date == d1) {
+                    System.out.println("fuck finals");
+                }
+
+                updateMap(date);
+
                //date.
-
-
-
 
 
                 return true;
@@ -179,7 +186,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    public String getCurrentTime(){
+    public String getCurrentTime(final Date d){
         String currentTime = "0";
 
         TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
@@ -189,6 +196,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
 
+                d.setHours(i);
+                d.setMinutes(i1);
+                System.out.println("Hours: " + i + "Minutes: " + i1);
                 //if (i1 != 0){
                  //   timePicker.setVisibility(View.INVISIBLE);
                // }
