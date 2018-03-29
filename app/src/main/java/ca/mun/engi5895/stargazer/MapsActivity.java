@@ -32,6 +32,7 @@ import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.Constants;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -83,7 +84,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //Entity satChosen = selectedSat.get(0);
 
         System.out.println(selectedSat.get(0).getName());
-        sat_Name = (TextView) findViewById(R.id.textView5);
+        sat_Name = (TextView) findViewById(R.id.satName);
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
       
@@ -91,7 +92,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
                 System.out.println(selectedSat.get(i).getName());
-                sat_Name = (TextView) findViewById(R.id.textView5);
+                sat_Name = (TextView) findViewById(R.id.satName);
                 sat_Name.setText(selectedSat.get(i).getName());
 
         try {
@@ -100,8 +101,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (OrekitException e) {
             e.printStackTrace();
         }
-        sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
-                sat_Perigee_Title.setText("Satellite Perigee");
+        //sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
+                //sat_Perigee_Title.setText("Satellite Perigee");
 
     }
 
@@ -133,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else {
                     clock.setVisibility(View.INVISIBLE);
                 }
-                sat_Name = findViewById(R.id.textView5);
+                sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(getCurrentTime());
 
                 return true;
@@ -244,7 +245,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         for (int i = 0; i < selectedSat.size(); i++) {
         //int i = 0;
-
+            double satNum = 0;
+            try {
+                satNum = selectedSat.get(i).getSatNum();
+            }catch(OrekitException e) {
+                e.printStackTrace();
+            }
+            TextView satNumberText = findViewById(R.id.satelliteNumber);
+            satNumberText.setText("Satellite Number: " + String.valueOf(satNum));
             //DETERMINES NECESSARY TIME
                 try {
                     utc = TimeScalesFactory.getUTC();       //Creates new timeScale
@@ -276,7 +284,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 //endDate.getTime();
                 //endDate.getDate();
 
-            this.initializeFrames();        //Updates satellites orbit
+                this.initializeFrames();        //Updates satellites orbit
 
 
             for (int k = 0; k < 300; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
@@ -289,6 +297,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());
                 longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude
                 latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
+                double altitude = pointPlot.getAltitude();
+                TextView satAltitude = findViewById(R.id.satAltitude);
+                satAltitude.setText("Altitude: " + String.valueOf(altitude));
+
+                try {
+                    String latitudeString = "Latitude: " + latitude;
+                    String longitudeString = "Longitude: " + longitude;
+                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity());
+                    TextView satLatitude = findViewById(R.id.satLatitude);
+                    TextView satLongitude = findViewById(R.id.satLongitude);
+                    TextView satVelocity = findViewById(R.id.velocity);
+                    satLatitude.setText(latitudeString);
+                    satLongitude.setText(longitudeString);
+                    satVelocity.setText(velocityString);
+                } catch (OrekitException e){
+                    e.printStackTrace();
+                }
+
                 LatLng point_a = new LatLng(latitude, longitude);           //Creates map points
                 System.out.println(pointPlot);
                 MarkerOptions pointA = new MarkerOptions().position(point_a);   //Creates a marker

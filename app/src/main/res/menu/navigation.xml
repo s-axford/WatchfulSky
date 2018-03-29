@@ -11,9 +11,4 @@
         android:icon="@drawable/favoritesicon"
         android:title="@string/title_favorites" />
 
-    <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/nearbyicon"
-        android:title="@string/title_nearby" />
-
 </menu>

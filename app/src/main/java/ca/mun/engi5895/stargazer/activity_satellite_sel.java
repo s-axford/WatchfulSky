@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.orekit.errors.OrekitException;
 
@@ -114,11 +115,11 @@ public class activity_satellite_sel extends AppCompatActivity {
                 //    listView.setVisibility(View.VISIBLE);
                     return true;
 
-                case R.id.navigation_notifications:
+                //case R.id.navigation_notifications:
 
 
 
-                    return true;
+                    //return true;
 
             }
             return false;
