@@ -265,6 +265,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void updateMap(Date dateTime){
 
+        System.out.println("Entering update map");
         if (dateTime == null){
             dateTime = getCreatedTime();
         }

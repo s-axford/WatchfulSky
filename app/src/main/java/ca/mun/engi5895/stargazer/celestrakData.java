@@ -1,6 +1,7 @@
 package ca.mun.engi5895.stargazer;
 
 import android.content.Context;
+import android.content.Intent;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -166,7 +167,38 @@ public class celestrakData {
             }
             lineNumber++;
         }
+
+        breader.close(); stream.close(); sreader.close();
         return list;
+    }
+
+    public static void downloadData(Context aContext) {
+
+        Intent intent = new Intent(aContext, saveFileIntent.class);
+        // add infos for the service which file to download and where to store
+        intent.putExtra(saveFileIntent.FILENAME,"stations.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/stations.txt");
+        aContext.startService(intent);
+
+        intent.putExtra(saveFileIntent.FILENAME,"tle-new.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/tle-new.txt");
+        aContext.startService(intent);
+
+        intent.putExtra(saveFileIntent.FILENAME,"gps-ops.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/gps-ops.txt");
+        aContext.startService(intent);
+
+        intent.putExtra(saveFileIntent.FILENAME,"intelsat.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/intelsat.txt");
+        aContext.startService(intent);
+
+        intent.putExtra(saveFileIntent.FILENAME,"geo.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/geo.txt");
+        aContext.startService(intent);
+
+        intent.putExtra(saveFileIntent.FILENAME,"science.txt");
+        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/science.txt");
+        aContext.startService(intent);
     }
 
 }

@@ -68,13 +68,13 @@ public class saveFileIntent extends IntentService {
 
 
             //Handler thing is to let you make a toast on a dead thread, has to be in for toast to work
-            Handler mHandler = new Handler(getMainLooper());
+            /*Handler mHandler = new Handler(getMainLooper());
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(getApplicationContext(), "Files Downloaded", Toast.LENGTH_SHORT).show();
                 }
-            });
+            });*/
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
