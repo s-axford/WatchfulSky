@@ -182,6 +182,10 @@ public class Entity {
         return 2*Math.PI / meanMotion; //returns period
     }
 
+    public double getSatNum() throws OrekitException{
+        return entity.getSatelliteNumber();
+    }
+
     //gets Height of satellite from ground
     public double getHeight() throws OrekitException{
         PVCoordinates coord = this.getPVCoordinates(); //gets up to date coordinates
