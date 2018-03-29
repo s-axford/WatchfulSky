@@ -11,11 +11,6 @@ import org.orekit.data.DataProvidersManager;
 import org.orekit.data.DirectoryCrawler;
 import org.orekit.errors.OrekitException;
 
-/**
- * initializes Orekit loading files from a directory in the device storage
- * @author Xavier Gibert
- *
- */
 public class OrekitInit {
 
     public static void init(File root) {
