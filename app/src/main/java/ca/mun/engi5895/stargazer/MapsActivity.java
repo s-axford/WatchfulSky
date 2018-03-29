@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -53,6 +54,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private TextView apogee_txt;
     private TextView inclination_txt;
     private ArrayList<Entity> selectedSat;
+
+    private String timePickerTime;
 
     private  ArrayList<Object> list = new ArrayList<Object>();
 
@@ -122,18 +125,36 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         switch (item.getItemId()) {
             case R.id.actionbar_clock:      //Clock icon selected
 
+                timePickerTime = getCurrentTime();
+
+                sat_Name = findViewById(R.id.textView5);
+                sat_Name.setText(getCurrentTime());
+
+                View s = findViewById(R.id.actionbar_clock);
+
+                item.setIcon(android.R.drawable.ic_menu_save);
+
                 View clock = findViewById(R.id.timePicker);         //Sets a view to the clock
                 if (clock.getVisibility() == View.INVISIBLE) {
                     clock.setVisibility(View.VISIBLE);      //If the clock is invisible, make it different
                 } else {
+                    item.setIcon(R.drawable.clockicon);
+
                     clock.setVisibility(View.INVISIBLE);
                 }
-                sat_Name = findViewById(R.id.textView5);
-                sat_Name.setText(getCurrentTime());
+
+                Date date = getCreatedTime();
+               //date.
+
+
+
+
 
                 return true;
             case R.id.actionbar_fav:
 
+
+                setTitle("StarGazer (Favorites)");
 
              //   list = activity_satellite_sel.getSelectedSat();
 
@@ -160,6 +181,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public String getCurrentTime(){
         String currentTime = "0";
+
         TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
@@ -167,9 +189,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
 
-                if (i1 != 0){
-                    timePicker.setVisibility(View.INVISIBLE);
-                }
+                //if (i1 != 0){
+                 //   timePicker.setVisibility(View.INVISIBLE);
+               // }
 
             }
         });
