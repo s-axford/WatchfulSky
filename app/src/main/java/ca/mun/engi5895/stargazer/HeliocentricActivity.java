@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -317,6 +318,41 @@ public class HeliocentricActivity extends AppCompatActivity {
         TextView pos = findViewById(R.id.PlanetPositionValue);
         TextView vel = findViewById(R.id.PlanetVelocityValue);
         TextView n = findViewById(R.id.PlanetName);
+        ImageView mercury = findViewById(R.id.mercury_icon);
+        ImageView venus = findViewById(R.id.venus_icon);
+        ImageView earth = findViewById(R.id.earth_icon);
+        ImageView mars = findViewById(R.id.mars_icon);
+        ImageView jupiter = findViewById(R.id.jupiter_icon);
+        ImageView saturn = findViewById(R.id.saturn_icon);
+        ImageView uranus = findViewById(R.id.uranus_icon);
+        ImageView neptune = findViewById(R.id.neptune_icon);
+        mercury.setVisibility(View.INVISIBLE);
+        venus.setVisibility(View.INVISIBLE);
+        earth.setVisibility(View.INVISIBLE);
+        mars.setVisibility(View.INVISIBLE);
+        jupiter.setVisibility(View.INVISIBLE);
+        saturn.setVisibility(View.INVISIBLE);
+        uranus.setVisibility(View.INVISIBLE);
+        neptune.setVisibility(View.INVISIBLE);
+
+        switch(name){
+            case "Mercury": mercury.setVisibility(View.VISIBLE);
+                break;
+            case "Venus": venus.setVisibility(View.VISIBLE);
+                break;
+            case "Earth": earth.setVisibility(View.VISIBLE);
+                break;
+            case "Mars": mars.setVisibility(View.VISIBLE);
+                break;
+            case "Jupiter": jupiter.setVisibility(View.VISIBLE);
+                break;
+            case "Saturn": saturn.setVisibility(View.VISIBLE);
+                break;
+            case "Uranus": uranus.setVisibility(View.VISIBLE);
+                break;
+            case "Neptune": neptune.setVisibility(View.VISIBLE);
+                break;
+        }
 
         double[] position = findPlanetPosition(body);
         double radius = Math.sqrt(Math.pow(mtoAU(position)[0],2) + Math.pow(mtoAU(position)[1],2));
@@ -328,11 +364,27 @@ public class HeliocentricActivity extends AppCompatActivity {
         n.setText(name);
     }
 
-    public void clickBack(View view) throws OrekitException {
+    public void clickBack(View view) {
         RelativeLayout buttons = findViewById(R.id.topButtons);
         buttons.setVisibility(View.VISIBLE);
         RelativeLayout info = findViewById(R.id.PlanetInfo);
         info.setVisibility(View.INVISIBLE);
+        ImageView mercury = findViewById(R.id.mercury_icon);
+        ImageView venus = findViewById(R.id.venus_icon);
+        ImageView earth = findViewById(R.id.earth_icon);
+        ImageView mars = findViewById(R.id.mars_icon);
+        ImageView jupiter = findViewById(R.id.jupiter_icon);
+        ImageView saturn = findViewById(R.id.saturn_icon);
+        ImageView uranus = findViewById(R.id.uranus_icon);
+        ImageView neptune = findViewById(R.id.neptune_icon);
+        mercury.setVisibility(View.INVISIBLE);
+        venus.setVisibility(View.INVISIBLE);
+        earth.setVisibility(View.INVISIBLE);
+        mars.setVisibility(View.INVISIBLE);
+        jupiter.setVisibility(View.INVISIBLE);
+        saturn.setVisibility(View.INVISIBLE);
+        uranus.setVisibility(View.INVISIBLE);
+        neptune.setVisibility(View.INVISIBLE);
     }
 
     public void clickMercury(View view) throws OrekitException {clickPlanet(CelestialBodyFactory.getMercury(), "Mercury");}
