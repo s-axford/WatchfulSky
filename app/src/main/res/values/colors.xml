@@ -8,4 +8,5 @@
     <color name="buttonCust">#636363</color>
     <color name="buttonText">#cecece</color>
     <color name="bbblack">#161616</color>
+    <color name="nav_bar">#FF6E6E6E</color>
 </resources>
