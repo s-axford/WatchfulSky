@@ -87,12 +87,13 @@ public class celestrakData {
         List<String> stations = new ArrayList<String>();
         if (test1.exists()) {
         List<String> stationsList = getNames("favorites_stations.txt", c);
-        stations.clear();
+        stations.remove("No data");
         for (String s : stationsList) {
+            System.out.println(s);
             stations.add(s);
-        }} else if (!test1.exists())
+        }} else if (!test1.exists()){
             System.out.println(test1.getAbsolutePath() + " does not exist");
-            stations.add("No data");
+            stations.add("No data");}
 
 
         List<String> thirtyDays = new ArrayList<String>();
@@ -100,40 +101,40 @@ public class celestrakData {
         List<String> thirtyDaysList = getNames("favorites_tle-new.txt", c);
         for (String s : thirtyDaysList) {
             thirtyDays.add(s);
-        }} else
-            thirtyDays.add(" No data");
+        }} else if (!test2.exists()) {
+            thirtyDays.add(" No data");}
 
         List<String> gps = new ArrayList<String>();
         if (test3.exists()) {
         List<String> gpsList = getNames("favorites_gps-ops.txt", c);
         for (String s : gpsList) {
             gps.add(s);
-        }} else
-            gps.add(" No data");
+        }} else if (!test3.exists()) {
+            gps.add(" No data");}
 
         List<String> intelsat = new ArrayList<String>();
         if (test4.exists()) {
         List<String> intelsatList = getNames("favorites_intelsat.txt", c);
         for (String s : intelsatList) {
             intelsat.add(s);
-        }} else
-            intelsat.add(" No data");
+        }} else if (!test4.exists()) {
+            intelsat.add(" No data");}
 
         List<String> geo = new ArrayList<String>();
         if (test5.exists()) {
         List<String> geoList = getNames("favorites_geo.txt", c);
         for (String s : geoList) {
             geo.add(s);
-        }} else
-            geo.add(" No data");
+        }} else if (!test5.exists()) {
+            geo.add(" No data");}
 
         List<String> science = new ArrayList<String>();
         if (test6.exists()) {
         List<String> scienceList = getNames("favorites_science.txt", c);
         for (String s : scienceList) {
             science.add(s);
-        }} else
-            science.add(" No data");
+        }} else if (test6.exists()) {
+            science.add(" No data");}
 
 
         celestrakMap.put("Space Stations", stations);
@@ -149,7 +150,7 @@ public class celestrakData {
     private static ArrayList<String> getNames(String filename, Context context) throws IOException {
 
         ArrayList<String> list = new ArrayList<>();
-        System.out.println("getFilesDir: " + context.getFilesDir());
+        //System.out.println("getFilesDir: " + context.getFilesDir());
         System.out.println("about to open: " + filename);
 
         FileInputStream stream = context.openFileInput(filename);
@@ -163,6 +164,7 @@ public class celestrakData {
         //If it is a name, add it to the list ArrayList
         while ((line = breader.readLine()) != null) {
             if ((lineNumber % 3 == 0) || (lineNumber == 0)) {
+                System.out.println("getNames line " +lineNumber+"is "+ line);
                 list.add(line);
             }
             lineNumber++;

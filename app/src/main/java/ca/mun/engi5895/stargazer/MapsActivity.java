@@ -140,7 +140,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 selectedSat = activity_satellite_sel.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
-                Favorites favorite = new Favorites(this);
+                Favorites favorite = new Favorites(getApplicationContext());
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try {
