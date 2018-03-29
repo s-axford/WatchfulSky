@@ -12,7 +12,10 @@ package ca.mun.engi5895.stargazer;
  to execute correctly and for entity to be able to access the required information.
  */
 
+import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.errors.OrekitException;
+import org.orekit.forces.ForceModel;
+import org.orekit.forces.gravity.ThirdBodyAttraction;
 import org.orekit.frames.FramesFactory;
 import org.orekit.orbits.Orbit;
 import org.orekit.propagation.SpacecraftState;
@@ -37,6 +40,7 @@ import org.orekit.utils.AngularCoordinates;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -62,28 +66,41 @@ public class Entity {
         //System.out.println(line2);
         entity = new TLE(line1, line2); //creates TLE object
         tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
-
+        tleProp.setSlaveMode();
         entity_name = name;
-       //TimeScale timeZone = TimeScalesFactory.getUTC();
-       //Date date = new Date();
-       //calendar = GregorianCalendar.getInstance();
-       //calendar.setTime(date);
-       //Frame frame = FramesFactory.getGCRF();
 
-       //BUILD TLEPropagator Builder
-       //builder = new TLEPropagatorBuilder(entity.getSatelliteNumber(), entity.getClassification(), entity.getLaunchYear(), entity.getLaunchNumber(), entity.getLaunchPiece(), entity.getElementNumber(), entity.getRevolutionNumberAtEpoch());
+        //tleProp.getGeneratedEphemeris();
+        //tleProp.resetInitialState(tleProp.getInitialState());
+        //tleProp.setSlaveMode();
 
-       //BUILD TLEPropagator
+        ArrayList<ForceModel> forcesList = new ArrayList<>();
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getSun()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMercury()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getVenus()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMars()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMoon()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getJupiter()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getSaturn()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getUranus()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getNeptune()));
+        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getPluto()));
+
+        System.out.println(tleProp.getFrame());
+        for (int i = 0; i < forcesList.size(); i++){
+
+        }
 
 
-       //Ellipsoid el = new Ellipsoid(frame, 1,1,1);
-       //AngularCoordinates orientation = new AngularCoordinates();
-       //AbsoluteDate initialDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
-       //currentPV = new PVCoordinates();
-       //att = new Attitude(initialDate, frame, orientation);
-       //Attitude att = new Attitude( initialDate, frame, orientation);
+    }
 
-        //Propagator propagator = builder.buildPropagator(initialDate, array);
+    public SpacecraftState updateState(AbsoluteDate currentDate){
+        SpacecraftState state = null;
+        try {
+            state = tleProp.propagate(currentDate);
+        } catch (OrekitException e){
+            e.printStackTrace();
+        }
+        return state;
 
     }
 
@@ -100,9 +117,15 @@ public class Entity {
         return tleProp.getPVCoordinates(abDate, frame); //returns coordinates
     }
 
+    public void getCurrentPosition(){
+
+        Frame eme = FramesFactory.getEME2000();
+
+
+    }
     private TimeStampedPVCoordinates getPVCoordinates(AbsoluteDate date) throws OrekitException {
 
-        Frame frame = FramesFactory.getTEME();
+        Frame frame = FramesFactory.getGCRF();
         //SpacecraftState state = tleProp.propagate(date);
         //Orbit orbit = state.getOrbit();
         //TimeStampedPVCoordinates coordinates = orbit.getPVCoordinates();
@@ -111,9 +134,11 @@ public class Entity {
         return tleProp.getPVCoordinates(date, frame); //returns coordinates
     }
     public Vector3D getVector(AbsoluteDate date){
+
         TimeStampedPVCoordinates pv = null;
         try {
-            pv = this.getPVCoordinates(date);
+            Frame frame = FramesFactory.getTEME();
+            pv = tleProp.getPVCoordinates(date, frame);
         } catch (OrekitException e) {
             e.printStackTrace();
         }
