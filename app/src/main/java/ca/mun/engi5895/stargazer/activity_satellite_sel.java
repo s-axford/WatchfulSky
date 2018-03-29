@@ -4,10 +4,14 @@ package ca.mun.engi5895.stargazer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -109,17 +113,18 @@ public class activity_satellite_sel extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_notifications:
-                    //mTextMessage.setText(R.string.title_nearby);
 
-                   // listView.setVisibility(View.INVISIBLE);
-                    //progressBar.setProgress(1);
-                    //progressBar.setVisibility(View.VISIBLE);
-                    //progressBar.setActivated(true);
+
+
+
                     return true;
             }
             return false;
         }
     };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +137,8 @@ public class activity_satellite_sel extends AppCompatActivity {
        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //listView = findViewById(R.id.lvid2);
 
+        //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
         expandableListView_fav = (ExpandableListView) findViewById(R.id.expandableListView_fav);
