@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAesthetics;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
  * Created by Spencer on 3/28/2018.
  */
 
+//new linearLayout type the is mandated to be square based on width
 public class SquareLayout extends LinearLayout {
     public SquareLayout(Context context) {
         super(context);
@@ -24,7 +25,7 @@ public class SquareLayout extends LinearLayout {
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec); //makes height the same as width
         int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int size = width > height ? height : width;

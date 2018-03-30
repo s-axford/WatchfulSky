@@ -1,7 +1,7 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.OrbitingEntityCalculations;
 
-/**
- * The Entity class is a representation of a space entity, with many methods used to interpret
+/*
+  The Entity class is a representation of a space entity, with many methods used to interpret
  its data. It is important to note here that the data on each satellite is in TLE (Two Line
  Element) format. Many of the Entity class methods call various methods from the TLE,
  TLEPropagator, PVCoordinates and TimeScaleFactory classes. As previously mentioned,
@@ -12,37 +12,25 @@ package ca.mun.engi5895.stargazer;
  to execute correctly and for entity to be able to access the required information.
  */
 
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.errors.OrekitException;
 import org.orekit.forces.ForceModel;
 import org.orekit.forces.gravity.ThirdBodyAttraction;
+import org.orekit.frames.Frame;
 import org.orekit.frames.FramesFactory;
-import org.orekit.orbits.Orbit;
 import org.orekit.propagation.SpacecraftState;
 import org.orekit.propagation.analytical.tle.TLE;
 import org.orekit.propagation.analytical.tle.TLEPropagator;
 import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
-import org.orekit.frames.Frame;
 import org.orekit.utils.PVCoordinates;
-import org.orekit.time.UTCScale;
-
 import org.orekit.utils.TimeStampedPVCoordinates;
-/*
-import org.orekit.propagation.conversion.TLEPropagatorBuilder;
-import org.orekit.propagation.Propagator;
-import org.orekit.attitudes.Attitude;
-import org.orekit.orbits.PositionAngle;
-import org.orekit.bodies.Ellipsoid;
-import org.orekit.utils.AngularCoordinates;
-*/
-
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Entity {
@@ -51,16 +39,8 @@ public class Entity {
     private static TLEPropagator tleProp; //orbit propagator
     private static String entity_name;
 
-    //private Calendar calendar;
-    //private double[] array;
-    //private int avgMass = 200;
-    //private Attitude att;
-    //private PVCoordinates currentPV;
-    //private TLEPropagatorBuilder builder;
-
-
     //constructor
-    Entity(String name, String line1, String line2) throws OrekitException{
+    public Entity(String name, String line1, String line2) throws OrekitException{
 
         //System.out.println(line1);
         //System.out.println(line2);
@@ -86,9 +66,6 @@ public class Entity {
         forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getPluto()));
 
         System.out.println(tleProp.getFrame());
-        for (int i = 0; i < forcesList.size(); i++){
-
-        }
     }
 
     public SpacecraftState updateState(AbsoluteDate currentDate){
@@ -135,6 +112,7 @@ public class Entity {
             e.printStackTrace();
         }
 
+        assert pv != null;
         return pv.getPosition();
     }
     public double getX(AbsoluteDate date){
@@ -202,10 +180,10 @@ public class Entity {
     }
 
 
-    public double getInclination(){
-        return entity.getI(); //return inclination angle
-    }
+    //return inclination angle
+    public double getInclination(){ return entity.getI();}
 
+    //gets TLE lines and Name of sat
     public String getLine1() throws OrekitException {return entity.getLine1();}
 
     public String getLine2() throws OrekitException {return entity.getLine2();}

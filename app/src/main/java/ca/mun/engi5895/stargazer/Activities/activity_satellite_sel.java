@@ -1,29 +1,20 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import org.orekit.errors.OrekitException;
 
@@ -35,7 +26,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import ca.mun.engi5895.stargazer.DataInstallation.celestrakData;
+import ca.mun.engi5895.stargazer.OrbitingEntityCalculations.Entity;
+import ca.mun.engi5895.stargazer.AndroidAesthetics.MyListAdapter;
+import ca.mun.engi5895.stargazer.R;
 
 //"?android:attr/windowBackground"
 

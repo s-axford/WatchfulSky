@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.bodies.GeodeticPoint;
 import org.orekit.bodies.OneAxisEllipsoid;
@@ -37,6 +36,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import ca.mun.engi5895.stargazer.OrbitingEntityCalculations.Entity;
+import ca.mun.engi5895.stargazer.AndroidAesthetics.Favorites;
+import ca.mun.engi5895.stargazer.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 

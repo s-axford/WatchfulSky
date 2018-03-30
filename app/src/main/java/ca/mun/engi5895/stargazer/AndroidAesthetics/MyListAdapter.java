@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAesthetics;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import ca.mun.engi5895.stargazer.R;
 
 public class MyListAdapter extends BaseExpandableListAdapter {
 

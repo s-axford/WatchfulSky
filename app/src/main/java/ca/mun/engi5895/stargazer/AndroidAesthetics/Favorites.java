@@ -1,10 +1,7 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAesthetics;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,14 +9,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -33,7 +26,7 @@ public class Favorites {
     private static Context context;
     private ListView listView;
 
-    Favorites(Context inContext){
+    public Favorites(Context inContext){
 
         context = inContext;
         /*try {

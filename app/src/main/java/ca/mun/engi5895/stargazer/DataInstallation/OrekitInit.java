@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.DataInstallation;
 
 /**
  * Created by Spencer on 3/8/2018.

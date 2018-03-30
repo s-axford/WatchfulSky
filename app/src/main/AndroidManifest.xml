@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:icon="@drawable/rocketcol">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,28 +32,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GeocentricActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activities.HeliocentricActivity"
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
-            android:name=".HeliocentricActivity"
-            android:parentActivityName=".MainActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Activities.SettingsActivity"
+            android:parentActivityName=".Activities.MainActivity" />
 
-        <service android:name=".saveFileIntent" />
+        <service android:name=".DataInstallation.saveFileIntent" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".activity_satellite_sel"
+            android:name=".Activities.activity_satellite_sel"
             android:label="@string/title_activity_satellite_sel"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.mun.engi5895.stargazer.MainActivity" />
+                android:value="ca.mun.engi5895.stargazer.Activities.MainActivity" />
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -68,7 +65,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Activities.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 
