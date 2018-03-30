@@ -13,6 +13,16 @@
     <string name="title_nearby">Nearby</string>
     <string name="title_activity_maps">Map</string>
     <string name="satellite_name"></string>
+    <string name="venus">Venus</string>
+    <string name="saturn">Saturn</string>
+    <string name="earth">Earth</string>
+    <string name="uranus">Uranus</string>
+    <string name="mars">Mars</string>
+    <string name="neptune">Neptune</string>
+    <string name="name">Name</string>
+    <string name="distance_from_sun">Distance from Sun</string>
+    <string name="velocity">Velocity</string>
+    <string name="back">back</string>
 
 
 </resources>

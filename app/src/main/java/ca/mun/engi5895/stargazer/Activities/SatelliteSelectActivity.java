@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.MyListAdapter;
 import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
@@ -43,9 +44,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapterList;
     private ArrayAdapter<String> favoriteList;
 
-    public static ArrayList<Entity> selectedSats = new ArrayList<Entity>();
-    private static ArrayList<Object> satList = new ArrayList<Object>();
-    private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
+    public static ArrayList<Entity> selectedSats = new ArrayList<>();
+    private static ArrayList<Object> satList = new ArrayList<>();
+    private static ArrayList<Object> favoriteSats = new ArrayList<>();
 
     private static String TLE1;
     private static String TLE2;
@@ -129,22 +130,22 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_satellite_sel);
 
       //  mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //listView = findViewById(R.id.lvid2);
 
         //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView_fav = (ExpandableListView) findViewById(R.id.expandableListView_fav);
+        expandableListView = findViewById(R.id.expandableListView);
+        expandableListView_fav = findViewById(R.id.expandableListView_fav);
 
         try {
             expandableListDetail = celestrakData.getSatData(getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
         expandableListAdapter = new MyListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         //expandableListView.setVisibility(View.VISIBLE);
@@ -168,7 +169,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        expandableListTitle_fav = new ArrayList<String>(expandableListDetail_fav.keySet());
+        expandableListTitle_fav = new ArrayList<>(expandableListDetail_fav.keySet());
         expandableListAdapter_fav = new MyListAdapter(this, expandableListTitle_fav, expandableListDetail_fav);
         expandableListView_fav.setAdapter(expandableListAdapter_fav);
         expandableListView_fav.setVisibility(View.VISIBLE);
@@ -186,17 +187,17 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String fileName = null;
 
 
-                if (satType == "Space Stations") {
+                if (satType.equals("Space Stations")) {
                     fileName = "favorites_stations.txt";
-                } else if (satType == "Newly Launched Satellites")
+                } else if (satType.equals("Newly Launched Satellites"))
                     fileName = "favorites_tle-new.txt";
-                else if (satType == "GPS Satellites")
+                else if (satType.equals("GPS Satellites")) {
                     fileName = "favorites_gps-ops.txt";
-                else if (satType == "Communications Satellites")
+                } else if (satType.equals("Communications Satellites"))
                     fileName = "favorites_geo.txt";
-                else if (satType == "Intelsat Satellites")
+                else if (satType.equals("Intelsat Satellites"))
                     fileName = "favorites_intelsat.txt";
-                else if (satType == "Science Satellites")
+                else if (satType.equals("Science Satellites"))
                     fileName = "favorites_science.txt";
 
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
@@ -216,12 +217,12 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 }
 
 
-                InputStreamReader sreader1 = new InputStreamReader(stream1);
+                InputStreamReader sreader1 = new InputStreamReader(Objects.requireNonNull(stream1));
                 BufferedReader breader1 = new BufferedReader(sreader1);
 
                 String line1;
-                String TLE1 = new String();
-                String TLE2 = new String();
+                String TLE1 = "";
+                String TLE2 = "";
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
 
@@ -323,17 +324,17 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String fileName = null;
 
 
-                if (satType == "Space Stations") {
+                if (satType.equals("Space Stations")) {
                     fileName = "stations.txt";
-                } else if (satType == "Newly Launched Satellites")
+                } else if (satType.equals("Newly Launched Satellites"))
                     fileName = "tle-new.txt";
-                else if (satType == "GPS Satellites")
+                else if (satType.equals("GPS Satellites"))
                     fileName = "gps-ops.txt";
-                else if (satType == "Communications Satellites")
+                else if (satType.equals("Communications Satellites"))
                     fileName = "geo.txt";
-                else if (satType == "Intelsat Satellites")
+                else if (satType.equals("Intelsat Satellites"))
                     fileName = "intelsat.txt";
-                else if (satType == "Science Satellites")
+                else if (satType.equals("Science Satellites"))
                     fileName = "science.txt";
 
                 System.out.println("Filename: "+ fileName);
@@ -355,12 +356,12 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 }
 
 
-                InputStreamReader sreader1 = new InputStreamReader(stream1);
+                InputStreamReader sreader1 = new InputStreamReader(Objects.requireNonNull(stream1));
                 BufferedReader breader1 = new BufferedReader(sreader1);
 
                 String line1;
-                String TLE1 = new String();
-                String TLE2 = new String();
+                String TLE1 = "";
+                String TLE2 = "";
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
 
@@ -421,14 +422,8 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
     public static void removeFavSat() {
         boolean found = false;
-
-        for (int i = 0; i < favoriteSats.size(); i++){
-
-        }
-
-        if(found == false){
             //create dialog box
-        }
+
     }
 
     /*

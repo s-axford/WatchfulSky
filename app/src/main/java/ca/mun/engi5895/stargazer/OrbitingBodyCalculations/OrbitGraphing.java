@@ -27,7 +27,7 @@ public class OrbitGraphing {
     }
 
     //gets PVCoordinates for current time for a particular body  based on a sun centered reference frame
-    protected static TimeStampedPVCoordinates getPlanetCoordinates(CelestialBody body) throws OrekitException {
+    private static TimeStampedPVCoordinates getPlanetCoordinates(CelestialBody body) throws OrekitException {
         TimeScale timeZone = TimeScalesFactory.getUTC(); // get UTC time scale
         Date date = new Date(); //creates date
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar

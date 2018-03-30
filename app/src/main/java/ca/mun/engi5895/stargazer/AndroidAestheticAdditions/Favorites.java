@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class Favorites {
 
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<String> list = new ArrayList<>();
     private ArrayAdapter adapterList;
     private static Context context;
     private ListView listView;
@@ -59,7 +59,7 @@ public class Favorites {
 
         //Needed to convert it to a ListView
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_list_item_1,
                 list);
@@ -130,7 +130,7 @@ public class Favorites {
         //Creates private list
     }
 
-    public ArrayAdapter<String> getFavorites(){return adapterList;}
+    public ArrayAdapter getFavorites(){return adapterList;}
 
     public static void addFavorite(String name, String line1, String line2, String fileName){
         try {

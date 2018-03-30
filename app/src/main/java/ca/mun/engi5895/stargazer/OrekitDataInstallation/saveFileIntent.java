@@ -40,7 +40,7 @@ public class saveFileIntent extends IntentService {
         }
 
         InputStream stream = null;
-        FileOutputStream fos = null;
+        FileOutputStream fos;
 
         try {
             URL url = new URL(urlPath);

@@ -1,7 +1,7 @@
 package ca.mun.engi5895.stargazer.OrekitDataInstallation;
 
-/**
- * Created by Spencer on 3/8/2018.
+/*
+  Created by Spencer on 3/8/2018.
  */
 
 import java.io.File;

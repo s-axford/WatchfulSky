@@ -1,7 +1,7 @@
 package ca.mun.engi5895.stargazer.OrbitingBodyCalculations;
 
-/**
- * The Entity class is a representation of a space entity, with many methods used to interpret
+/*
+  The Entity class is a representation of a space entity, with many methods used to interpret
  its data. It is important to note here that the data on each satellite is in TLE (Two Line
  Element) format. Many of the Entity class methods call various methods from the TLE,
  TLEPropagator, PVCoordinates and TimeScaleFactory classes. As previously mentioned,
@@ -74,9 +74,6 @@ public class Entity {
         forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getPluto()));
 
         System.out.println(tleProp.getFrame());
-        for (int i = 0; i < forcesList.size(); i++){
-
-        }
     }
 
     public SpacecraftState updateState(AbsoluteDate currentDate){
@@ -123,22 +120,23 @@ public class Entity {
             e.printStackTrace();
         }
 
+        assert pv != null;
         return pv.getPosition();
     }
     public double getX(AbsoluteDate date){
-        double xVal = 0;
+        double xVal;
         xVal = getVector(date).getX();
 
         return xVal;
     }
     public double getY(AbsoluteDate date){
-        double yVal = 0;
+        double yVal;
         yVal = getVector(date).getY();
 
         return yVal;
     }
     public double getZ(AbsoluteDate date){
-        double zVal = 0;
+        double zVal;
         zVal = getVector(date).getZ();
 
         return zVal;
@@ -170,7 +168,7 @@ public class Entity {
         return 2*Math.PI / meanMotion; //returns period
     }
 
-    public double getSatNum() throws OrekitException{
+    public double getSatNum() {
         return entity.getSatelliteNumber();
     }
 

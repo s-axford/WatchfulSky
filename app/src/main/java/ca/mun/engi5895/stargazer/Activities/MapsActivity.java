@@ -44,18 +44,9 @@ import ca.mun.engi5895.stargazer.R;
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private int hour;
-    private int minute;
 
     public static final String FILENAME = "filename";
 
-    private TextView outSat;
-    private TextView velocity_txt;
-    private TextView period_txt;
-    private TextView height_txt;
-    private TextView perigee_txt;
-    private TextView apogee_txt;
-    private TextView inclination_txt;
     private ArrayList<Entity> selectedSat;
 
     private String timePickerTime;
@@ -63,7 +54,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Date date;
     Date d1;
 
-    private  ArrayList<Object> list = new ArrayList<Object>();
+    private  ArrayList<Object> list = new ArrayList<>();
 
     private Frame earthFixedFrame;      //Declares a frame of the earth
     private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
@@ -73,7 +64,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     boolean initial = true;
     TextView sat_Name;
-    TextView sat_Perigee_Title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +75,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         selectedSat = SatelliteSelectActivity.getSelectedSat();
-        //Entity satChosen = selectedSat.get(0);
 
         System.out.println(selectedSat.get(0).getName());
-        sat_Name = (TextView) findViewById(R.id.satName);
+        sat_Name = findViewById(R.id.satName);
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
       
@@ -96,7 +85,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
                 System.out.println(selectedSat.get(i).getName());
-                sat_Name = (TextView) findViewById(R.id.satName);
+                sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(selectedSat.get(i).getName());
 
         try {
@@ -105,13 +94,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (OrekitException e) {
             e.printStackTrace();
         }
-        //sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
-                //sat_Perigee_Title.setText("Satellite Perigee");
-
     }
 
     public void onBackPressed() {
-        //SatelliteSelectActivity.clearSelectedSats();
         selectedSat.clear();
         System.out.println("DONE WITH THE MAP");
         initial = false;
@@ -183,7 +168,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         System.out.println(selectedSat.get(i).getLine1());
                         System.out.println(selectedSat.get(i).getLine2());
                         System.out.println(fileName);
-                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
+                        Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
                         e.printStackTrace();
@@ -194,9 +179,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public String getCurrentTime(final Date d){
-        String currentTime = "0";
+        String currentTime;
 
-        TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
+        TimePicker timePicker = findViewById(R.id.timePicker);
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
@@ -287,11 +272,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < selectedSat.size(); i++) {
         //int i = 0;
             double satNum = 0;
-            try {
-                satNum = selectedSat.get(i).getSatNum();
-            }catch(OrekitException e) {
-                e.printStackTrace();
-            }
+            satNum = selectedSat.get(i).getSatNum();
             TextView satNumberText = findViewById(R.id.satelliteNumber);
             satNumberText.setText("Satellite Number: " + String.valueOf(satNum));
             //DETERMINES NECESSARY TIME
@@ -340,12 +321,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
                 double altitude = pointPlot.getAltitude();
                 TextView satAltitude = findViewById(R.id.satAltitude);
-                satAltitude.setText("Altitude: " + String.valueOf(altitude));
+                satAltitude.setText("Altitude: " + altitude + "m");
 
                 try {
-                    String latitudeString = "Latitude: " + latitude;
-                    String longitudeString = "Longitude: " + longitude;
-                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity());
+                    String latitudeString = "Latitude: " + latitude + "m/s";
+                    String longitudeString = "Longitude: " + longitude + "m/s";
+                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity()) + "m/s^2";
                     TextView satLatitude = findViewById(R.id.satLatitude);
                     TextView satLongitude = findViewById(R.id.satLongitude);
                     TextView satVelocity = findViewById(R.id.velocity);
@@ -364,7 +345,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mMap.clear();
                     pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
                     mMap.addMarker(pointA);
-                    if (initial == true) {
+                    if (initial) {
                         initial = false;
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
                     }
