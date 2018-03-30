@@ -1,11 +1,7 @@
 package ca.mun.engi5895.stargazer;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;

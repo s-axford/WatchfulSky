@@ -6,13 +6,6 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-
-import ca.mun.engi5895.stargazer.R;
-
 /**
  * Dialog to sho errors
  * @author Xavier Gibert

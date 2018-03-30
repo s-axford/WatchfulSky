@@ -2,29 +2,19 @@ package ca.mun.engi5895.stargazer;
 
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.orekit.errors.OrekitException;
 
@@ -36,11 +26,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-//"?android:attr/windowBackground"
 
-public class activity_satellite_sel extends AppCompatActivity {
+public class SatelliteSelectActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ListView listView;
@@ -68,10 +56,10 @@ public class activity_satellite_sel extends AppCompatActivity {
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
 
-   // Favorites fav = new Favorites(activity_satellite_sel.this);
+   // Favorites fav = new Favorites(SatelliteSelectActivity.this);
   //  favoriteList = fav.getFavorites();\
 
-  //  Context context = activity_satellite_sel.this;
+  //  Context context = SatelliteSelectActivity.this;
   //  Favorites fav = new Favorites(context);
    // favoriteList = fav.getFavorites();
 
@@ -98,7 +86,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     System.out.println("Clicked Favourites");
 
-                   //Context context = activity_satellite_sel.this;
+                   //Context context = SatelliteSelectActivity.this;
                  //  Favorites fav = new Favorites(context);
                 //    favoriteList = fav.getFavorites();
 
@@ -252,7 +240,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                 } catch (OrekitException e) {
                     e.printStackTrace();
                 }
@@ -397,7 +385,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                     System.out.println("Adding entity big success");
                 } catch (OrekitException e) {
                     System.out.println("Fucking up with making new entity");
