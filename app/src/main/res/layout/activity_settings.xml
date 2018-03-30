@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.mun.engi5895.stargazer.SettingsActivity">
+    tools:context="ca.mun.engi5895.stargazer.Activities.SettingsActivity">
 
     <RelativeLayout
         android:id="@+id/topButtons"

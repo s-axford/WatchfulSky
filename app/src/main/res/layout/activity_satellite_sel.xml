@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.mun.engi5895.stargazer.SatelliteSelectActivity">
+    tools:context="ca.mun.engi5895.stargazer.Activities.SatelliteSelectActivity">
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -63,7 +63,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_constraintBottom_toBottomOf="@id/navigation"
-        tools:context="ca.mun.engi5895.stargazer.SatelliteSelectActivity">
+        tools:context="ca.mun.engi5895.stargazer.Activities.SatelliteSelectActivity">
 
         <ExpandableListView
             android:id="@+id/expandableListView"
