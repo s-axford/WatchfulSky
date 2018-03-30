@@ -1,10 +1,12 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.OrekitDataInstallation;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import ca.mun.engi5895.stargazer.R;
 
 /**
  * Dialog to sho errors

@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAestheticAdditions;
 
 import android.content.Context;
 import android.util.Log;
@@ -26,7 +26,7 @@ public class Favorites {
     private static Context context;
     private ListView listView;
 
-    Favorites(Context inContext){
+    public Favorites(Context inContext){
 
         context = inContext;
         /*try {

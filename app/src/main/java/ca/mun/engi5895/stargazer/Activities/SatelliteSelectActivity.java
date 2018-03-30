@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 
 
@@ -26,6 +26,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.MyListAdapter;
+import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
+import ca.mun.engi5895.stargazer.R;
 
 
 public class SatelliteSelectActivity extends AppCompatActivity {

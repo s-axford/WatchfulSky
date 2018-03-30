@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.OrbitingBodyCalculations;
 
 /**
  * The Entity class is a representation of a space entity, with many methods used to interpret
@@ -48,7 +48,7 @@ public class Entity {
 
 
     //constructor
-    Entity(String name, String line1, String line2) throws OrekitException{
+    public Entity(String name, String line1, String line2) throws OrekitException{
 
         //System.out.println(line1);
         //System.out.println(line2);

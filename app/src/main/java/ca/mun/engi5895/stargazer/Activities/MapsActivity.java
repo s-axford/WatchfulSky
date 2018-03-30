@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,6 +36,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.Favorites;
+import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.stargazer.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -439,12 +443,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
 
-        AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
 
-
-
-
-        return abDate;
+        return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
     }
 
 }

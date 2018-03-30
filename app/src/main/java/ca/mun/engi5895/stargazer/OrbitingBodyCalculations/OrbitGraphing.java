@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.OrbitingBodyCalculations;
 
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYSeries;

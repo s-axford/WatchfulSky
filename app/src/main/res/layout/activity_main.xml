@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:theme="@style/Theme.AppCompat"
     android:background="@color/black"
-    tools:context="ca.mun.engi5895.stargazer.MainActivity">
+    tools:context="ca.mun.engi5895.stargazer.Activities.MainActivity">
 
     <Button
         android:id="@+id/button"
