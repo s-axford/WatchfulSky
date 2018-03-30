@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void geoGo(View view) {
-        Intent intent = new Intent(this, activity_satellite_sel.class);
+        Intent intent = new Intent(this, SatelliteSelectActivity.class);
         startActivity(intent);
     }
 

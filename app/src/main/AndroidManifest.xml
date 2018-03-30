@@ -45,7 +45,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Activities.activity_satellite_sel"
+            android:name=".Activities.SatelliteSelectActivity"
             android:label="@string/title_activity_satellite_sel"
             android:parentActivityName=".Activities.MainActivity">
             <meta-data

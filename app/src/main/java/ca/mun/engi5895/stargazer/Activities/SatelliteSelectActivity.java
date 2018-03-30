@@ -34,7 +34,7 @@ import ca.mun.engi5895.stargazer.R;
 
 //"?android:attr/windowBackground"
 
-public class activity_satellite_sel extends AppCompatActivity {
+public class SatelliteSelectActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ListView listView;
@@ -62,10 +62,10 @@ public class activity_satellite_sel extends AppCompatActivity {
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
 
-   // Favorites fav = new Favorites(activity_satellite_sel.this);
+   // Favorites fav = new Favorites(SatelliteSelectActivity.this);
   //  favoriteList = fav.getFavorites();\
 
-  //  Context context = activity_satellite_sel.this;
+  //  Context context = SatelliteSelectActivity.this;
   //  Favorites fav = new Favorites(context);
    // favoriteList = fav.getFavorites();
 
@@ -92,7 +92,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     System.out.println("Clicked Favourites");
 
-                   //Context context = activity_satellite_sel.this;
+                   //Context context = SatelliteSelectActivity.this;
                  //  Favorites fav = new Favorites(context);
                 //    favoriteList = fav.getFavorites();
 
@@ -246,7 +246,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                 } catch (OrekitException e) {
                     e.printStackTrace();
                 }
@@ -391,7 +391,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                     System.out.println("Adding entity big success");
                 } catch (OrekitException e) {
                     System.out.println("Fucking up with making new entity");

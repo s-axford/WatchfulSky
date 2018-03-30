@@ -79,7 +79,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        selectedSat = activity_satellite_sel.getSelectedSat();
+        selectedSat = SatelliteSelectActivity.getSelectedSat();
         //Entity satChosen = selectedSat.get(0);
 
         System.out.println(selectedSat.get(0).getName());
@@ -106,7 +106,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onBackPressed() {
-        //activity_satellite_sel.clearSelectedSats();
+        //SatelliteSelectActivity.clearSelectedSats();
         selectedSat.clear();
         System.out.println("DONE WITH THE MAP");
         this.finish();
@@ -139,9 +139,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.actionbar_fav:
 
 
-             //   list = activity_satellite_sel.getSelectedSat();
+             //   list = SatelliteSelectActivity.getSelectedSat();
 
-                selectedSat = activity_satellite_sel.getSelectedSat();
+                selectedSat = SatelliteSelectActivity.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
                 Favorites favorite = new Favorites(getApplicationContext());
