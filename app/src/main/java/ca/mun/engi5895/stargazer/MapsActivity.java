@@ -15,12 +15,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.bodies.GeodeticPoint;
 import org.orekit.bodies.OneAxisEllipsoid;
@@ -32,16 +30,12 @@ import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.Constants;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -86,7 +80,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        selectedSat = activity_satellite_sel.getSelectedSat();
+        selectedSat = SatelliteSelectActivity.getSelectedSat();
         //Entity satChosen = selectedSat.get(0);
 
         System.out.println(selectedSat.get(0).getName());
@@ -113,7 +107,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void onBackPressed() {
-        //activity_satellite_sel.clearSelectedSats();
+        //SatelliteSelectActivity.clearSelectedSats();
         selectedSat.clear();
         System.out.println("DONE WITH THE MAP");
         initial = false;
@@ -170,9 +164,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                // setTitle("StarGazer (Favorites)");
 
-             //   list = activity_satellite_sel.getSelectedSat();
+             //   list = SatelliteSelectActivity.getSelectedSat();
 
-                selectedSat = activity_satellite_sel.getSelectedSat();
+                selectedSat = SatelliteSelectActivity.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
                 Favorites favorite = new Favorites(getApplicationContext());

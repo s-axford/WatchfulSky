@@ -2,31 +2,11 @@ package ca.mun.engi5895.stargazer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.orekit.errors.OrekitException;
-
-import ca.mun.engi5895.stargazer.activity_satellite_sel;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class GeocentricActivity extends AppCompatActivity {
@@ -61,7 +41,7 @@ public class GeocentricActivity extends AppCompatActivity {
     }
 /*
     public void onBackPressed() {
-        activity_satellite_sel.clearSatsList();
+        SatelliteSelectActivity.clearSatsList();
         this.finish();
     }
 */
@@ -100,7 +80,7 @@ public class GeocentricActivity extends AppCompatActivity {
         sreader.close();
         stream.close();
 
-                ArrayList<Object> sats = activity_satellite_sel.getSelectedSat();
+                ArrayList<Object> sats = SatelliteSelectActivity.getSelectedSat();
                 Object o = sats.get(0); //listView.getItemAtPosition(position); //Gets clicked option as java object
                 System.out.println(o.toString()); //Output to console as string
                 listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
