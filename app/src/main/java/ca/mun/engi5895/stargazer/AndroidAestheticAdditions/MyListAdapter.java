@@ -1,4 +1,4 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAestheticAdditions;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import ca.mun.engi5895.stargazer.R;
 
 public class MyListAdapter extends BaseExpandableListAdapter {
 
@@ -39,9 +41,11 @@ public class MyListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_child, null);
+            if (layoutInflater != null) {
+                convertView = layoutInflater.inflate(R.layout.list_child, null);
+            }
         }
-        TextView expandedListTextView = (TextView) convertView
+        TextView expandedListTextView = convertView
                 .findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
         return convertView;
@@ -74,9 +78,11 @@ public class MyListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_parent, null);
+            if (layoutInflater != null) {
+                convertView = layoutInflater.inflate(R.layout.list_parent, null);
+            }
         }
-        TextView listTitleTextView = (TextView) convertView
+        TextView listTitleTextView = convertView
                 .findViewById(R.id.listTitle);
         listTitleTextView.setTypeface(null, Typeface.BOLD);
         listTitleTextView.setText(listTitle);

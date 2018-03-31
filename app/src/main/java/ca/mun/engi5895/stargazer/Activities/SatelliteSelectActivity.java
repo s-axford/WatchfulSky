@@ -1,30 +1,20 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.orekit.errors.OrekitException;
 
@@ -36,11 +26,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
-//"?android:attr/windowBackground"
+import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.MyListAdapter;
+import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
+import ca.mun.engi5895.stargazer.R;
 
-public class activity_satellite_sel extends AppCompatActivity {
+
+public class SatelliteSelectActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ListView listView;
@@ -50,9 +44,9 @@ public class activity_satellite_sel extends AppCompatActivity {
     private ArrayAdapter<String> adapterList;
     private ArrayAdapter<String> favoriteList;
 
-    public static ArrayList<Entity> selectedSats = new ArrayList<Entity>();
-    private static ArrayList<Object> satList = new ArrayList<Object>();
-    private static ArrayList<Object> favoriteSats = new ArrayList<Object>();
+    public static ArrayList<Entity> selectedSats = new ArrayList<>();
+    private static ArrayList<Object> satList = new ArrayList<>();
+    private static ArrayList<Object> favoriteSats = new ArrayList<>();
 
     private static String TLE1;
     private static String TLE2;
@@ -68,10 +62,10 @@ public class activity_satellite_sel extends AppCompatActivity {
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
 
-   // Favorites fav = new Favorites(activity_satellite_sel.this);
+   // Favorites fav = new Favorites(SatelliteSelectActivity.this);
   //  favoriteList = fav.getFavorites();\
 
-  //  Context context = activity_satellite_sel.this;
+  //  Context context = SatelliteSelectActivity.this;
   //  Favorites fav = new Favorites(context);
    // favoriteList = fav.getFavorites();
 
@@ -98,7 +92,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 case R.id.navigation_dashboard:
                     System.out.println("Clicked Favourites");
 
-                   //Context context = activity_satellite_sel.this;
+                   //Context context = SatelliteSelectActivity.this;
                  //  Favorites fav = new Favorites(context);
                 //    favoriteList = fav.getFavorites();
 
@@ -136,22 +130,22 @@ public class activity_satellite_sel extends AppCompatActivity {
         setContentView(R.layout.activity_satellite_sel);
 
       //  mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //listView = findViewById(R.id.lvid2);
 
         //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
-        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
-        expandableListView_fav = (ExpandableListView) findViewById(R.id.expandableListView_fav);
+        expandableListView = findViewById(R.id.expandableListView);
+        expandableListView_fav = findViewById(R.id.expandableListView_fav);
 
         try {
             expandableListDetail = celestrakData.getSatData(getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
         expandableListAdapter = new MyListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         //expandableListView.setVisibility(View.VISIBLE);
@@ -175,7 +169,7 @@ public class activity_satellite_sel extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        expandableListTitle_fav = new ArrayList<String>(expandableListDetail_fav.keySet());
+        expandableListTitle_fav = new ArrayList<>(expandableListDetail_fav.keySet());
         expandableListAdapter_fav = new MyListAdapter(this, expandableListTitle_fav, expandableListDetail_fav);
         expandableListView_fav.setAdapter(expandableListAdapter_fav);
         expandableListView_fav.setVisibility(View.VISIBLE);
@@ -193,17 +187,17 @@ public class activity_satellite_sel extends AppCompatActivity {
                 String fileName = null;
 
 
-                if (satType == "Space Stations") {
+                if (satType.equals("Space Stations")) {
                     fileName = "favorites_stations.txt";
-                } else if (satType == "Newly Launched Satellites")
+                } else if (satType.equals("Newly Launched Satellites"))
                     fileName = "favorites_tle-new.txt";
-                else if (satType == "GPS Satellites")
+                else if (satType.equals("GPS Satellites")) {
                     fileName = "favorites_gps-ops.txt";
-                else if (satType == "Communications Satellites")
+                } else if (satType.equals("Communications Satellites"))
                     fileName = "favorites_geo.txt";
-                else if (satType == "Intelsat Satellites")
+                else if (satType.equals("Intelsat Satellites"))
                     fileName = "favorites_intelsat.txt";
-                else if (satType == "Science Satellites")
+                else if (satType.equals("Science Satellites"))
                     fileName = "favorites_science.txt";
 
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
@@ -223,12 +217,12 @@ public class activity_satellite_sel extends AppCompatActivity {
                 }
 
 
-                InputStreamReader sreader1 = new InputStreamReader(stream1);
+                InputStreamReader sreader1 = new InputStreamReader(Objects.requireNonNull(stream1));
                 BufferedReader breader1 = new BufferedReader(sreader1);
 
                 String line1;
-                String TLE1 = new String();
-                String TLE2 = new String();
+                String TLE1 = "";
+                String TLE2 = "";
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
 
@@ -252,7 +246,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                 } catch (OrekitException e) {
                     e.printStackTrace();
                 }
@@ -330,17 +324,17 @@ public class activity_satellite_sel extends AppCompatActivity {
                 String fileName = null;
 
 
-                if (satType == "Space Stations") {
+                if (satType.equals("Space Stations")) {
                     fileName = "stations.txt";
-                } else if (satType == "Newly Launched Satellites")
+                } else if (satType.equals("Newly Launched Satellites"))
                     fileName = "tle-new.txt";
-                else if (satType == "GPS Satellites")
+                else if (satType.equals("GPS Satellites"))
                     fileName = "gps-ops.txt";
-                else if (satType == "Communications Satellites")
+                else if (satType.equals("Communications Satellites"))
                     fileName = "geo.txt";
-                else if (satType == "Intelsat Satellites")
+                else if (satType.equals("Intelsat Satellites"))
                     fileName = "intelsat.txt";
-                else if (satType == "Science Satellites")
+                else if (satType.equals("Science Satellites"))
                     fileName = "science.txt";
 
                 System.out.println("Filename: "+ fileName);
@@ -362,12 +356,12 @@ public class activity_satellite_sel extends AppCompatActivity {
                 }
 
 
-                InputStreamReader sreader1 = new InputStreamReader(stream1);
+                InputStreamReader sreader1 = new InputStreamReader(Objects.requireNonNull(stream1));
                 BufferedReader breader1 = new BufferedReader(sreader1);
 
                 String line1;
-                String TLE1 = new String();
-                String TLE2 = new String();
+                String TLE1 = "";
+                String TLE2 = "";
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
 
@@ -397,7 +391,7 @@ public class activity_satellite_sel extends AppCompatActivity {
                 try {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
-                    activity_satellite_sel.getSelectedSat();
+                    SatelliteSelectActivity.getSelectedSat();
                     System.out.println("Adding entity big success");
                 } catch (OrekitException e) {
                     System.out.println("Fucking up with making new entity");
@@ -428,14 +422,8 @@ public class activity_satellite_sel extends AppCompatActivity {
 
     public static void removeFavSat() {
         boolean found = false;
-
-        for (int i = 0; i < favoriteSats.size(); i++){
-
-        }
-
-        if(found == false){
             //create dialog box
-        }
+
     }
 
     /*

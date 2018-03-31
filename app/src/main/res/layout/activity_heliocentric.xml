@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.mun.engi5895.stargazer.HeliocentricActivity">
+    tools:context="ca.mun.engi5895.stargazer.Activities.HeliocentricActivity">
 
-    <ca.mun.engi5895.stargazer.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ca.mun.engi5895.stargazer.AndroidAestheticAdditions.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:ap="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layout"
         android:layout_width="fill_parent"
@@ -25,7 +25,7 @@
             ap:rangeTitle="range"
             ap:title="A Simple XY Plot" />
 
-    </ca.mun.engi5895.stargazer.SquareLayout>
+    </ca.mun.engi5895.stargazer.AndroidAestheticAdditions.SquareLayout>
 
     <RelativeLayout
         android:id="@+id/topButtons"
@@ -75,14 +75,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickVenus"
-                    android:text="Venus" />
+                    android:text="@string/venus" />
 
                 <Button
                     android:id="@+id/buttonSaturn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickSaturn"
-                    android:text="Saturn" />
+                    android:text="@string/saturn" />
 
             </LinearLayout>
 
@@ -97,14 +97,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickEarth"
-                    android:text="Earth" />
+                    android:text="@string/earth" />
 
                 <Button
                     android:id="@+id/buttonUranus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickUranus"
-                    android:text="Uranus" />
+                    android:text="@string/uranus" />
 
             </LinearLayout>
 
@@ -119,14 +119,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickMars"
-                    android:text="Mars" />
+                    android:text="@string/mars" />
 
                 <Button
                     android:id="@+id/buttonNeptune"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:onClick="clickNeptune"
-                    android:text="Neptune" />
+                    android:text="@string/neptune" />
 
             </LinearLayout>
 
@@ -152,42 +152,35 @@
                 android:layout_centerHorizontal = "true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Name"/>
+                android:text="@string/name"/>
 
             <TextView
                 android:id="@+id/PlanetPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/PlanetName"
-                android:layout_weight="1"
-                android:text="Distance from Sun" />
+                android:text="@string/distance_from_sun" />
 
             <TextView
                 android:id="@+id/PlanetPositionValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/PlanetName"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_alignParentEnd="true" />
 
             <TextView
                 android:id="@+id/PlanetVelocity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/PlanetPosition"
-                android:layout_weight="1"
-                android:text="Velocity" />
+                android:text="@string/velocity" />
 
             <TextView
                 android:id="@+id/PlanetVelocityValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/PlanetPositionValue"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/PlanetPositionValue" />
 
             
                 <Button
@@ -196,7 +189,7 @@
                     android:layout_height="match_parent"
                     android:layout_below="@+id/earth_icon"
                     android:onClick="clickBack"
-                    android:text="back" />
+                    android:text="@string/back" />
 
             <ImageView
                 android:id="@+id/earth_icon"
@@ -206,9 +199,9 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/earth" /> />
+                app:srcCompat="@drawable/earth" />
 
-            <!--<ImageView
+            <ImageView
                 android:id="@+id/mercury_icon"
                 android:layout_width="73dp"
                 android:layout_height="65dp"
@@ -216,7 +209,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/mercury" /> />
+                app:srcCompat="@drawable/mercury" />
 
             <ImageView
                 android:id="@+id/venus_icon"
@@ -226,7 +219,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/venus" /> />
+                app:srcCompat="@drawable/venus" />
 
             <ImageView
                 android:id="@+id/mars_icon"
@@ -236,7 +229,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/mars1" /> />
+                app:srcCompat="@drawable/mars1" />
 
             <ImageView
                 android:id="@+id/jupiter_icon"
@@ -246,7 +239,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/jupiter" /> />
+                app:srcCompat="@drawable/jupiter" />
 
             <ImageView
                 android:id="@+id/saturn_icon"
@@ -256,7 +249,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/saturn1" /> />
+                app:srcCompat="@drawable/saturn1" />
 
             <ImageView
                 android:id="@+id/uranus_icon"
@@ -266,7 +259,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/uranus" /> />
+                app:srcCompat="@drawable/uranus" />
 
             <ImageView
                 android:id="@+id/neptune_icon"
@@ -276,7 +269,7 @@
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/neptune" /> />-->
+                app:srcCompat="@drawable/neptune" />
 
 
         </RelativeLayout>

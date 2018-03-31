@@ -1,17 +1,15 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.OrekitDataInstallation;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.res.AssetManager;
-import android.os.Environment;
-import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import ca.mun.engi5895.stargazer.Activities.MainActivity;
 
 /**
  * Created by Spencer on 3/8/2018.

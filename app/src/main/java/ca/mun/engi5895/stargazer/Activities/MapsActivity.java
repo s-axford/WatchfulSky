@@ -1,8 +1,7 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +15,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.bodies.GeodeticPoint;
 import org.orekit.bodies.OneAxisEllipsoid;
@@ -33,7 +30,6 @@ import org.orekit.time.AbsoluteDate;
 import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.Constants;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,24 +37,16 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.Favorites;
+import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.stargazer.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private int hour;
-    private int minute;
 
     public static final String FILENAME = "filename";
 
-    private TextView outSat;
-    private TextView velocity_txt;
-    private TextView period_txt;
-    private TextView height_txt;
-    private TextView perigee_txt;
-    private TextView apogee_txt;
-    private TextView inclination_txt;
     private ArrayList<Entity> selectedSat;
 
     private String timePickerTime;
@@ -66,7 +54,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Date date;
     Date d1;
 
-    private  ArrayList<Object> list = new ArrayList<Object>();
+    private  ArrayList<Object> list = new ArrayList<>();
 
     private Frame earthFixedFrame;      //Declares a frame of the earth
     private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
@@ -76,10 +64,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     boolean initial = true;
     TextView sat_Name;
-    TextView sat_Perigee_Title;
-
-    MenuItem favBtn;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,33 +74,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        // Global class
-
-
-
-
-        selectedSat = activity_satellite_sel.getSelectedSat();
-        //Entity satChosen = selectedSat.get(0);
+        selectedSat = SatelliteSelectActivity.getSelectedSat();
 
         System.out.println(selectedSat.get(0).getName());
-        sat_Name = (TextView) findViewById(R.id.satName);
+        sat_Name = findViewById(R.id.satName);
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
-
-
-        GlobalClass globe = ((GlobalClass) getApplicationContext());
-
-        Favorites favorite = globe.getGlobalFavorites();
-
-        if(favorite.getListOfFavs().contains(sat_Name)) {
-            favBtn.setIcon(R.drawable.favoritesicon_filled);
-        }
       
         int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
                 System.out.println(selectedSat.get(i).getName());
-                sat_Name = (TextView) findViewById(R.id.satName);
+                sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(selectedSat.get(i).getName());
 
         try {
@@ -125,13 +94,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         } catch (OrekitException e) {
             e.printStackTrace();
         }
-        //sat_Perigee_Title = (TextView) findViewById(R.id.textView6);
-                //sat_Perigee_Title.setText("Satellite Perigee");
-
     }
 
     public void onBackPressed() {
-        //activity_satellite_sel.clearSelectedSats();
         selectedSat.clear();
         System.out.println("DONE WITH THE MAP");
         initial = false;
@@ -141,7 +106,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater item = getMenuInflater();
-        favBtn = menu.getItem(R.id.actionbar_fav);
         item.inflate(R.menu.actionbar, menu);
         setTitle("StarGazer");
         return super.onCreateOptionsMenu(menu);
@@ -157,11 +121,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
              d1 = getCreatedTime();
                 timePickerTime = getCurrentTime(date);
 
-            
                 sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(timePickerTime);
-
-
 
                 View s = findViewById(R.id.actionbar_clock);
 
@@ -177,9 +138,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 sat_Name = findViewById(R.id.satName);
-
-                sat_Name.setText(timePickerTime);
-
+                //sat_Name.setText();
 
 
                 if (date == d1) {
@@ -194,15 +153,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                // setTitle("StarGazer (Favorites)");
 
-             //   list = activity_satellite_sel.getSelectedSat();
+             //   list = SatelliteSelectActivity.getSelectedSat();
 
-                selectedSat = activity_satellite_sel.getSelectedSat();
+                selectedSat = SatelliteSelectActivity.getSelectedSat();
                 String fileName = getIntent().getStringExtra(FILENAME);
 
-              //  Favorites favorite = new Favorites(getApplicationContext());
-                GlobalClass globe = ((GlobalClass) getApplicationContext());
-
-                Favorites favorite = globe.getGlobalFavorites();
+                Favorites favorite = new Favorites(getApplicationContext());
 
                 item.setIcon(R.drawable.favoritesicon_filled);
 
@@ -212,7 +168,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                         System.out.println(selectedSat.get(i).getLine1());
                         System.out.println(selectedSat.get(i).getLine2());
                         System.out.println(fileName);
-                        favorite.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
+                        Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
                         e.printStackTrace();
@@ -223,9 +179,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public String getCurrentTime(final Date d){
-        String currentTime = "0";
+        String currentTime;
 
-        TimePicker timePicker = (TimePicker) findViewById(R.id.timePicker);
+        TimePicker timePicker = findViewById(R.id.timePicker);
 
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
 
@@ -316,11 +272,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         for (int i = 0; i < selectedSat.size(); i++) {
         //int i = 0;
             double satNum = 0;
-            try {
-                satNum = selectedSat.get(i).getSatNum();
-            }catch(OrekitException e) {
-                e.printStackTrace();
-            }
+            satNum = selectedSat.get(i).getSatNum();
             TextView satNumberText = findViewById(R.id.satelliteNumber);
             satNumberText.setText("Satellite Number: " + String.valueOf(satNum));
             //DETERMINES NECESSARY TIME
@@ -369,12 +321,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
                 double altitude = pointPlot.getAltitude();
                 TextView satAltitude = findViewById(R.id.satAltitude);
-                satAltitude.setText("Altitude: " + String.valueOf(altitude));
+                satAltitude.setText("Altitude: " + altitude + "m");
 
                 try {
-                    String latitudeString = "Latitude: " + latitude;
-                    String longitudeString = "Longitude: " + longitude;
-                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity());
+                    String latitudeString = "Latitude: " + latitude + "m/s";
+                    String longitudeString = "Longitude: " + longitude + "m/s";
+                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity()) + "m/s^2";
                     TextView satLatitude = findViewById(R.id.satLatitude);
                     TextView satLongitude = findViewById(R.id.satLongitude);
                     TextView satVelocity = findViewById(R.id.velocity);
@@ -393,7 +345,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mMap.clear();
                     pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
                     mMap.addMarker(pointA);
-                    if (initial == true) {
+                    if (initial) {
                         initial = false;
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
                     }
@@ -472,12 +424,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
 
-        AbsoluteDate abDate = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone); //creates orekit absolute date from calender
 
-
-
-
-        return abDate;
+        return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
     }
 
 }

@@ -1,10 +1,7 @@
-package ca.mun.engi5895.stargazer;
+package ca.mun.engi5895.stargazer.AndroidAestheticAdditions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -12,14 +9,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -28,13 +21,12 @@ import java.util.ArrayList;
 
 public class Favorites {
 
-    private static ArrayList<String> favList = new ArrayList<String>();
-    private static ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<String> list = new ArrayList<>();
     private ArrayAdapter adapterList;
     private static Context context;
     private ListView listView;
 
-    Favorites(Context inContext){
+    public Favorites(Context inContext){
 
         context = inContext;
         /*try {
@@ -67,7 +59,7 @@ public class Favorites {
 
         //Needed to convert it to a ListView
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_list_item_1,
                 list);
@@ -138,9 +130,7 @@ public class Favorites {
         //Creates private list
     }
 
-    public ArrayAdapter<String> getFavorites(){return adapterList;}
-
-    public ArrayList<String> getListOfFavs() {return favList;}
+    public ArrayAdapter getFavorites(){return adapterList;}
 
     public static void addFavorite(String name, String line1, String line2, String fileName){
         try {
@@ -149,8 +139,6 @@ public class Favorites {
             System.out.println("Name: " + name);
             System.out.println("Tle1: " + line1);
             System.out.println("Tle2: " + line2);
-
-            favList.add(name);
 
            /*File favTest = new File(context.getFilesDir(), "favorites_" + fileName);
 
