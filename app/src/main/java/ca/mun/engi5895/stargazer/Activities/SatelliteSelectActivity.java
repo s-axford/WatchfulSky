@@ -426,12 +426,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
     }
 
-    /*
-    public static void clearSatsList() {
-        selectedSats.clear();
-    }
-    */
-    public void geoGo(View view) {
+    public void geoGo(View view) {      //Starts the Google Maps Activity
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
