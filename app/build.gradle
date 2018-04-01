@@ -16,6 +16,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
@@ -39,5 +41,5 @@ dependencies {
     implementation files('libs/gson-2.2.4.jar')
     implementation files('libs/hipparchus-geometry-1.2.jar')
     implementation files('libs/httpclientandroidlib-1.2.1.jar')
-    compile "com.androidplot:androidplot-core:1.5.4"
+    implementation 'com.androidplot:androidplot-core:1.5.4'
 }

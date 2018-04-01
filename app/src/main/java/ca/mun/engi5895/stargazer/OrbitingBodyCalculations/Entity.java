@@ -61,18 +61,6 @@ public class Entity {
         //tleProp.resetInitialState(tleProp.getInitialState());
         //tleProp.setSlaveMode();
 
-        ArrayList<ForceModel> forcesList = new ArrayList<>();
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getSun()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMercury()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getVenus()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMars()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getMoon()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getJupiter()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getSaturn()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getUranus()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getNeptune()));
-        forcesList.add(new ThirdBodyAttraction(CelestialBodyFactory.getPluto()));
-
         System.out.println(tleProp.getFrame());
     }
 
@@ -110,44 +98,36 @@ public class Entity {
 
         return tleProp.getPVCoordinates(date, frame); //returns coordinates
     }
-    public Vector3D getVector(AbsoluteDate date){
+    public Vector3D getVector(AbsoluteDate date){       //Returns a the Cartesian coordinates of the entity
 
         TimeStampedPVCoordinates pv = null;
         try {
-            Frame frame = FramesFactory.getTEME();
-            pv = tleProp.getPVCoordinates(date, frame);
+            Frame frame = FramesFactory.getTEME();      //Creates a TLE Reference Frame
+            pv = tleProp.getPVCoordinates(date, frame); //Finds the cartesian coordinates
         } catch (OrekitException e) {
             e.printStackTrace();
         }
 
         assert pv != null;
-        return pv.getPosition();
+        return pv.getPosition();        //Returns entity position
     }
-    public double getX(AbsoluteDate date){
+    public double getX(AbsoluteDate date){      //Finds and returns the X Cartesian Coordinate
         double xVal;
-        xVal = getVector(date).getX();
+        xVal = getVector(date).getX();          //Finds X from 3D Vector
 
-        return xVal;
+        return xVal;        //Returns X Value
     }
-    public double getY(AbsoluteDate date){
+    public double getY(AbsoluteDate date){      //Finds and returns the Y Cartesian Coordinate
         double yVal;
-        yVal = getVector(date).getY();
+        yVal = getVector(date).getY();          //Finds Y from 3D Vector
 
-        return yVal;
+        return yVal;        //Returns Y Value
     }
-    public double getZ(AbsoluteDate date){
+    public double getZ(AbsoluteDate date){      //Finds and returns the Z Cartesian Coordinate
         double zVal;
-        zVal = getVector(date).getZ();
+        zVal = getVector(date).getZ();          //Finds Z from 3D Vector
 
-        return zVal;
-    }
-    public SpacecraftState getOrbit(AbsoluteDate date){
-
-        try {
-            return tleProp.propagate(date);
-        } catch (OrekitException e) {
-            return null;
-        }
+        return zVal;        //Returns Z Value
     }
 
     //Returns the magnitude of the velocity
@@ -170,7 +150,7 @@ public class Entity {
 
     public double getSatNum() {
         return entity.getSatelliteNumber();
-    }
+    }       //Returns the entity number
 
     //gets Height of satellite from ground
     public double getHeight() throws OrekitException{
@@ -196,11 +176,11 @@ public class Entity {
         return entity.getI(); //return inclination angle
     }
 
-    public String getLine1() throws OrekitException {return entity.getLine1();}
+    public String getLine1() throws OrekitException {return entity.getLine1();}     //Returns TLE Line 1
 
-    public String getLine2() throws OrekitException {return entity.getLine2();}
+    public String getLine2() throws OrekitException {return entity.getLine2();}     //Returns TLE Line 2
 
-    public String getName() {return entity_name;}
+    public String getName() {return entity_name;}       //Returns name of space entity
 
 
 }

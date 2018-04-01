@@ -74,38 +74,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        selectedSat = SatelliteSelectActivity.getSelectedSat(); // Get satellite currently being displayed
 
-        sat_Name = findViewById(R.id.satName); // Get the name of the satellite
-        double inclination = selectedSat.get(0).getInclination();
-        sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
+        selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
+        System.out.println(selectedSat.get(0).getName());
+        sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
+        double inclination = selectedSat.get(0).getInclination();   //Gets the inclination of the entity
+        sat_Name.setText(String.valueOf(inclination));
+
       
         int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
-                sat_Name = findViewById(R.id.satName);
-                sat_Name.setText(selectedSat.get(i).getName());
+
+                System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
+                sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
+                sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
+
 
         try {
             System.out.println("Velocity:");
-            System.out.println(selectedSat.get(i).getVelocity());
+            System.out.println(selectedSat.get(i).getVelocity());       //Prints the velocity of the entity
         } catch (OrekitException e) {
             e.printStackTrace();
         }
     }
 
-    public void onBackPressed() {
-        selectedSat.clear();
-        System.out.println("DONE WITH THE MAP");
-        initial = false;
-        this.finish();
+    public void onBackPressed() {       //Runs when you exit the activity
+        selectedSat.clear();            //Clears the satellite list
+        System.out.println("DONE WITH THE MAP");        //Prints to the console that we are done with the Maps activity
+        initial = false;                //Boolean variable specifying we are dealing with the first satellite
+        this.finish();                  //Closes the activity
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {     //Creates action bar in the MapsActivity UI
 
-        MenuInflater item = getMenuInflater();
-        item.inflate(R.menu.actionbar, menu);
-        setTitle("StarGazer");
+        MenuInflater item = getMenuInflater();     //Specifies the item fit
+        item.inflate(R.menu.actionbar, menu);   //Fits the menu to the item fit
+        setTitle("StarGazer");                  //Sets the action bar title
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -138,21 +143,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 sat_Name = findViewById(R.id.satName);
                 //sat_Name.setText();
 
-
-                if (date == d1) {
-                    System.out.println("fuck finals");
-                }
-
-                updateMap();
+                updateMap();        //Calls update map to update with the clock selected time
 
                 return true;
+
             case R.id.actionbar_fav: // Handles the clicking of the favorite button
+
 
 
              //   list = SatelliteSelectActivity.getSelectedSat();
 
-               // selectedSat = SatelliteSelectActivity.getSelectedSat(); // Get the current satellite selected from previous activity
-                String fileName = getIntent().getStringExtra(FILENAME); // Get the fileName sent from previous activity
+
+                selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
+                String fileName = getIntent().getStringExtra(FILENAME);     //
+
 
                 Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
 
@@ -207,20 +211,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     @Override
-    public void onMapReady(final GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {     //Called when the map is first created and ready to be modified. Android method
         mMap = googleMap;
 
             mapUpdater(getCreatedTime());    //Plots the orbit for the given time period
 
     }
     private int incr = 0;
-    public void mapUpdater(Date date){
-                //updateMap(getCreatedTime());
 
-        if(date == null){
-            dateTime = getCreatedTime();
+
+    public void mapUpdater(Date date){      //Updates the map with the entities new position every 10 seconds
+
+        if(date == null){       //Sets the corresponding date to be used in the updateMap() method
+            dateTime = getCreatedTime();    //Date not specified - Create new date with current time
         } else{
-            dateTime = date;
+            dateTime = date;        //Date Specified by user
         }
 
         new Thread() {
@@ -234,7 +239,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                                 updateMap();
                             }
                         });
-                        Thread.sleep(10000);
+                        Thread.sleep(10000);        //Waits 10 seconds
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -245,33 +250,31 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    private Date getCreatedTime(){
-        //date.getTime();
-
+    private Date getCreatedTime(){  //Creates a new date with the current time and returns it
         return new Date();
     }
 
-    private Date dateTime = null;
+    private Date dateTime = null;   //Declares date to be used throughout class
 
-    private Runnable updateMap(){
+    private Runnable updateMap(){       //Runnable to allow map to be updated every 10 seconds
 
         System.out.println("Entering update map");
-        if (dateTime == null){
-            dateTime = getCreatedTime();
+        if (dateTime == null){              //If no date specified by the calling class
+            dateTime = getCreatedTime();    //Use the current date and time
         }
         AbsoluteDate date;
 
-        for (int i = 0; i < selectedSat.size(); i++) {
-        //int i = 0;
-            double satNum = 0;
-            satNum = selectedSat.get(i).getSatNum();
-            TextView satNumberText = findViewById(R.id.satelliteNumber);
-            satNumberText.setText("Satellite Number: " + String.valueOf(satNum));
-            //DETERMINES NECESSARY TIME
+        for (int i = 0; i < selectedSat.size(); i++) {      //For every satellite selected by the user
+
+            double satNum = selectedSat.get(i).getSatNum();                 //Gets the selected entities identifying number - Unique
+            TextView satNumberText = findViewById(R.id.satelliteNumber);    //Finds the corresponding UI textbox
+            satNumberText.setText("Satellite Number: " + String.valueOf(satNum));   //Outputs the Sat Number to the UI using the selected textbox
+
+
                 try {
-                    utc = TimeScalesFactory.getUTC();       //Creates new timeScale
+                    utc = TimeScalesFactory.getUTC();       //Creates new UTC Timescale
                 } catch (OrekitException e) {
-                    System.out.println("ERROR IN UPDATE MAP");
+                    System.out.println("ERROR IN TIMESCALE CREATION"); //Used in debugging
                     e.printStackTrace();
                 }
 
@@ -284,119 +287,100 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
 
                 double satPeriod = selectedSat.get(i).getPeriod();      //Finds the satellites period of orbiting earth
-                int period = (int) Math.round(satPeriod);
-                int periodMin = (period / 100);
-                System.out.println("Interval: " + periodMin);
+                int period = (int) Math.round(satPeriod);               //Rounded to the nearest second - Required for methods that require int
+                int periodMin = (period / 100);                         //Finds the interval to allow for 100 location points for every orbit of the earth
+                System.out.println("Interval: " + periodMin);           //Prints the calculated time step
                 calendar.setTime(dateTime);     //Shifts the time
 
-                System.out.println(calendar.get(Calendar.YEAR));
-                calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                System.out.println(calendar.get(Calendar.YEAR));                    //Prints the current year - Used for debugging
+                calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));       //Converts any time zone to UTC
                 date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
 
+                this.initializeFrames();        //Initializes orbit information
 
-                Date endDate = new Date();
-                //endDate.getTime();
-                //endDate.getDate();
+            for (int k = 0; k < 300; k++) {     //Plots 300 points of the entities location - The equivalent of 3 orbits of the earth
 
-                this.initializeFrames();        //Updates satellites orbit
-
-
-            for (int k = 0; k < 300; k++) {     //Gets 100 points to create visual orbit of position of the satellite over 1 period of the earth
-                //calendar.setTime(dateTime);     //Shifts the time
-                //date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
-                //date = new AbsoluteDate(date, periodMin);
                 System.out.println("DATE: " + date);
-                   //this.initializeFrames(date);        //Updates satellites orbit
                 this.updatePosition(date, i);
-                System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());
-                longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude
-                latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude
-                double altitude = pointPlot.getAltitude();
-                TextView satAltitude = findViewById(R.id.satAltitude);
-                satAltitude.setText("Altitude: " + altitude + "m");
+                System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());      //Prints the size of the map to the console
+                longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude and converts to degrees
+                latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude and converts to degrees
+                double altitude = pointPlot.getAltitude();              //Determines the entities altitude at the current date and time
+                TextView satAltitude = findViewById(R.id.satAltitude);  //Specifies the textbox to output the Altitude information to the UI
+                satAltitude.setText("Altitude: " + altitude + "m");     //Prints the Altitude information to the UI using the previously specified textbox
 
-                try {
-                    String latitudeString = "Latitude: " + latitude + "m/s";
-                    String longitudeString = "Longitude: " + longitude + "m/s";
-                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity()) + "m/s^2";
-                    TextView satLatitude = findViewById(R.id.satLatitude);
-                    TextView satLongitude = findViewById(R.id.satLongitude);
-                    TextView satVelocity = findViewById(R.id.velocity);
-                    satLatitude.setText(latitudeString);
-                    satLongitude.setText(longitudeString);
-                    satVelocity.setText(velocityString);
+                try {       //Prints entity information to the User Interface using textboxes - Updates at the same time as the maps position
+                    String latitudeString = "Latitude: " + latitude + "m/s";                                            //Text to be set as position in UI
+                    String longitudeString = "Longitude: " + longitude + "m/s";                                         //Text to be set as position in UI
+                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity()) + "m/s^2";  //Text to be set as Velocity in UI
+                    TextView satLatitude = findViewById(R.id.satLatitude);      //Latitude Position textbox (UI)
+                    TextView satLongitude = findViewById(R.id.satLongitude);    //Longitude position textbox (UI)
+                    TextView satVelocity = findViewById(R.id.velocity);         //Velocity textbox (UI)
+                    satLatitude.setText(latitudeString);                //Sets textbox to Latitude String
+                    satLongitude.setText(longitudeString);              //Sets textbox to Longitude String
+                    satVelocity.setText(velocityString);                //Sets textbox to Velocity String
                 } catch (OrekitException e){
                     e.printStackTrace();
                 }
 
-                LatLng point_a = new LatLng(latitude, longitude);           //Creates map points
-                System.out.println(pointPlot);
+                //Creates map objects
+                LatLng point_a = new LatLng(latitude, longitude);           //Creates map point
                 MarkerOptions pointA = new MarkerOptions().position(point_a);   //Creates a marker
 
-                if (k == 0) {
-                    mMap.clear();
+                if (k == 0) {       //If the point is the current position of the satellite
+                    mMap.clear();       //Clears all markers and polylines on the map
                     pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
-                    mMap.addMarker(pointA);
-                    if (initial) {
-                        initial = false;
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));
+                    mMap.addMarker(pointA);     //Adds a new marker to the Google map
+                    if (initial) {              //Only move the camera when the map first loads
+                        initial = false;        //Prevent the camera from being moved when the map is updating every 10 seconds
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));        //Moves the camera to the entities current position when the map first loads
                     }
                 }
-                plotPoints.add(point_a);        //Adds point to polyline
-                System.out.println("Latitude: " + latitude);
-                System.out.println("Longitude: " + longitude);
-                //dateTime.setSeconds(dateTime.getSeconds() + periodMin);     //Moves to the next location
-                System.out.println("PERIOD: " + periodMin);
-                date = new AbsoluteDate(date, periodMin);
+                plotPoints.add(point_a);                            //Adds point to polyline
+                System.out.println("Latitude: " + latitude);        //Prints Latitude to the console
+                System.out.println("Longitude: " + longitude);      //Prints Longitude to the console
+                System.out.println("PERIOD: " + periodMin);         //Prints the Period to the console
+                date = new AbsoluteDate(date, periodMin);           //Moves the date ahead to the next point
             }
+
+            //Creates Polyline to be plotted on the map (Plots Expected Orbit)
         Polyline line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
-        line.setWidth(5);       //Sets width of polyline
-        line.setColor(Color.RED);   //Sets color of polyline
-                /*
-                try {
-                    wait(30000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                */
+        line.setWidth(5);                                                               //Sets width of polyline
+        line.setColor(Color.RED);                                                       //Sets color of polyline
         }
         return null;
     }
 
-    private void initializeFrames(){//AbsoluteDate date, int i) {
+    private void initializeFrames(){        //AbsoluteDate date, int i) {
 
         try {
             Frame f;
-            f = CelestialBodyFactory.getEarth().getBodyOrientedFrame();
-            //f = FramesFactory.getTEME();
+            f = CelestialBodyFactory.getEarth().getBodyOrientedFrame();     //Creates a new earth reference frame
 
-            earthFixedFrame = FramesFactory.getTEME();
+            earthFixedFrame = FramesFactory.getTEME();      //Creates TLE Data specific frame
 
-            earth = new OneAxisEllipsoid(
+            earth = new OneAxisEllipsoid(                   //Creates representation of earth as a OneAxisEllipsoid using previously defined frame
                     Constants.WGS84_EARTH_EQUATORIAL_RADIUS,
                     Constants.WGS84_EARTH_FLATTENING,
-                    f); //earthFixedFrame);
+                    f);
         }catch (OrekitException e) {
+            System.out.println("ERROR IN FRAME CREATION");
             e.printStackTrace();
         }
     }
 
     private void updatePosition(AbsoluteDate date, int i){
 
-        Frame gcrf;
-
-        scs = selectedSat.get(i).updateState(date);
+        scs = selectedSat.get(i).updateState(date);     //Returns current SpaceCraftState
         System.out.println(scs);
-        System.out.println(scs.getPVCoordinates().getPosition());
+        System.out.println(scs.getPVCoordinates().getPosition());       //Uses SpaceCraftState to print the coordinates to the console
         System.out.println(scs.getDate());
         System.out.println(earthFixedFrame);
 
         try {
-            gcrf = FramesFactory.getTEME();
-            //Vector3D earthPoint = earth.projectToGround(selectedSat.get(i).getVector(date), date, gcrf);
-            pointPlot = earth.transform(selectedSat.get(i).getVector(date), earthFixedFrame, date);
+            pointPlot = earth.transform(selectedSat.get(i).getVector(date), earthFixedFrame, date);     //Finds the Cartesian position of the satellite, then converts to a Geodetic Point
         }  catch (OrekitException e){
-            System.out.println("FAILED PLOTTING POINT");
+            System.out.println("FAILED CARTESIAN POINT CONVERSION");
             e.printStackTrace();
         }
 
@@ -409,6 +393,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         try {
             timeZone = TimeScalesFactory.getUTC(); // get UTC time scale
         } catch (OrekitException e) {
+            System.out.println("ERROR IN getTime() METHOD");
             e.printStackTrace();
         }
 
@@ -416,7 +401,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
         calendar.setTime(date); //updates date and time
 
-
+        //Returns Orekit specific date format
         return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
     }
 
