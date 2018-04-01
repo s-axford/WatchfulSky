@@ -83,6 +83,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }*/
+
                     expandableListView.setVisibility(View.VISIBLE);
                     expandableListView_fav.setVisibility(View.INVISIBLE);
 
@@ -137,19 +138,27 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
+        // Find the expandable list views, one for all satellites and one for favorite satellites
         expandableListView = findViewById(R.id.expandableListView);
         expandableListView_fav = findViewById(R.id.expandableListView_fav);
 
+        // Get the satellite data from the internal files
+        // Represents the child titles of the expandable list view
         try {
             expandableListDetail = celestrakData.getSatData(getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Get the satellite categories for the expandable list view
+        // Stored as the keys of the hash map
         expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
+        // Set the custom adapter for the expandable list view
         expandableListAdapter = new MyListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         //expandableListView.setVisibility(View.VISIBLE);
 
+
+        // Run the getSatsCreate method and make the expandable list view appear
         try {
             getSatsCreate();
             expandableListView.setVisibility(View.VISIBLE);
@@ -162,31 +171,40 @@ public class SatelliteSelectActivity extends AppCompatActivity {
       //  listView = (ListView) findViewById(R.id.lvid2);
     }
 
+    // Method that populates the expandable list view with the favorite satellites
+    // Also handles clicking a favorite satellite and doing calculations with its data
+    // Ran when the "favorites" button is clicked
     public void getFavData() {
 
+        // Get the favorites data for the expandable list view
         try {
             expandableListDetail_fav = celestrakData.getSatDataFavorites(getApplicationContext());
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Get the list titles for favorite satellites
         expandableListTitle_fav = new ArrayList<>(expandableListDetail_fav.keySet());
+        // Get custom adapter, passing in the hashmap keys and data
         expandableListAdapter_fav = new MyListAdapter(this, expandableListTitle_fav, expandableListDetail_fav);
+        // Set the adapter and make the list visible
         expandableListView_fav.setAdapter(expandableListAdapter_fav);
         expandableListView_fav.setVisibility(View.VISIBLE);
 
+        // Set a click listener for the expandable list view
         expandableListView_fav.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                //NEW HANDLING THE CLICK OF SOMETHING
+                //Type of satellite is set to the parent chosen
                 String satType = expandableListTitle_fav.get(groupPosition);
+                // Satellite chosen is set to whatever name was chosen
                 String satChosen = expandableListDetail_fav.get(expandableListTitle_fav.get(groupPosition)).get(childPosition);
+                // Add the chosen satellite to the satList
                 satList.add(satChosen);
-                System.out.println("Type of satellite: " + satType);
-                System.out.println("Chosen sat: " + satChosen); // nEED TO START NEW INTENT WITH SATELLITE NAME
+
                 String fileName = null;
 
-
+                // Need to know the filename corresponding to the chosen satellite
                 if (satType.equals("Space Stations")) {
                     fileName = "favorites_stations.txt";
                 } else if (satType.equals("Newly Launched Satellites"))
@@ -200,14 +218,15 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 else if (satType.equals("Science Satellites"))
                     fileName = "favorites_science.txt";
 
+                // Navigate to the MapsActivity screen
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                // Send the chosen satellite name and filename into the MapsActivity
                 intent.putExtra("CHOSEN_SAT_NAME", satChosen);
                 intent.putExtra("filename", fileName);
                 startActivity(intent);
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
-
                 FileInputStream stream1 = null;
                 try {
                     stream1 = openFileInput(fileName); //openFileInput auto opens from getFilesDir() directory
@@ -225,27 +244,24 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String TLE2 = "";
 
                 //Read each lne of file, if its equal to the one chosen from the list, update TLE strings and break loop
-
-
                 try {
                     while ((line1 = breader1.readLine()) != null) {
-                        if (line1.equals(satChosen)) { //If the current line is the one we chose from the list
-                            TLE1 = breader1.readLine();
-                            TLE2 = breader1.readLine();
+                        if (line1.equals(satChosen)) { //If the current line is the name of the one we chose from the list
+                            TLE1 = breader1.readLine(); // Next line is first TLE string
+                            TLE2 = breader1.readLine(); // Next line is second TLE string
 
-                            break;
+                            break; //Break loop, data successfully acquired
                         }
                     }
-                    breader1.close();  sreader1.close();stream1.close();
+                  //  breader1.close();  sreader1.close();stream1.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
-
                 try {
-                    currentEntity = new Entity(satChosen, TLE1, TLE2);
-                    selectedSats.add(currentEntity);
+                    currentEntity = new Entity(satChosen, TLE1, TLE2); //Create a new sat entity using the satellite name and two TLE strings
+                    selectedSats.add(currentEntity); // Add entity to selectedSats list
                     SatelliteSelectActivity.getSelectedSat();
                 } catch (OrekitException e) {
                     e.printStackTrace();
@@ -315,12 +331,11 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 //outSat.setVisibility(View.VISIBLE);
 
 
-                //NEW HANDLING THE CLICK OF SOMETHING
+                //Handles the click of an item from the list
                 String satType = expandableListTitle.get(groupPosition);
                 String satChosen = expandableListDetail.get(expandableListTitle.get(groupPosition)).get(childPosition);
                 satList.add(satChosen);
-                System.out.println("Type of satellite: " + satType);
-                System.out.println("Chosen sat: " + satChosen); // nEED TO START NEW INTENT WITH SATELLITE NAME
+
                 String fileName = null;
 
 
@@ -392,9 +407,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     currentEntity = new Entity(satChosen, TLE1, TLE2);
                     selectedSats.add(currentEntity);
                     SatelliteSelectActivity.getSelectedSat();
-                    System.out.println("Adding entity big success");
                 } catch (OrekitException e) {
-                    System.out.println("Fucking up with making new entity");
                     e.printStackTrace();
                 }
 

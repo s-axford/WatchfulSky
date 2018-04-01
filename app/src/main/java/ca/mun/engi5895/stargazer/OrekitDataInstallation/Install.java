@@ -59,26 +59,23 @@ public class Install {
             try {
                 files = assetManager.list(orekitDataPath+File.separator+foldername);
             } catch (IOException e) {
-                //Log.e("tag", "Failed to get asset file list.", e);
                 installed=false;
             }
             for(String filename : files) {
-                InputStream in = null;
+                InputStream instream = null;
                 OutputStream out = null;
                 try {
-                    in = assetManager.open(orekitDataPath+File.separator+foldername+File.separator+filename);
-                    System.out.println("File copying is: " + orekitDataPath+File.separator+foldername+File.separator+filename);
+                    instream = assetManager.open(orekitDataPath+File.separator+foldername+File.separator+filename);
                     File outFile = new File(activity.getFilesDir()+File.separator+orekitDataPath+File.separator+foldername, filename);
                     outFile.getParentFile().mkdirs();
                     out = new FileOutputStream(outFile);
-                    copyFile(in, out);
-                    in.close();
-                    in = null;
+                    copyFile(instream, out);
+                    instream.close();
+                    instream = null;
                     out.flush();
                     out.close();
                     out = null;
                 } catch(IOException e) {
-                    //Log.e("tag", "Failed to copy asset file: " + filename, e);
                     installed=false;
                 }
             }

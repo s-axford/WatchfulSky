@@ -16,7 +16,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 /**
- * Created by noahg on 3/24/2018.
+ * Class responsible for handling the favorites function
  */
 
 public class Favorites {
@@ -29,11 +29,6 @@ public class Favorites {
     public Favorites(Context inContext){
 
         context = inContext;
-        /*try {
-            adapterList = this.getFavSats();
-        } catch (IOException e) {
-
-        }*/
     }
 
     private ArrayAdapter<String> getFavSats() throws IOException {

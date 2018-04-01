@@ -64,119 +64,6 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Geocentric"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="30sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="215dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Heliocentric"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="30sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="monospace"
-        android:shadowColor="@android:color/background_dark"
-        android:shadowDx="1.0"
-        android:shadowDy="1.0"
-        android:shadowRadius="4.0"
-        android:text="StarGazer"
-        android:textAllCaps="false"
-        android:textColor="@android:color/holo_orange_light"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:typeface="monospace"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="61dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:onClick="settingsGo"
-        android:visibility="gone"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_manage"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:onClick="onClick"
-        android:text="Download"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@+id/button5"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <LinearLayout
-        android:id="@+id/linearLay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="416dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status: "
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Not started"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:fontFamily="@font/actor"
-        android:onClick="checkFiles"
-        android:text="list"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="364dp" />
-
     <LinearLayout
         android:id="@+id/earth_layout"
         android:layout_width="0dp"
@@ -195,11 +82,8 @@
         android:layout_height="65dp"
         android:layout_marginBottom="4dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/button"
         app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/earth" />
 
     <ImageView

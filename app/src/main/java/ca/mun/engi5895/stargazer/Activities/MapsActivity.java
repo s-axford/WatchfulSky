@@ -74,17 +74,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        selectedSat = SatelliteSelectActivity.getSelectedSat();
+        selectedSat = SatelliteSelectActivity.getSelectedSat(); // Get satellite currently being displayed
 
-        System.out.println(selectedSat.get(0).getName());
-        sat_Name = findViewById(R.id.satName);
+        sat_Name = findViewById(R.id.satName); // Get the name of the satellite
         double inclination = selectedSat.get(0).getInclination();
         sat_Name.setText(String.valueOf(inclination)); //selectedSat.get(0).getName());
       
         int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
-                System.out.println(selectedSat.get(i).getName());
                 sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(selectedSat.get(i).getName());
 
@@ -115,7 +113,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
 
         switch (item.getItemId()) {
-            case R.id.actionbar_clock:      //Clock icon selected
+            case R.id.actionbar_clock:      //Hanldes the clicking of the clock
 
                 date = getCreatedTime();
              d1 = getCreatedTime();
@@ -148,26 +146,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 updateMap();
 
                 return true;
-            case R.id.actionbar_fav:
+            case R.id.actionbar_fav: // Handles the clicking of the favorite button
 
-
-               // setTitle("StarGazer (Favorites)");
 
              //   list = SatelliteSelectActivity.getSelectedSat();
 
-                selectedSat = SatelliteSelectActivity.getSelectedSat();
-                String fileName = getIntent().getStringExtra(FILENAME);
+               // selectedSat = SatelliteSelectActivity.getSelectedSat(); // Get the current satellite selected from previous activity
+                String fileName = getIntent().getStringExtra(FILENAME); // Get the fileName sent from previous activity
 
-                Favorites favorite = new Favorites(getApplicationContext());
+                Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
 
-                item.setIcon(R.drawable.favoritesicon_filled);
+                item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
-                    try {
-                        System.out.println(selectedSat.get(i).getName());
-                        System.out.println(selectedSat.get(i).getLine1());
-                        System.out.println(selectedSat.get(i).getLine2());
-                        System.out.println(fileName);
+                    try { // Add All selected satellites to favorites
                         Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {

@@ -19,9 +19,9 @@ import java.util.List;
 public class celestrakData {
     private static Context c;
 
-    public static HashMap<String, List<String>> getSatData(Context aContext) throws IOException {
+    public static HashMap<String, List<String>> getSatData(Context context) throws IOException {
 
-        c = aContext;
+        c = context;
         HashMap<String, List<String>> celestrakMap = new HashMap<String, List<String>>();
 
         List<String> stations = new ArrayList<String>();
@@ -70,9 +70,9 @@ public class celestrakData {
         return celestrakMap;
     }
 
-    public static HashMap<String, List<String>> getSatDataFavorites(Context aContext) throws IOException {
+    public static HashMap<String, List<String>> getSatDataFavorites(Context context) throws IOException {
 
-        c = aContext;
+        c = context;
         HashMap<String, List<String>> celestrakMap = new HashMap<String, List<String>>();
 
         File test1 = new File(c.getFilesDir(), "favorites_stations.txt");
