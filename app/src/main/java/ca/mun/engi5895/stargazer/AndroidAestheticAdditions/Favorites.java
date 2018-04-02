@@ -42,26 +42,53 @@ public class Favorites {
     public static void addFavorite(String name, String line1, String line2, String fileName){
         try {
 
-            FileOutputStream fostream = context.openFileOutput( "favorites_" + fileName, Context.MODE_APPEND);
+            boolean favExists = false;
+            File test1 = new File(context.getFilesDir(), "favorites_" + fileName);
 
-           OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
-           BufferedWriter bwriter = new BufferedWriter(oswriter);
+            if(test1.exists()) {
+
+                // Open file streams
+
+                System.out.println("Filename: " + fileName);
+                FileInputStream stream = context.openFileInput("favorites_" + fileName);
+                InputStreamReader sreader = new InputStreamReader(stream);
+                BufferedReader breader = new BufferedReader(sreader);
+
+                String line;
+
+                // Parse the file and check to see if the satellite is already added asa  favorite
+                while ((line = breader.readLine()) != null) {
+                    if (line.contains(name)) {
+                        favExists = true;
+                    }
+                }
+            }
 
 
-            // Write the name of the satellite to the favorites file
-            bwriter.write(name);
-            bwriter.write("\n");
+            if (favExists == false) {
+                FileOutputStream fostream = context.openFileOutput("favorites_" + fileName, Context.MODE_APPEND);
 
-            // Write the first TLE line to the favorites file
-            bwriter.write(line1);
-            bwriter.write("\n");
+                OutputStreamWriter oswriter = new OutputStreamWriter(fostream);
+                BufferedWriter bwriter = new BufferedWriter(oswriter);
 
-            // Write the second TLE line to the favorites file
-            bwriter.write(line2);
-            bwriter.write("\n");
 
-            // flush the writer
-            bwriter.flush();
+                // Write the name of the satellite to the favorites file
+                bwriter.write(name);
+                bwriter.write("\n");
+
+                // Write the first TLE line to the favorites file
+                bwriter.write(line1);
+                bwriter.write("\n");
+
+                // Write the second TLE line to the favorites file
+                bwriter.write(line2);
+                bwriter.write("\n");
+
+                // flush the writer
+                bwriter.flush();
+            } else {
+                System.out.println("Favorite already exists.");
+            }
 
         }
         catch (IOException e) {
