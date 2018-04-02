@@ -12,12 +12,12 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 /**
- * Created by john on 2018-02-24.
+ * IntentService that handles the download of files from the web
  */
 
 public class saveFileIntent extends IntentService {
 
-    //These are like parameters. See SettingsActivity onClick() method to see how they are used
+    //These are the parameters sent to the intent when it is called
     public static final String URL = "urlpath";
     public static final String FILENAME = "filename";
     public static final String FILEPATH = "filepath";
@@ -30,12 +30,12 @@ public class saveFileIntent extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        String urlPath = intent.getStringExtra(URL);
+        String urlPath = intent.getStringExtra(URL); // Get stringextra parameters
         String fileName = intent.getStringExtra(FILENAME);
 
-        File output = new File(getFilesDir(), fileName);
+        File output = new File(getFilesDir(), fileName); // Get file output
 
-        if (output.exists()) {
+        if (output.exists()) { // if file already exists, delete it
             output.delete();
         }
 
@@ -44,31 +44,18 @@ public class saveFileIntent extends IntentService {
 
         try {
             URL url = new URL(urlPath);
-            stream = url.openConnection().getInputStream();
+            stream = url.openConnection().getInputStream(); // Open a URLconnection
             InputStreamReader reader = new InputStreamReader(stream);
             fos = new FileOutputStream(output.getPath());
             int next = -1;
-            while ((next = reader.read()) != -1) {
+            while ((next = reader.read()) != -1) {  // Read the input stream and output it to a fileoutputstream
                 fos.write(next);
             }
-            // successfully finished
 
-            //result = Activity.RESULT_OK;
-
-
-
-            //Handler thing is to let you make a toast on a dead thread, has to be in for toast to work
-            /*Handler mHandler = new Handler(getMainLooper());
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getApplicationContext(), "Files Downloaded", Toast.LENGTH_SHORT).show();
-                }
-            });*/
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (stream != null) {
+            if (stream != null) { // close the stream
                 try {
                     stream.close();
                 } catch (IOException e) {
@@ -76,116 +63,7 @@ public class saveFileIntent extends IntentService {
                 }
             }
         }
-
-
-
-        String filename = "favoriteSats.txt";
-        String fileContents = "Favorite Entities List";
-        File file = new File(this.getFilesDir(), filename);
-        FileOutputStream outputStream;
-
-        try {
-            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-            outputStream.write(fileContents.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
     }
-
-/*
-    private static boolean dirChecker(String pathname) {
-
-        File theDir = new File(pathname);
-
-        boolean result = false;
-        // if the directory does not exist, create it
-        if (!theDir.exists())
-
-        {
-            System.out.println("creating directory: " + theDir.getName());
-            //result = false;
-
-            try {
-                theDir.mkdir();
-                result = true;
-            } catch (SecurityException se) {
-                //handle it
-            }
-            if (result) {
-                System.out.println("DIR created");
-            }
-        }
-        return result;
-    }
-*/
-
-
-/*
-    public static void unzip(String _zipFile, String _targetLocation) {
-
-        //create target location folder if not exist
-        dirChecker(_targetLocation);
-
-        try {
-            System.out.println(new File(".").getAbsolutePath());
-            FileInputStream fin = new FileInputStream(_zipFile);
-            ZipInputStream zin = new ZipInputStream(fin);
-            ZipEntry ze = null;
-            while ((ze = zin.getNextEntry()) != null) {
-
-                //create dir if required while unzipping
-                if (ze.isDirectory()) {
-                    dirChecker(ze.getName());
-                } else {
-                    FileOutputStream fout = new FileOutputStream(_targetLocation + ze.getName());
-                    for (int c = zin.read(); c != -1; c = zin.read()) {
-                        fout.write(c);
-                    }
-
-                    zin.closeEntry();
-                    fout.close();
-                }
-
-            }
-            zin.close();
-        } catch (Exception e) {
-           System.out.println(e);
-        }
-    }public static void unzip(String _zipFile, String _targetLocation) {
-
-        //create target location folder if not exist
-        dirChecker(_targetLocation);
-
-        try {
-            System.out.println(new File(".").getAbsolutePath());
-            FileInputStream fin = new FileInputStream(_zipFile);
-            ZipInputStream zin = new ZipInputStream(fin);
-            ZipEntry ze = null;
-            while ((ze = zin.getNextEntry()) != null) {
-
-                //create dir if required while unzipping
-                if (ze.isDirectory()) {
-                    dirChecker(ze.getName());
-                } else {
-                    FileOutputStream fout = new FileOutputStream(_targetLocation + ze.getName());
-                    for (int c = zin.read(); c != -1; c = zin.read()) {
-                        fout.write(c);
-                    }
-
-                    zin.closeEntry();
-                    fout.close();
-                }
-
-            }
-            zin.close();
-        } catch (Exception e) {
-           System.out.println(e);
-        }
-    }
-    */
 }
 
 

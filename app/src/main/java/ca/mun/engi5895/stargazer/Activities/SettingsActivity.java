@@ -109,53 +109,6 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(saveFileIntent.FILENAME,"science.txt");
         intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/science.txt");
         startService(intent);
-
-        /*ZipUtil.explode(new File(getFilesDir().getName() + File.separator + "orekit-data.zip"));
-        File orekitData = new File(getFilesDir().getName() + "/orekit-data");
-        DataProvidersManager manager = DataProvidersManager.getInstance();
-
-/*
-        Intent orekit = new Intent(this, saveFileIntent.class);
-
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + "/orekit-data/");
-        System.out.println(file);
-
-        File orekitData = file;
-        DataProvidersManager manager = DataProvidersManager.getInstance();
-
-
-        try {
-            manager.addProvider(new DirectoryCrawler(orekitData));
-        } catch (OrekitException e) {
-            e.printStackTrace();
-        }
-*/
-
-        /*
-        Intent orekit = new Intent(this, saveFileIntent.class);
-        // add infos for the service which file to download and where to store
-        orekit.putExtra(saveFileIntent.FILENAME, "orekit-data.zip");
-        orekit.putExtra(saveFileIntent.URL,
-                "https://www.orekit.org/forge/attachments/download/677/orekit-data.zip");
-        startService(orekit);
-
-        //String target = getFilesDir().getName() + "orekit-data";
-        //saveFileIntent.unzip("orekit-data.zip", getFilesDir().getName());
-
-
-
-
-        /*
-        File orekitData = new File(getFilesDir().getName() + "/orekit-data");
-
-
-        DataProvidersManager manager = DataProvidersManager.getInstance();
-        try {
-            manager.addProvider(new DirectoryCrawler(orekitData));
-        } catch (OrekitException e) {
-            e.printStackTrace();
-        }
-        */
     }
 
 }

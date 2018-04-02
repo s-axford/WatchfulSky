@@ -3,6 +3,8 @@ package ca.mun.engi5895.stargazer.OrekitDataInstallation;
 import android.app.Application;
 import android.util.Log;
 
+import ca.mun.engi5895.stargazer.Activities.MainActivity;
+
 /**
  * Class representing the android application
  */
@@ -15,6 +17,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         celestrakData.downloadData(this); // downloads the TLE data
+
         Log.i("main", "onCreate fired");
     }
 }
