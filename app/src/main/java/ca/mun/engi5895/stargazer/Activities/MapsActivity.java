@@ -74,18 +74,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
         selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
         System.out.println(selectedSat.get(0).getName());
         sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
         double inclination = selectedSat.get(0).getInclination();   //Gets the inclination of the entity
         sat_Name.setText(String.valueOf(inclination));
+
       
         int  i = 0;
         //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
 
+
                 System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
                 sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
                 sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
+
 
         try {
             System.out.println("Velocity:");
@@ -114,7 +118,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
 
         switch (item.getItemId()) {
-            case R.id.actionbar_clock:      //Clock icon selected
+            case R.id.actionbar_clock:      //Hanldes the clicking of the clock
 
                 date = getCreatedTime();
              d1 = getCreatedTime();
@@ -142,26 +146,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 updateMap();        //Calls update map to update with the clock selected time
 
                 return true;
-            case R.id.actionbar_fav:        //If the favorites icon is clicked
+
+            case R.id.actionbar_fav: // Handles the clicking of the favorite button
 
 
-               // setTitle("StarGazer (Favorites)");
 
              //   list = SatelliteSelectActivity.getSelectedSat();
 
+
                 selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
-                String fileName = getIntent().getStringExtra(FILENAME);     //
+                String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
 
-                Favorites favorite = new Favorites(getApplicationContext());
 
-                item.setIcon(R.drawable.favoritesicon_filled);
+                Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
+
+                item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
-                    try {
-                        System.out.println(selectedSat.get(i).getName());
-                        System.out.println(selectedSat.get(i).getLine1());
-                        System.out.println(selectedSat.get(i).getLine2());
-                        System.out.println(fileName);
+                    try { // Add All selected satellites to favorites
                         Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
                         return true;
                     } catch (OrekitException e) {
@@ -211,6 +213,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(final GoogleMap googleMap) {     //Called when the map is first created and ready to be modified. Android method
         mMap = googleMap;
+        //mMap.setMapType(mMap.MAP_TYPE_HYBRID);
 
             mapUpdater(getCreatedTime());    //Plots the orbit for the given time period
 

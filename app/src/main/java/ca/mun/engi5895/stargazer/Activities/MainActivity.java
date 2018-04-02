@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import ca.mun.engi5895.stargazer.OrekitDataInstallation.ErrorDialogFragment;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.Install;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.OrekitInit;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
@@ -21,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Download data
-        celestrakData.downloadData(this);
-
         //STAVOR CODE
         Install.installApkData(this);
 
@@ -33,16 +29,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Displays an error dialog
-     * @param message
-     * @param canIgnore
-     */
-    public void showErrorDialog(String message, boolean canIgnore) {
-        DialogFragment newFragment = ErrorDialogFragment.newInstance(message, canIgnore);
-        newFragment.setCancelable(false);
-        newFragment.show(getFragmentManager(), "error");
-    }
+
 
     public void geoGo(View view) {
         Intent intent = new Intent(this, SatelliteSelectActivity.class);
