@@ -210,12 +210,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 else if (satType.equals("Science Satellites"))
                     fileName = "favorites_science.txt";
 
-                // Navigate to the MapsActivity screen
-                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                // Send the chosen satellite name and filename into the MapsActivity
-                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
-                intent.putExtra("filename", fileName);
-                startActivity(intent);
+
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -249,6 +244,13 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                // Navigate to the MapsActivity screen
+                Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
+                // Send the chosen satellite name and filename into the MapsActivity
+                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
+                intent.putExtra("filename", fileName);
+                startActivity(intent);
 
 
                 try {

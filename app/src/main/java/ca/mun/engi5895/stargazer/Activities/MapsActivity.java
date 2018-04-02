@@ -432,8 +432,14 @@ checkifFavorite();
 
     private void checkifFavorite() {
 
+
         System.out.println("about to check if fasv. Filename: " + fileName);
+        if(fileName.contains("favorites_")) {
+            fileName = fileName.replace("favorites_", "");
+        }
+
         File test1 = new File(this.getFilesDir(), "favorites_" + fileName);
+
 
         if (test1.exists()) {
             System.out.println("file exists");
