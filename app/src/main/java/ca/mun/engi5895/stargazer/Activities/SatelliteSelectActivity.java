@@ -77,19 +77,11 @@ public class SatelliteSelectActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 
-                    //mTextMessage.setText(R.string.title_satellites);
-                  /*  try {
-                        getSatsCreate();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }*/
-
                     expandableListView.setVisibility(View.VISIBLE);
                     expandableListView_fav.setVisibility(View.INVISIBLE);
 
-
-                    //  listView.setVisibility(View.VISIBLE);
                     return true;
+
                 case R.id.navigation_dashboard:
                     System.out.println("Clicked Favourites");
 
@@ -278,58 +270,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
     public void getSatsCreate() throws IOException {
 
-        //open file stations.txt
-      /*  FileInputStream stream = openFileInput("stations.txt");
-        InputStreamReader sreader = new InputStreamReader(stream);
-        BufferedReader breader = new BufferedReader(sreader);
-
-        // StringBuilder sb = new StringBuilder();
-
-        String line;
-        int lineNumber = 0;
-
-        //While the next line exists, check to see if it is the 0th line or every 3rd line (satellite names)
-        //If it is a name, add it to the list ArrayList
-        while ((line = breader.readLine()) != null) {
-            if ((lineNumber % 3 == 0) || (lineNumber == 0)) {
-                list.add(line);
-            }
-            lineNumber++;
-        }
-        //Needed to convert it to a ListView
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                list);
-        //se the adapter
-        listView.setAdapter(arrayAdapter);
-        //close streams
-        breader.close();
-        sreader.close();
-        stream.close();*/
-
-        //Class that handles clicking on a list item
-       // AdapterView.OnItemClickListener mMessageClickedHandler = new AdapterView.OnItemClickListener() {
-           // public void onItemClick(AdapterView parent, View v, int position, long id) {
-
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                //   Object o = listView.getItemAtPosition(position); //Gets clicked option as java object
-                //    satList.add(o);
-                //    System.out.println(o.toString()); //Output to console as string
-                //    Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                // //   intent.putExtra("CHOSEN_SAT_NAME", o.toString());
-                //   startActivity(intent);
-
-                //listView.setVisibility(listView.GONE); //Hide the list cause its no longer needed
-
-                //Updates textview to the picked satellite name. Used for testing.
-                //outSat = (TextView) findViewById(R.id.textView2);
-                //outSat.setText(o.toString());
-                //outSat.setVisibility(View.VISIBLE);
-
 
                 //Handles the click of an item from the list
                 String satType = expandableListTitle.get(groupPosition);
@@ -353,11 +296,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     fileName = "science.txt";
 
                 System.out.println("Filename: "+ fileName);
-
-                /*Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
-                intent.putExtra("CHOSEN_SAT_NAME", satChosen);
-                intent.putExtra(MapsActivity.FILENAME, fileName);
-                startActivity(intent);*/
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -416,7 +354,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
             }
 
         });
-        //listView.setOnItemClickListener(mMessageClickedHandler);
     }
 
 

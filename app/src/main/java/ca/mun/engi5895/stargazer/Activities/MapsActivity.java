@@ -155,7 +155,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
-                String fileName = getIntent().getStringExtra(FILENAME);     //
+                String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
 
 
                 Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
@@ -213,6 +213,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(final GoogleMap googleMap) {     //Called when the map is first created and ready to be modified. Android method
         mMap = googleMap;
+        //mMap.setMapType(mMap.MAP_TYPE_HYBRID);
 
             mapUpdater(getCreatedTime());    //Plots the orbit for the given time period
 
