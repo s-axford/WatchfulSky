@@ -44,7 +44,9 @@ import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.stargazer.R;
 
-
+/**
+ * Clss representing the maps activity that comes up when a satellite is selected
+ */
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

@@ -11,7 +11,9 @@ import java.io.File;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.saveFileIntent;
 import ca.mun.engi5895.stargazer.R;
 
-
+/**
+ * Settings activity
+ */
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
