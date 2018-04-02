@@ -31,6 +31,8 @@ import org.orekit.time.TimeScale;
 import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.Constants;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,6 +41,7 @@ import java.util.TimeZone;
 
 import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.Favorites;
 import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.stargazer.R;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -50,6 +53,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ArrayList<Entity> selectedSat;
 
     private String timePickerTime;
+
+    String fileName;
+    String satelliteName;
+    MenuItem favItem;
 
     Date date;
     Date d1;
@@ -75,6 +82,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
 
+        fileName  = getIntent().getStringExtra(FILENAME);
+
+
+
+
+
+
+       // try {
+       //     ArrayList<String> favs = celestrakData.getNames("favorites_" + fileName, this);
+       // } catch (IOException e) {
+       //     e.printStackTrace();
+       // }
+
         selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
         System.out.println(selectedSat.get(0).getName());
         sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
@@ -89,6 +109,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
                 sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
                 sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
+
+      //  checkifFavorite();
 
 
         try {
@@ -111,6 +133,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         MenuInflater item = getMenuInflater();     //Specifies the item fit
         item.inflate(R.menu.actionbar, menu);   //Fits the menu to the item fit
         setTitle("StarGazer");                  //Sets the action bar title
+        favItem = menu.findItem(R.id.actionbar_fav);
+checkifFavorite();
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -404,6 +428,34 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //Returns Orekit specific date format
         return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
+    }
+
+    private void checkifFavorite() {
+
+
+        System.out.println("about to check if fasv. Filename: " + fileName);
+        if(fileName.contains("favorites_")) {
+            fileName = fileName.replace("favorites_", "");
+        }
+
+        File test1 = new File(this.getFilesDir(), "favorites_" + fileName);
+
+
+        if (test1.exists()) {
+            System.out.println("file exists");
+            try {
+                ArrayList<String> favs = celestrakData.getNames("favorites_" + fileName, this);
+
+                if (favs.contains(selectedSat.get(0).getName())) {
+                    System.out.println("already is a favorite");
+                    favItem.setIcon(R.drawable.favoritesicon_filled);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {System.out.println("file doesnt exist");}
+
+
     }
 
 }

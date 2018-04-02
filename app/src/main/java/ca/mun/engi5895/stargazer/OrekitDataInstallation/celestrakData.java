@@ -149,7 +149,7 @@ public class celestrakData {
             List<String> scienceList = getNames("favorites_science.txt", c);
             for (String s : scienceList) {
                 science.add(s);
-            }} else if (test6.exists()) {
+            }} else if (!test6.exists()) {
             science.add(" No data");}
 
         // Add lists to the hash map with corresponding keys for list categories
@@ -170,7 +170,7 @@ public class celestrakData {
      * @return Arraylist containing all the names of the satellites from a specific internal file
      * @throws IOException
      */
-    private static ArrayList<String> getNames(String filename, Context context) throws IOException {
+    public static ArrayList<String> getNames(String filename, Context context) throws IOException {
 
         ArrayList<String> list = new ArrayList<>();
 
