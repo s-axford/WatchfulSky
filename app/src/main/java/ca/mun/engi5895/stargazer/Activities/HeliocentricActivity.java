@@ -26,6 +26,9 @@ import static ca.mun.engi5895.stargazer.OrbitingBodyCalculations.OrbitGraphing.d
 import static ca.mun.engi5895.stargazer.OrbitingBodyCalculations.OrbitGraphing.findPlanetPosition;
 import static ca.mun.engi5895.stargazer.OrbitingBodyCalculations.OrbitGraphing.getPlanetVelocity;
 
+/**
+ * Class representing the heliocentric activity
+ */
 public class HeliocentricActivity extends AppCompatActivity {
 
     @Override
