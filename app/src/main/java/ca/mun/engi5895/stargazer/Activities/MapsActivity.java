@@ -44,6 +44,7 @@ import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.stargazer.R;
 
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -85,16 +86,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         fileName  = getIntent().getStringExtra(FILENAME);
 
 
-
-
-
-
-       // try {
-       //     ArrayList<String> favs = celestrakData.getNames("favorites_" + fileName, this);
-       // } catch (IOException e) {
-       //     e.printStackTrace();
-       // }
-
         selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
         System.out.println(selectedSat.get(0).getName());
         sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
@@ -109,9 +100,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
                 sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
                 sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
-
-      //  checkifFavorite();
-
 
         try {
             System.out.println("Velocity:");
@@ -134,7 +122,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         item.inflate(R.menu.actionbar, menu);   //Fits the menu to the item fit
         setTitle("StarGazer");                  //Sets the action bar title
         favItem = menu.findItem(R.id.actionbar_fav);
-checkifFavorite();
+        checkifFavorite(); // see if sat is favorite
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -165,18 +153,12 @@ checkifFavorite();
                 }
 
                 sat_Name = findViewById(R.id.satName);
-                //sat_Name.setText();
 
                 updateMap();        //Calls update map to update with the clock selected time
 
                 return true;
 
             case R.id.actionbar_fav: // Handles the clicking of the favorite button
-
-
-
-             //   list = SatelliteSelectActivity.getSelectedSat();
-
 
                 selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
                 String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
@@ -394,6 +376,11 @@ checkifFavorite();
         }
     }
 
+    /**
+     *
+     * @param date
+     * @param i
+     */
     private void updatePosition(AbsoluteDate date, int i){
 
         scs = selectedSat.get(i).updateState(date);     //Returns current SpaceCraftState
@@ -430,25 +417,30 @@ checkifFavorite();
         return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
     }
 
+    /**
+     * Checks to see if the satellite is a favorite. If it is, fill in the star
+     */
     private void checkifFavorite() {
 
 
-        System.out.println("about to check if fasv. Filename: " + fileName);
+        // Handle clicking on a satellite from the favorites menu
         if(fileName.contains("favorites_")) {
             fileName = fileName.replace("favorites_", "");
         }
 
+        // File representing the favorites file of the satellite selected
         File test1 = new File(this.getFilesDir(), "favorites_" + fileName);
 
 
         if (test1.exists()) {
             System.out.println("file exists");
             try {
-                ArrayList<String> favs = celestrakData.getNames("favorites_" + fileName, this);
+                ArrayList<String> favs = celestrakData.getNames("favorites_" + fileName, this);   // if the file exists, return all the names stored in the favorites
 
+                // If satellite is in list of favorite satellites
                 if (favs.contains(selectedSat.get(0).getName())) {
                     System.out.println("already is a favorite");
-                    favItem.setIcon(R.drawable.favoritesicon_filled);
+                    favItem.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
                 }
             } catch (IOException e) {
                 e.printStackTrace();

@@ -18,17 +18,8 @@ import ca.mun.engi5895.stargazer.Activities.MainActivity;
 public class Install {
 
 
-    /**
-     * Returns the File pointing to the root of the Orekit data in the device storage
-     * @param activity
-     * @return
-     */
-    public static File getOrekitDataRoot(Activity activity){
-        return new File(activity.getFilesDir()+File.separator+orekitDataPath);
-    }
-
     private static String orekitDataPath = "orekit-data";
-    private static String[] orekitDataFolders = {
+    private static String[] orekitFolders = {
             "Others",
             "DE-430-ephemerides",
             "Earth-Orientation-Parameters"+File.separator+"IAU-1980",
@@ -37,8 +28,19 @@ public class Install {
             "Potential"
     };
 
+
     /**
-     * Installs the default Orekit data files in the device
+     * Returns file pointing to root directory of the orekit data
+     * @param activity
+     */
+    public static File getOrekitDataRoot(Activity activity){
+        return new File(activity.getFilesDir()+File.separator+orekitDataPath);
+    }
+
+
+
+    /**
+     * Installs the orekit files in the internal storage of the application
      * @param activity
      */
     public static void installApkData(MainActivity activity){
@@ -51,10 +53,16 @@ public class Install {
            System.out.println("Files already in storage.");
 
     }
+
+    /**
+     * Copies the orekit files from the assets folder to internal device storage
+     * @param activity
+     * @return
+     */
     private static boolean copyAssets(Activity activity) {
         boolean installed = true;
         AssetManager assetManager = activity.getAssets();
-        for(String foldername : orekitDataFolders) {
+        for(String foldername : orekitFolders) {
             String[] files = null;
             try {
                 files = assetManager.list(orekitDataPath+File.separator+foldername);
@@ -82,6 +90,13 @@ public class Install {
         }
         return installed;
     }
+
+    /**
+     * Copies a file from one place to another
+     * @param in
+     * @param out
+     * @throws IOException
+     */
     private static void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;

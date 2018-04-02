@@ -33,6 +33,10 @@ import ca.mun.engi5895.stargazer.OrbitingBodyCalculations.Entity;
 import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.stargazer.R;
 
+/**
+ * Activity representing the satellite select screen that comes up
+ * when you click "Geocentric" in the main activity
+ */
 
 public class SatelliteSelectActivity extends AppCompatActivity {
 
@@ -62,52 +66,29 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
 
-   // Favorites fav = new Favorites(SatelliteSelectActivity.this);
-  //  favoriteList = fav.getFavorites();\
 
-  //  Context context = SatelliteSelectActivity.this;
-  //  Favorites fav = new Favorites(context);
-   // favoriteList = fav.getFavorites();
-
+    // Bottom navigation bar
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_home: // Clicking the "satellites" button
 
-                    expandableListView.setVisibility(View.VISIBLE);
-                    expandableListView_fav.setVisibility(View.INVISIBLE);
+                    expandableListView.setVisibility(View.VISIBLE); // Set the main list to visible
+                    expandableListView_fav.setVisibility(View.INVISIBLE); // set the favorites list to invisible
 
                     return true;
 
-                case R.id.navigation_dashboard:
+                case R.id.navigation_dashboard: // Clicking the "favorites" button
+
                     System.out.println("Clicked Favourites");
-
-                   //Context context = SatelliteSelectActivity.this;
-                 //  Favorites fav = new Favorites(context);
-                //    favoriteList = fav.getFavorites();
-
                     expandableListView.setVisibility(View.INVISIBLE);
 
                     getFavData();
 
-                    //   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                   //         context,
-                    //        android.R.layout.simple_list_item_1,
-             //               list);
-                    //se the adapter
-                //    listView.setAdapter(favoriteList);
-                //    listView.setVisibility(View.VISIBLE);
                     return true;
-
-                //case R.id.navigation_notifications:
-
-
-
-                    //return true;
-
             }
             return false;
         }
@@ -122,13 +103,8 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_satellite_sel);
 
-      //  mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
-       navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        //listView = findViewById(R.id.lvid2);
-
-        //LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+       navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // Set click lsitener for bottom navbar
 
         // Find the expandable list views, one for all satellites and one for favorite satellites
         expandableListView = findViewById(R.id.expandableListView);
@@ -147,7 +123,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         // Set the custom adapter for the expandable list view
         expandableListAdapter = new MyListAdapter(this, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
-        //expandableListView.setVisibility(View.VISIBLE);
 
 
         // Run the getSatsCreate method and make the expandable list view appear
@@ -270,6 +245,10 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Handles click of satellite in main satellite list
+     * @throws IOException
+     */
     public void getSatsCreate() throws IOException {
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -337,6 +316,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 System.out.println("Tle 1: " + TLE1);
                 System.out.println("Tle 2: " + TLE2);
 
+                // Navigate to the MapsActivity and send the filename and chosen satellite name
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 intent.putExtra("CHOSEN_SAT_NAME", satChosen);
                 intent.putExtra(MapsActivity.FILENAME, fileName);
@@ -344,8 +324,8 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
 
                 try {
-                    currentEntity = new Entity(satChosen, TLE1, TLE2);
-                    selectedSats.add(currentEntity);
+                    currentEntity = new Entity(satChosen, TLE1, TLE2); // Create entity from chosen satellite
+                    selectedSats.add(currentEntity); // Add entity to selectedsats list
                     SatelliteSelectActivity.getSelectedSat();
                 } catch (OrekitException e) {
                     e.printStackTrace();
@@ -370,16 +350,5 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         satList.clear();
 
     }
-    public static ArrayList<Object> getFavoriteSats(){return favoriteSats;}
 
-    public static void removeFavSat() {
-        boolean found = false;
-            //create dialog box
-
-    }
-
-    public void geoGo(View view) {      //Starts the Google Maps Activity
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
 }

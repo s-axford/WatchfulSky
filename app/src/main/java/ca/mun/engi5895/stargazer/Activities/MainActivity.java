@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //STAVOR CODE
-        Install.installApkData(this);
+        // Install the orekit files
+       Install.installApkData(this);
 
         //Initialize Orekit with the data files
         OrekitInit.init(Install.getOrekitDataRoot(this));
@@ -30,17 +30,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+ // Button that goes to the geocentric activity
     public void geoGo(View view) {
         Intent intent = new Intent(this, SatelliteSelectActivity.class);
         startActivity(intent);
     }
-
+    // Button that goes to the heliocentric activity
     public void helioGo(View view) {
         Intent intent = new Intent(this, HeliocentricActivity.class);
         startActivity(intent);
     }
-
+    // Button that goes to the settings activity
     public void settingsGo(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
