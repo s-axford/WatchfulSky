@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Objects;
 
 import ca.mun.engi5895.stargazer.Activities.MainActivity;
 
@@ -69,7 +70,7 @@ public class Install {
             } catch (IOException e) {
                 installed=false;
             }
-            for(String filename : files) {
+            for(String filename : Objects.requireNonNull(files)) {
                 InputStream instream = null;
                 OutputStream out = null;
                 try {

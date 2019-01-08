@@ -4,7 +4,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "ca.mun.engi5895.stargazer"
-        minSdkVersion 26
+        minSdkVersion 24
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -42,4 +42,5 @@ dependencies {
     implementation files('libs/hipparchus-geometry-1.2.jar')
     implementation files('libs/httpclientandroidlib-1.2.1.jar')
     implementation 'com.androidplot:androidplot-core:1.5.4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

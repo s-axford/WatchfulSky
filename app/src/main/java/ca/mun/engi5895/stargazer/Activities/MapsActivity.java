@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import ca.mun.engi5895.stargazer.AndroidAestheticAdditions.Favorites;
@@ -45,7 +46,7 @@ import ca.mun.engi5895.stargazer.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.stargazer.R;
 
 /**
- * Clss representing the maps activity that comes up when a satellite is selected
+ * Class representing the maps activity that comes up when a satellite is selected
  */
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -55,10 +56,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private ArrayList<Entity> selectedSat;
 
-    private String timePickerTime;
-
     String fileName;
-    String satelliteName;
     MenuItem favItem;
 
     Date date;
@@ -136,7 +134,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 date = getCreatedTime();
              d1 = getCreatedTime();
-                timePickerTime = getCurrentTime(date);
+                String timePickerTime = getCurrentTime(date);
 
                 sat_Name = findViewById(R.id.satName);
                 sat_Name.setText(timePickerTime);
@@ -191,9 +189,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-
-                d.setHours(i);
-                d.setMinutes(i1);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(d);
+                calendar.set(Calendar.HOUR_OF_DAY, i);
+                calendar.set(Calendar.MINUTE, i1);
                 System.out.println("Hours: " + i + "Minutes: " + i1);
                 //if (i1 != 0){
                  //   timePicker.setVisibility(View.INVISIBLE);
@@ -265,7 +264,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Date dateTime = null;   //Declares date to be used throughout class
 
-    private Runnable updateMap(){       //Runnable to allow map to be updated every 10 seconds
+    private void updateMap(){       //Runnable to allow map to be updated every 10 seconds
 
         System.out.println("Entering update map");
         if (dateTime == null){              //If no date specified by the calling class
@@ -357,7 +356,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         line.setWidth(5);                                                               //Sets width of polyline
         line.setColor(Color.RED);                                                       //Sets color of polyline
         }
-        return null;
     }
 
     private void initializeFrames(){        //AbsoluteDate date, int i) {
@@ -416,7 +414,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         calendar.setTime(date); //updates date and time
 
         //Returns Orekit specific date format
-        return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), timeZone);
+        return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), Objects.requireNonNull(timeZone));
     }
 
     /**

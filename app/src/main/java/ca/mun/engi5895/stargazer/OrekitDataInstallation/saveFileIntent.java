@@ -1,7 +1,6 @@
 package ca.mun.engi5895.stargazer.OrekitDataInstallation;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 
 import java.io.File;
