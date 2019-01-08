@@ -14,6 +14,7 @@ import com.androidplot.xy.PanZoom;
 import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
+import com.squareup.picasso.Picasso;
 
 import org.orekit.bodies.CelestialBody;
 import org.orekit.bodies.CelestialBodyFactory;
@@ -37,6 +38,27 @@ public class HeliocentricActivity extends AppCompatActivity {
         setContentView(R.layout.activity_heliocentric);
         getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         setTitle("Heliocentric Orbit");
+
+        //Set up planet images
+        ImageView mercury_icon = findViewById(R.id.mercury_icon);
+        ImageView venus_icon = findViewById(R.id.venus_icon);
+        ImageView earth_icon = findViewById(R.id.earth_icon);
+        ImageView mars_icon = findViewById(R.id.mars_icon);
+        ImageView jupiter_icon = findViewById(R.id.jupiter_icon);
+        ImageView saturn_icon = findViewById(R.id.saturn_icon);
+        ImageView uranus_icon = findViewById(R.id.uranus_icon);
+        ImageView neptune_icon = findViewById(R.id.neptune_icon);
+
+        Picasso.get().load(R.drawable.mercury).resize(75,75).centerCrop().into(mercury_icon);
+        Picasso.get().load(R.drawable.venus).resize(75,75).centerCrop().into(venus_icon);
+        Picasso.get().load(R.drawable.earth).resize(75, 75).centerCrop().into(earth_icon);
+        Picasso.get().load(R.drawable.mars1).resize(75,75).centerCrop().into(mars_icon);
+        Picasso.get().load(R.drawable.jupiter).resize(75,75).centerCrop().into(jupiter_icon);
+        Picasso.get().load(R.drawable.saturn1).resize(145, 75).centerCrop().into(saturn_icon);
+        Picasso.get().load(R.drawable.uranus).resize(75,75).centerCrop().into(uranus_icon);
+        Picasso.get().load(R.drawable.neptune).resize(75,75).centerCrop().into(neptune_icon);
+
+
 
         //Set up solar-system plot
         XYPlot plot = findViewById(R.id.plot);
@@ -212,7 +234,7 @@ public class HeliocentricActivity extends AppCompatActivity {
     }
 
     //Operation for swapping buttons for planet info
-    public void clickPlanet(CelestialBody body, String name) throws OrekitException {
+    private void clickPlanet(CelestialBody body, String name) throws OrekitException {
        //setting relevant visibilities
         RelativeLayout buttons = findViewById(R.id.topButtons);
         buttons.setVisibility(View.GONE);

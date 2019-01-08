@@ -64,17 +64,17 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/earth_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/earth_bg"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/button8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/button2"/>
+        <!--android:background="@drawable/earth_bg"-->
 
     <ImageView
         android:id="@+id/earth_icon"
@@ -83,8 +83,8 @@
         android:layout_marginBottom="4dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:srcCompat="@drawable/earth" />
+        app:layout_constraintStart_toStartOf="@+id/button"/>
+        <!--app:srcCompat="@drawable/earth" />-->
 
     <ImageView
         android:id="@+id/sun_icon"
@@ -96,8 +96,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/button2"
         app:layout_constraintStart_toStartOf="@+id/button2"
         app:layout_constraintTop_toTopOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/sun" />
+        app:layout_constraintVertical_bias="0.0"/>
+        <!--app:srcCompat="@drawable/sun" />-->
 
 
 </android.support.constraint.ConstraintLayout>

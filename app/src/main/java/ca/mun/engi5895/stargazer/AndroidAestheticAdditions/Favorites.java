@@ -2,8 +2,6 @@ package ca.mun.engi5895.stargazer.AndroidAestheticAdditions;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,7 +11,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 
 /**
  * Class responsible for handling adding satellites as a favorite
@@ -65,7 +62,7 @@ public class Favorites {
             }
 
 
-            if (favExists == false) {
+            if (!favExists) {
                 FileOutputStream fostream = context.openFileOutput("favorites_" + fileName, Context.MODE_APPEND);
 
                 OutputStreamWriter oswriter = new OutputStreamWriter(fostream);

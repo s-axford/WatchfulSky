@@ -44,7 +44,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     private ListView listView;
 
     private ProgressBar progressBar;
-    //private ArrayList<String> list = new ArrayList<String>();
     private ArrayAdapter<String> adapterList;
     private ArrayAdapter<String> favoriteList;
 
@@ -126,16 +125,8 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
 
         // Run the getSatsCreate method and make the expandable list view appear
-        try {
-            getSatsCreate();
-            expandableListView.setVisibility(View.VISIBLE);
-
-            // listView.setVisibility(View.VISIBLE);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-      //  listView = (ListView) findViewById(R.id.lvid2);
+        getSatsCreate();
+        expandableListView.setVisibility(View.VISIBLE);
     }
 
     // Method that populates the expandable list view with the favorite satellites
@@ -247,9 +238,8 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
     /**
      * Handles click of satellite in main satellite list
-     * @throws IOException
      */
-    public void getSatsCreate() throws IOException {
+    public void getSatsCreate() {
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override

@@ -198,8 +198,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/earth" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/mercury_icon"
@@ -208,8 +207,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/mercury" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/venus_icon"
@@ -218,8 +216,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/venus" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/mars_icon"
@@ -228,8 +225,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/mars1" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/jupiter_icon"
@@ -238,8 +234,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/jupiter" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/saturn_icon"
@@ -248,8 +243,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/saturn1" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/uranus_icon"
@@ -258,8 +252,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/uranus" />
+                app:layout_constraintVertical_bias="1.0" />
 
             <ImageView
                 android:id="@+id/neptune_icon"
@@ -268,8 +261,7 @@
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"
                 app:layout_constraintTop_toBottomOf="@+id/PlanetName"
-                app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/neptune" />
+                app:layout_constraintVertical_bias="1.0" />
 
 
         </RelativeLayout>

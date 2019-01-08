@@ -13,10 +13,7 @@ package ca.mun.engi5895.stargazer.OrbitingBodyCalculations;
  */
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
-import org.orekit.bodies.CelestialBodyFactory;
 import org.orekit.errors.OrekitException;
-import org.orekit.forces.ForceModel;
-import org.orekit.forces.gravity.ThirdBodyAttraction;
 import org.orekit.frames.Frame;
 import org.orekit.frames.FramesFactory;
 import org.orekit.propagation.SpacecraftState;
@@ -28,7 +25,6 @@ import org.orekit.time.TimeScalesFactory;
 import org.orekit.utils.PVCoordinates;
 import org.orekit.utils.TimeStampedPVCoordinates;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,27 +35,13 @@ public class Entity {
     private static TLEPropagator tleProp; //orbit propagator
     private static String entity_name;
 
-    //private Calendar calendar;
-    //private double[] array;
-    //private int avgMass = 200;
-    //private Attitude att;
-    //private PVCoordinates currentPV;
-    //private TLEPropagatorBuilder builder;
-
-
     //constructor
     public Entity(String name, String line1, String line2) throws OrekitException{
 
-        //System.out.println(line1);
-        //System.out.println(line2);
         entity = new TLE(line1, line2); //creates TLE object
         tleProp = TLEPropagator.selectExtrapolator(entity); //extrapolates proper propagation for orbit as TLEPropagator
         tleProp.setSlaveMode();
         entity_name = name;
-
-        //tleProp.getGeneratedEphemeris();
-        //tleProp.resetInitialState(tleProp.getInitialState());
-        //tleProp.setSlaveMode();
 
         System.out.println(tleProp.getFrame());
     }
@@ -91,9 +73,6 @@ public class Entity {
     private TimeStampedPVCoordinates getPVCoordinates(AbsoluteDate date) throws OrekitException {
 
         Frame frame = FramesFactory.getGCRF();
-        //SpacecraftState state = tleProp.propagate(date);
-        //Orbit orbit = state.getOrbit();
-        //TimeStampedPVCoordinates coordinates = orbit.getPVCoordinates();
         tleProp.propagate(date);
 
         return tleProp.getPVCoordinates(date, frame); //returns coordinates
