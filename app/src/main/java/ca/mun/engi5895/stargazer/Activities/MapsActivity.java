@@ -171,7 +171,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
                 String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
 
-
+                Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
                 item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
 
 
