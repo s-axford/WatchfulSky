@@ -2,16 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <item
+        android:id="@+id/actionbar_info"
+        android:icon="@drawable/infoicon"
+        android:title="@string/app_name"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/actionbar_clock"
         android:icon="@drawable/clockicon"
         android:title="@string/app_name"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionbar_fav"
         android:icon="@drawable/favoritesicon"
         android:title="@string/app_name"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
 </menu>

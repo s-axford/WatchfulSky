@@ -90,25 +90,6 @@ public class Entity {
         assert pv != null;
         return pv.getPosition();        //Returns entity position
     }
-    public double getX(AbsoluteDate date){      //Finds and returns the X Cartesian Coordinate
-        double xVal;
-        xVal = getVector(date).getX();          //Finds X from 3D Vector
-
-        return xVal;        //Returns X Value
-    }
-    public double getY(AbsoluteDate date){      //Finds and returns the Y Cartesian Coordinate
-        double yVal;
-        yVal = getVector(date).getY();          //Finds Y from 3D Vector
-
-        return yVal;        //Returns Y Value
-    }
-    public double getZ(AbsoluteDate date){      //Finds and returns the Z Cartesian Coordinate
-        double zVal;
-        zVal = getVector(date).getZ();          //Finds Z from 3D Vector
-
-        return zVal;        //Returns Z Value
-    }
-
     //Returns the magnitude of the velocity
     public double getVelocity() throws OrekitException {
         PVCoordinates coord = this.getPVCoordinates(); //gets up to date coordinates
