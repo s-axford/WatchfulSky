@@ -2,11 +2,14 @@ package ca.mun.engi5895.stargazer.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -33,6 +36,7 @@ import org.orekit.utils.Constants;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,7 +66,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     Date date;
     Date d1;
 
-    private  ArrayList<Object> list = new ArrayList<>();
+    private  DecimalFormat df = new DecimalFormat("#.00");
 
     private Frame earthFixedFrame;      //Declares a frame of the earth
     private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
@@ -76,7 +80,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
+
+        selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
+        System.out.println(selectedSat.get(0).getName());
+
         setContentView(R.layout.activity_maps);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(selectedSat.get(0).getName());
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -85,12 +98,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         fileName  = getIntent().getStringExtra(FILENAME);
 
-
-        selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
-        System.out.println(selectedSat.get(0).getName());
-        sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
-        double inclination = selectedSat.get(0).getInclination();   //Gets the inclination of the entity
-        sat_Name.setText(String.valueOf(inclination));
+//        sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
+//        double inclination = selectedSat.get(0).getInclination();   //Gets the inclination of the entity
+//        sat_Name.setText(String.valueOf(df.format(inclination)));
 
       
         int  i = 0;
@@ -98,8 +108,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
-                sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
-                sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
+//                sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
+//                sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
 
         try {
             System.out.println("Velocity:");
@@ -133,13 +143,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.actionbar_clock:      //Hanldes the clicking of the clock
 
                 date = getCreatedTime();
-             d1 = getCreatedTime();
+                d1 = getCreatedTime();
                 String timePickerTime = getCurrentTime(date);
 
-                sat_Name = findViewById(R.id.satName);
-                sat_Name.setText(timePickerTime);
-
-                View s = findViewById(R.id.actionbar_clock);
+//                sat_Name = findViewById(R.id.satName);
+//                sat_Name.setText(timePickerTime);
 
                 item.setIcon(android.R.drawable.ic_menu_save);
 
@@ -152,7 +160,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     clock.setVisibility(View.INVISIBLE);
                 }
 
-                sat_Name = findViewById(R.id.satName);
+//                sat_Name = findViewById(R.id.satName);
 
                 updateMap();        //Calls update map to update with the clock selected time
 
@@ -164,9 +172,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
 
 
-                Favorites favorite = new Favorites(getApplicationContext()); // Create a favorites object
-
                 item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
+
 
                 for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
                     try { // Add All selected satellites to favorites
@@ -175,7 +182,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     } catch (OrekitException e) {
                         e.printStackTrace();
                     }
-            
+
+            case R.id.actionbar_info:
+                ConstraintLayout satInfo = findViewById(R.id.satelliteInfo);
+                if (satInfo.getVisibility() == View.INVISIBLE) {
+                    satInfo.setVisibility(View.VISIBLE);
+                } else{
+                    satInfo.setVisibility(View.INVISIBLE);
+                }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -202,7 +216,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         currentTime="Current Time: "+timePicker.getHour()+":"+timePicker.getMinute();
 
-        //int[] array = {timepicker.getHour(), timepicker.getMinute()};
         return currentTime;
     }
 
@@ -276,7 +289,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             double satNum = selectedSat.get(i).getSatNum();                 //Gets the selected entities identifying number - Unique
             TextView satNumberText = findViewById(R.id.satelliteNumber);    //Finds the corresponding UI textbox
-            satNumberText.setText("Satellite Number: " + String.valueOf(satNum));   //Outputs the Sat Number to the UI using the selected textbox
+            satNumberText.setText("Satellite Number: " + String.valueOf(Math.round(satNum)));   //Outputs the Sat Number to the UI using the selected textbox
 
 
                 try {
@@ -315,12 +328,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude and converts to degrees
                 double altitude = pointPlot.getAltitude();              //Determines the entities altitude at the current date and time
                 TextView satAltitude = findViewById(R.id.satAltitude);  //Specifies the textbox to output the Altitude information to the UI
-                satAltitude.setText("Altitude: " + altitude + "m");     //Prints the Altitude information to the UI using the previously specified textbox
+                satAltitude.setText("Altitude: " + df.format(altitude) + "m");     //Prints the Altitude information to the UI using the previously specified textbox
 
                 try {       //Prints entity information to the User Interface using textboxes - Updates at the same time as the maps position
-                    String latitudeString = "Latitude: " + latitude + "m/s";                                            //Text to be set as position in UI
-                    String longitudeString = "Longitude: " + longitude + "m/s";                                         //Text to be set as position in UI
-                    String velocityString = "Velocity: " + String.valueOf(selectedSat.get(i).getVelocity()) + "m/s^2";  //Text to be set as Velocity in UI
+                    String latitudeString = "Latitude: " + df.format(latitude) + "m/s";                                            //Text to be set as position in UI
+                    String longitudeString = "Longitude: " + df.format(longitude) + "m/s";                                         //Text to be set as position in UI
+                    String velocityString = "Velocity: " + df.format(selectedSat.get(i).getVelocity()) + "m/s^2";  //Text to be set as Velocity in UI
                     TextView satLatitude = findViewById(R.id.satLatitude);      //Latitude Position textbox (UI)
                     TextView satLongitude = findViewById(R.id.satLongitude);    //Longitude position textbox (UI)
                     TextView satVelocity = findViewById(R.id.velocity);         //Velocity textbox (UI)
@@ -379,7 +392,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     /**
      *
      * @param date
+     * AbsoluteDate object representing what time the data should be extrapolated to
      * @param i
+     * What satellite in the selectedSat list is being updated
      */
     private void updatePosition(AbsoluteDate date, int i){
 
