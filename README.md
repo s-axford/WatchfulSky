@@ -1,4 +1,4 @@
-# StarGazer
+# WatchfulSky
 Term 5 Design Project
 This java mobile application will allow users to see various space entities, their relative orbits, and their proximity to the user. Various features will be implemented for educational and entertainment purposes including the ability to view a large variety of satellites from countries all over the world, as well as learn about their purpose, and history. Entities such as planets, and asteroids will also be tracked, and their location provided to the user. By tracking GPS satellites, a map of GPS visibility will be created which could potentially be used for dead zone locating, and for planning GPS visibility and accuracy. 
 
