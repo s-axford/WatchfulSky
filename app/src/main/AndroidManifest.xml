@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ca.mun.engi5895.stargazer">
+    package="ca.mun.engi5895.watchfulsky">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,7 +16,7 @@
 
 
     <application
-        android:name=".OrekitDataInstallation.MyApplication"
+        android:name="ca.mun.engi5895.watchfulsky.OrekitDataInstallation.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="ca.mun.engi5895.watchfulsky.Activities.MainActivity"
             android:icon="@drawable/rocketcol">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,25 +33,25 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.HeliocentricActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="ca.mun.engi5895.watchfulsky.Activities.HeliocentricActivity"
+            android:parentActivityName="ca.mun.engi5895.watchfulsky.Activities.MainActivity" />
         <activity
-            android:name=".Activities.SettingsActivity"
-            android:parentActivityName=".Activities.MainActivity" />
+            android:name="ca.mun.engi5895.watchfulsky.Activities.SettingsActivity"
+            android:parentActivityName="ca.mun.engi5895.watchfulsky.Activities.MainActivity" />
 
-        <service android:name=".OrekitDataInstallation.saveFileIntent" />
+        <service android:name="ca.mun.engi5895.watchfulsky.OrekitDataInstallation.saveFileIntent" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".Activities.SatelliteSelectActivity"
+            android:name="ca.mun.engi5895.watchfulsky.Activities.SatelliteSelectActivity"
             android:label="@string/title_activity_satellite_sel"
-            android:parentActivityName=".Activities.MainActivity">
+            android:parentActivityName="ca.mun.engi5895.watchfulsky.Activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ca.mun.engi5895.stargazer.Activities.MainActivity" />
+                android:value="ca.mun.engi5895.watchfulsky.Activities.MainActivity" />
         </activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -66,7 +66,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activities.MapsActivity"
+            android:name="ca.mun.engi5895.watchfulsky.Activities.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
     </application>
 
