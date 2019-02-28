@@ -324,8 +324,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 System.out.println("DATE: " + date);
                 this.updatePosition(date, i);
                 System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());      //Prints the size of the map to the console
-                longitude = pointPlot.getLongitude();       //Finds longitude
-                latitude = pointPlot.getLatitude();         //Finds latitude
+                longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude and converts to degrees
+                latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude and converts to degrees
                 double altitude = pointPlot.getAltitude();              //Determines the entities altitude at the current date and time
                 TextView satAltitude = findViewById(R.id.satAltitude);  //Specifies the textbox to output the Altitude information to the UI
                 satAltitude.setText("Altitude: " + df.format(altitude) + "m");     //Prints the Altitude information to the UI using the previously specified textbox
