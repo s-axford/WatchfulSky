@@ -176,9 +176,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 else if (satType.equals("Science Satellites"))
                     fileName = "favorites_science.txt";
 
-
-
-
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
                 FileInputStream stream1 = null;
                 try {
