@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import org.orekit.errors.OrekitException;
 
@@ -40,19 +37,9 @@ import ca.mun.engi5895.watchfulsky.R;
 
 public class SatelliteSelectActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
-    private ListView listView;
-
-    private ProgressBar progressBar;
-    private ArrayAdapter<String> adapterList;
-    private ArrayAdapter<String> favoriteList;
-
     public static ArrayList<Entity> selectedSats = new ArrayList<>();
     private static ArrayList<Object> satList = new ArrayList<>();
-    private static ArrayList<Object> favoriteSats = new ArrayList<>();
 
-    private static String TLE1;
-    private static String TLE2;
     private static Entity currentEntity = null;
 
     ExpandableListView expandableListView;
@@ -64,6 +51,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     ExpandableListAdapter expandableListAdapter_fav;
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
+    private ActionBar ab;
 
 
     // Bottom navigation bar
@@ -75,12 +63,22 @@ public class SatelliteSelectActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home: // Clicking the "satellites" button
 
+                    ab = getSupportActionBar();
+                    if (ab != null) {
+                        ab.setTitle("Satellites");
+                    }
+
                     expandableListView.setVisibility(View.VISIBLE); // Set the main list to visible
                     expandableListView_fav.setVisibility(View.INVISIBLE); // set the favorites list to invisible
 
                     return true;
 
                 case R.id.navigation_dashboard: // Clicking the "favorites" button
+
+                    ab = getSupportActionBar();
+                    if (ab != null) {
+                        ab.setTitle("Favorites");
+                    }
 
                     System.out.println("Clicked Favourites");
                     expandableListView.setVisibility(View.INVISIBLE);
@@ -102,6 +100,11 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_satellite_sel);
 
+        ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setTitle("Satellites");
+        }
+
         BottomNavigationView navigation = findViewById(R.id.navigation);
        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // Set click lsitener for bottom navbar
 
@@ -112,7 +115,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         // Get the satellite data from the internal files
         // Represents the child titles of the expandable list view
         try {
-            expandableListDetail = celestrakData.getSatData(getApplicationContext());
+            while (expandableListDetail == null) {
+                expandableListDetail = celestrakData.getSatData(getApplicationContext());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -163,18 +168,26 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String fileName = null;
 
                 // Need to know the filename corresponding to the chosen satellite
-                if (satType.equals("Space Stations")) {
-                    fileName = "favorites_stations.txt";
-                } else if (satType.equals("Newly Launched Satellites"))
-                    fileName = "favorites_tle-new.txt";
-                else if (satType.equals("GPS Satellites")) {
-                    fileName = "favorites_gps-ops.txt";
-                } else if (satType.equals("Communications Satellites"))
-                    fileName = "favorites_geo.txt";
-                else if (satType.equals("Intelsat Satellites"))
-                    fileName = "favorites_intelsat.txt";
-                else if (satType.equals("Science Satellites"))
-                    fileName = "favorites_science.txt";
+                switch (satType) {
+                    case "Space Stations":
+                        fileName = "favorites_stations.txt";
+                        break;
+                    case "Newly Launched Satellites":
+                        fileName = "favorites_tle-new.txt";
+                        break;
+                    case "GPS Satellites":
+                        fileName = "favorites_gps-ops.txt";
+                        break;
+                    case "Communications Satellites":
+                        fileName = "favorites_geo.txt";
+                        break;
+                    case "Intelsat Satellites":
+                        fileName = "favorites_intelsat.txt";
+                        break;
+                    case "Science Satellites":
+                        fileName = "favorites_science.txt";
+                        break;
+                }
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
                 FileInputStream stream1 = null;
@@ -250,18 +263,26 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String fileName = null;
 
 
-                if (satType.equals("Space Stations")) {
-                    fileName = "stations.txt";
-                } else if (satType.equals("Newly Launched Satellites"))
-                    fileName = "tle-new.txt";
-                else if (satType.equals("GPS Satellites"))
-                    fileName = "gps-ops.txt";
-                else if (satType.equals("Communications Satellites"))
-                    fileName = "geo.txt";
-                else if (satType.equals("Intelsat Satellites"))
-                    fileName = "intelsat.txt";
-                else if (satType.equals("Science Satellites"))
-                    fileName = "science.txt";
+                switch (satType) {
+                    case "Space Stations":
+                        fileName = "stations.txt";
+                        break;
+                    case "Newly Launched Satellites":
+                        fileName = "tle-new.txt";
+                        break;
+                    case "GPS Satellites":
+                        fileName = "gps-ops.txt";
+                        break;
+                    case "Communications Satellites":
+                        fileName = "geo.txt";
+                        break;
+                    case "Intelsat Satellites":
+                        fileName = "intelsat.txt";
+                        break;
+                    case "Science Satellites":
+                        fileName = "science.txt";
+                        break;
+                }
 
                 System.out.println("Filename: "+ fileName);
 

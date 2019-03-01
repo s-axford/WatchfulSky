@@ -80,10 +80,8 @@ public class Install {
                     out = new FileOutputStream(outFile);
                     copyFile(instream, out);
                     instream.close();
-                    instream = null;
                     out.flush();
                     out.close();
-                    out = null;
                 } catch(IOException e) {
                     installed=false;
                 }
