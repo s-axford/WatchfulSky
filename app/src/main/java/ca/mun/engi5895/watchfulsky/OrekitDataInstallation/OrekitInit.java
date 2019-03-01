@@ -18,7 +18,7 @@ public class OrekitInit {
     // This is code provided by the Orekit library in order to successfully configure it
 
     /**
-     * Configures Orekit with its configuration filss
+     * Configures Orekit with its configuration files
      * @param root
      */
     public static void init(File root) {

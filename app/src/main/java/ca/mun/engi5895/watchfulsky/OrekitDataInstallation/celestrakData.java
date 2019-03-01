@@ -34,41 +34,23 @@ public class celestrakData {
         // Create empty hash map
         HashMap<String, List<String>> celestrakMap = new HashMap<String, List<String>>();
 
-        List<String> stations = new ArrayList<String>();
         List<String> stationsList = getNames("stations.txt", c); // Add names of satellites to list
-        for (String s : stationsList) {
-            stations.add(s);
-        }
+        List<String> stations = new ArrayList<String>(stationsList);
 
-        List<String> thirtyDays = new ArrayList<String>();
         List<String> thirtyDaysList = getNames("tle-new.txt", c);
-        for (String s : thirtyDaysList) {
-            thirtyDays.add(s);
-        }
+        List<String> thirtyDays = new ArrayList<String>(thirtyDaysList);
 
-        List<String> gps = new ArrayList<String>();
         List<String> gpsList = getNames("gps-ops.txt", c);
-        for (String s : gpsList) {
-            gps.add(s);
-        }
+        List<String> gps = new ArrayList<String>(gpsList);
 
-        List<String> intelsat = new ArrayList<String>();
         List<String> intelsatList = getNames("intelsat.txt", c);
-        for (String s : intelsatList) {
-            intelsat.add(s);
-        }
+        List<String> intelsat = new ArrayList<String>(intelsatList);
 
-        List<String> geo = new ArrayList<String>();
         List<String> geoList = getNames("geo.txt", c);
-        for (String s : geoList) {
-            geo.add(s);
-        }
+        List<String> geo = new ArrayList<String>(geoList);
 
-        List<String> science = new ArrayList<String>();
         List<String> scienceList = getNames("science.txt", c);
-        for (String s : scienceList) {
-            science.add(s);
-        }
+        List<String> science = new ArrayList<String>(scienceList);
 
         // Populate hash map with satellite names and corresponding keys
         celestrakMap.put("Space Stations", stations);
@@ -201,7 +183,7 @@ public class celestrakData {
      * Method responsible for downloading the satellite data from celestrak.com
      * Method is ran whenever the app is first started
      */
-    public static void downloadData(Context aContext) {
+    static void downloadData(Context aContext) {
 
         Intent intent = new Intent(aContext, saveFileIntent.class);
         // add information for the service: which file to download and where to store

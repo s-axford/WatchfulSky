@@ -9,7 +9,7 @@ import android.util.Log;
 public class MyApplication extends Application {
 
     /**
-     * Ran once, when the applciation starts up
+     * Ran once, when the application starts up
      */
     @Override
     public void onCreate() {
