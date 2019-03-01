@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //method that runs the saveFileIntent class, responsible for downloading file
-    public void onClick(View view) {
+    public void downloadFiles(View view) {
 
         Intent intent = new Intent(this, saveFileIntent.class);
         // add infos for the service which file to download and where to store
@@ -112,5 +112,9 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/science.txt");
         startService(intent);
     }
-
+    public void updateFiles(View view){
+        purgeFiles(view);
+        downloadFiles(view);
+        checkFiles(view);
+    }
 }
