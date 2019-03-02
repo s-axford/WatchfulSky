@@ -1,10 +1,13 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -123,6 +126,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         selectedSat.clear();            //Clears the satellite list
         System.out.println("DONE WITH THE MAP");        //Prints to the console that we are done with the Maps activity
         initial = false;                //Boolean variable specifying we are dealing with the first satellite
+        Intent intent = new Intent(getApplicationContext(), SatelliteSelectActivity.class);
+        startActivity(intent);
         this.finish();                  //Closes the activity
     }
 
@@ -172,21 +177,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return true;
 
             case R.id.actionbar_fav: // Handles the clicking of the favorite button
-
                 selectedSat = SatelliteSelectActivity.getSelectedSat();     //Retrieves list of selected satellites
                 String fileName = getIntent().getStringExtra(FILENAME);     // Get file name from previous activity
 
-                new Favorites(getApplicationContext()); // Create a favorites object
-                item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
-
-
-                for (int i = 0; i < selectedSat.size(); i++) //for all satellites being displayed
-                    try { // Add All selected satellites to favorites
-                        Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName); //adds the Entity info to the list of favorite satellites
-                        return true;
-                    } catch (OrekitException e) {
-                        e.printStackTrace();
+                if (!Favorites.contains(selectedSat.get(0).getName(), fileName, getApplicationContext())) {
+                    item.setIcon(R.drawable.favoritesicon_filled); // Fill in the star
+                    for (int i = 0; i < selectedSat.size(); i++) //for all satellites being displayed
+                        try { // Add All selected satellites to favorites
+                            Favorites.addFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName, getApplicationContext()); //adds the Entity info to the list of favorite satellites
+                            return true;
+                        } catch (OrekitException e) {
+                            e.printStackTrace();
+                        }
+                } else {
+                    item.setIcon(R.drawable.favoritesicon); // un fill in the star
+                    for (int i = 0; i < selectedSat.size(); i++) {//for all satellites being displayed
+                        try { // Add All selected satellites to favorites
+                            boolean removed = Favorites.removeFavorite(selectedSat.get(i).getName(), selectedSat.get(i).getLine1(), selectedSat.get(i).getLine2(), fileName, getApplicationContext()); //adds the Entity info to the list of favorite satellites
+                            System.out.print(removed);
+                        } catch (OrekitException e) {
+                            e.printStackTrace();
+                        }
                     }
+                    return true;
+                }
 
             case R.id.actionbar_info:
                 ConstraintLayout satInfo = findViewById(R.id.satelliteInfo);
@@ -480,6 +494,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
+
 
 }
 
