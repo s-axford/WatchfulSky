@@ -92,6 +92,11 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     };
 
 
+    public void onBackPressed() {       //Runs when you exit the activity
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        this.finish();                  //Closes the activity
+    }
 
 
     @Override
