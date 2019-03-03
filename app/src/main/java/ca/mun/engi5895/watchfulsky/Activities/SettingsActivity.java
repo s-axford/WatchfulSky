@@ -1,6 +1,5 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.widget.Toast;
 
 import java.io.File;
 
-import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.saveFileIntent;
+import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.LoadData;
 import ca.mun.engi5895.watchfulsky.R;
 
 /**
@@ -83,38 +82,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    //method that runs the saveFileIntent class, responsible for downloading file
-    public void downloadFiles(View view) {
-
-        Intent intent = new Intent(this, saveFileIntent.class);
-        // add infos for the service which file to download and where to store
-        intent.putExtra(saveFileIntent.FILENAME,"stations.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/stations.txt");
-        startService(intent);
-
-        intent.putExtra(saveFileIntent.FILENAME,"tle-new.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/tle-new.txt");
-        startService(intent);
-
-        intent.putExtra(saveFileIntent.FILENAME,"gps-ops.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/gps-ops.txt");
-        startService(intent);
-
-        intent.putExtra(saveFileIntent.FILENAME,"intelsat.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/intelsat.txt");
-        startService(intent);
-
-        intent.putExtra(saveFileIntent.FILENAME,"geo.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/geo.txt");
-        startService(intent);
-
-        intent.putExtra(saveFileIntent.FILENAME,"science.txt");
-        intent.putExtra(saveFileIntent.URL,"https://www.celestrak.com/NORAD/elements/science.txt");
-        startService(intent);
-    }
     public void updateFiles(View view){
         purgeFiles(view);
-        downloadFiles(view);
+        LoadData task = new LoadData(this);
+        task.execute();
         checkFiles(view);
     }
 }

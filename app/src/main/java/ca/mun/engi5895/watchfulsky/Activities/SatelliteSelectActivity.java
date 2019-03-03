@@ -1,7 +1,5 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,6 +25,7 @@ import java.util.Objects;
 
 import ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.MyListAdapter;
 import ca.mun.engi5895.watchfulsky.OrbitingBodyCalculations.Entity;
+import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.LoadData;
 import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.celestrakData;
 import ca.mun.engi5895.watchfulsky.R;
 
@@ -38,7 +37,6 @@ import ca.mun.engi5895.watchfulsky.R;
 public class SatelliteSelectActivity extends AppCompatActivity {
 
     public static ArrayList<Entity> selectedSats = new ArrayList<>();
-    private static ArrayList<Object> satList = new ArrayList<>();
 
     private static Entity currentEntity = null;
 
@@ -98,7 +96,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         this.finish();                  //Closes the activity
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -111,7 +108,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         }
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
-       navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // Set click lsitener for bottom navbar
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // Set click lsitener for bottom navbar
 
         // Find the expandable list views, one for all satellites and one for favorite satellites
         expandableListView = findViewById(R.id.expandableListView);
@@ -167,8 +164,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 String satType = expandableListTitle_fav.get(groupPosition);
                 // Satellite chosen is set to whatever name was chosen
                 String satChosen = expandableListDetail_fav.get(expandableListTitle_fav.get(groupPosition)).get(childPosition);
-                // Add the chosen satellite to the satList
-                satList.add(satChosen);
 
                 String fileName = null;
 
@@ -221,7 +216,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                             break; //Break loop, data successfully acquired
                         }
                     }
-                  //  breader1.close();  sreader1.close();stream1.close();
+                    //  breader1.close();  sreader1.close();stream1.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -263,7 +258,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                 //Handles the click of an item from the list
                 String satType = expandableListTitle.get(groupPosition);
                 String satChosen = expandableListDetail.get(expandableListTitle.get(groupPosition)).get(childPosition);
-                satList.add(satChosen);
 
                 String fileName = null;
 
@@ -289,7 +283,7 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                         break;
                 }
 
-                System.out.println("Filename: "+ fileName);
+                System.out.println("Filename: " + fileName);
 
 
                 //Start the re-parsing of the text file for the TLE data for chosen satellite
@@ -322,7 +316,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                             break;
                         }
                     }
-                    breader1.close();sreader1.close();stream1.close();
+                    breader1.close();
+                    sreader1.close();
+                    stream1.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -356,12 +352,6 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         System.out.println(selectedSats.size());
 
         return selectedSats;
-    }
-
-    public static void clearSelectedSats() {
-        selectedSats.clear();
-        satList.clear();
-
     }
 
 }
