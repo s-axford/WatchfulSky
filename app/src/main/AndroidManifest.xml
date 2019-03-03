@@ -39,8 +39,6 @@
             android:name="ca.mun.engi5895.watchfulsky.Activities.SettingsActivity"
             android:parentActivityName="ca.mun.engi5895.watchfulsky.Activities.MainActivity" />
 
-        <service android:name="ca.mun.engi5895.watchfulsky.OrekitDataInstallation.saveFileIntent" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

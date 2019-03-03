@@ -3,8 +3,6 @@ package ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions;
 import android.content.Context;
 import android.util.Log;
 
-import org.orekit.propagation.semianalytical.dsst.utilities.NewcombOperators;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,11 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.parsers.FactoryConfigurationError;
 
 /**
  * Class responsible for handling adding satellites as a favorite

@@ -14,8 +14,6 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        celestrakData.downloadData(this); // downloads the TLE data
-
         Log.i("main", "onCreate fired");
     }
 }

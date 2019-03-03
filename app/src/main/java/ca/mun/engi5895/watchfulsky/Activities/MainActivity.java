@@ -9,19 +9,27 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.Install;
+import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.LoadData;
 import ca.mun.engi5895.watchfulsky.OrekitDataInstallation.OrekitInit;
 import ca.mun.engi5895.watchfulsky.R;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    static boolean checkFirstTime = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (checkFirstTime) {
+            LoadData task = new LoadData(this);
+            task.execute();
+            checkFirstTime = false;
+        }
 
         // Install the Orekit files
-       Install.installApkData(this);
+        Install.installApkData(this);
 
         //Initialize Orekit with the data files
         OrekitInit.init(Install.getOrekitDataRoot(this));
