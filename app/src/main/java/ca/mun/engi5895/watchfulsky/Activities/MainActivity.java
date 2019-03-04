@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView sun_icon = findViewById(R.id.sun_icon);
         ImageView earth_bg = findViewById(R.id.earth_layout);
 
-        Picasso.get().load(R.drawable.earth).resize(72,66).centerCrop().into(earth_icon);
-        Picasso.get().load(R.drawable.sun).resize(72,66).centerCrop().into(sun_icon);
+        Picasso.get().load(R.drawable.earthicon).resize(76,70).centerCrop().into(earth_icon);
+        Picasso.get().load(R.drawable.sunicon).resize(72,66).centerCrop().into(sun_icon);
         Picasso.get().load(R.drawable.earth_bg).resize(500, 500).centerCrop().into(earth_bg);
     }
 

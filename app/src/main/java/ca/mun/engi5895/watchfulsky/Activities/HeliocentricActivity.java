@@ -36,8 +36,8 @@ public class HeliocentricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heliocentric);
-        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-        setTitle("Heliocentric Orbit");
+//        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
+        setTitle("The Solar System");
 
         //Set up planet images
         ImageView mercury_icon = findViewById(R.id.mercury_icon);
@@ -54,7 +54,7 @@ public class HeliocentricActivity extends AppCompatActivity {
         Picasso.get().load(R.drawable.earth).resize(75, 75).centerCrop().into(earth_icon);
         Picasso.get().load(R.drawable.mars1).resize(75,75).centerCrop().into(mars_icon);
         Picasso.get().load(R.drawable.jupiter).resize(75,75).centerCrop().into(jupiter_icon);
-        Picasso.get().load(R.drawable.saturn1).resize(145, 75).centerCrop().into(saturn_icon);
+        Picasso.get().load(R.drawable.saturn1).resize(200, 75).centerCrop().into(saturn_icon);
         Picasso.get().load(R.drawable.uranus).resize(75,75).centerCrop().into(uranus_icon);
         Picasso.get().load(R.drawable.neptune).resize(75,75).centerCrop().into(neptune_icon);
 
@@ -62,12 +62,32 @@ public class HeliocentricActivity extends AppCompatActivity {
 
         //Set up solar-system plot
         XYPlot plot = findViewById(R.id.plot);
-        plot.setTitle("Current Location of Planets");
         plot.getLegend().setVisible(false);
-        plot.setRangeLabel("");
-        plot.setDomainLabel("Astronomical Units");
+//        plot.setDomainLabel("Astronomical Units");
         plot.getOuterLimits().set(-40, 40, -40, 40);
         PanZoom.attach(plot); //make plot able to pan and zoom
+        //this removes the vertical lines
+        plot.getGraph().setDomainGridLinePaint(null);
+
+        //this removes the horizontal lines
+        plot.getGraph().setRangeGridLinePaint(null);
+
+        //This gets rid of the gray grid
+        plot.getGraph().getGridBackgroundPaint().setColor(Color.TRANSPARENT);
+
+        //This gets rid of the black border (up to the graph) there is no black border around the labels
+        plot.getBackgroundPaint().setColor(Color.TRANSPARENT);
+
+        //This gets rid of the black behind the graph
+        plot.getGraph().getBackgroundPaint().setColor(Color.TRANSPARENT);
+
+        //With a new release of AndroidPlot you have to also set the border paint
+        plot.getBorderPaint().setColor(Color.TRANSPARENT);
+
+        //No Margins
+        plot.setPlotMargins(0,0,0,0);
+
+        plot.setBorderPaint(null);
 
         //Formatting for orbit lines and celestial body points
         LineAndPointFormatter formatOrbits = new LineAndPointFormatter(this, R.xml.line_point_formatter_with_labels);

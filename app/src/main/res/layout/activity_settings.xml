@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navbar"
     tools:context="ca.mun.engi5895.watchfulsky.Activities.SettingsActivity">
 
     <RelativeLayout
@@ -36,8 +37,9 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
+                    android:background="@color/buttonCust"
                     android:onClick="updateFiles"
-                    android:text="Update TLE Files"
+                    android:text="Update Celestrak Files"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,6 +50,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:background="@color/buttonCust"
                     android:onClick="checkExternalFiles"
                     android:text="Clear Favorites"
                     app:layout_constraintEnd_toEndOf="parent"
