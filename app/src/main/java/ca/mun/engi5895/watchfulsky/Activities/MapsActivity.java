@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +18,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -44,8 +44,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Objects;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.Favorites;
 import ca.mun.engi5895.watchfulsky.OrbitingBodyCalculations.Entity;
@@ -67,14 +67,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     MenuItem favItem;
 
     Date date;
-    Date d1;
 
     private DecimalFormat df = new DecimalFormat("#.00");
 
     private Frame earthFixedFrame;      //Declares a frame of the earth
     private OneAxisEllipsoid earth;     //Creates another elliptical frame of the earth
-    SpacecraftState scs;                //Declares variable to hold state of the current entity
     protected GeodeticPoint pointPlot = null;
+    protected Marker currentMarker = null;
+    protected Polyline line = null;
+    protected ArrayList<Marker> markers = new ArrayList<>();
 
     boolean initial = true;
 
@@ -90,7 +91,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
-            ab.setTitle(selectedSat.get(0).getName());
+            ab.setTitle(selectedSat.get(0).getName().trim());
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -98,21 +99,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         fileName = getIntent().getStringExtra(FILENAME);
 
-//        sat_Name = findViewById(R.id.satName);      //Finds name UI textbox
-//        double inclination = selectedSat.get(0).getInclination();   //Gets the inclination of the entity
-//        sat_Name.setText(String.valueOf(df.format(inclination)));
-
-
         int i = 0;
-        //for (int i = 0 ; i < selectedSat.size() ; i++) //for all satellites being displayed
-
 
         System.out.println(selectedSat.get(i).getName());   //Prints Entity Name to the Console
-//                sat_Name = findViewById(R.id.satName);              //Specifies the UI textbox
-//                sat_Name.setText(selectedSat.get(i).getName());     //Prints the Entity Name to the UI
 
         try {
             System.out.println("Velocity:");
@@ -146,34 +137,58 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
 
         switch (item.getItemId()) {
-            case R.id.actionbar_clock:      //Hanldes the clicking of the clock
+            case R.id.actionbar_clock:      //Handles the clicking of the clock
 
+                TimeScale utc = null;
+                try {
+                    utc = TimeScalesFactory.getUTC();
+                } catch (OrekitException e) {
+                    e.printStackTrace();
+                }
                 date = getCreatedTime();
-                d1 = getCreatedTime();
-                String timePickerTime = getCurrentTime(date);
 
-//                sat_Name = findViewById(R.id.satName);
-//                sat_Name.setText(timePickerTime);
+                TimePicker timePicker = findViewById(R.id.timePicker);
+                timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+
+                    @Override
+                    public void onTimeChanged(TimePicker timePicker, int i, int i1) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.set(Calendar.HOUR_OF_DAY, i);
+                        calendar.set(Calendar.MINUTE, i1);
+                        System.out.println("Hours: " + i + "Minutes: " + i1);
+                    }
+                });
 
                 item.setIcon(android.R.drawable.ic_menu_save);
-
                 View clock = findViewById(R.id.timePicker);         //Sets a view to the clock
+
                 if (clock.getVisibility() == View.INVISIBLE) {
                     clock.setVisibility(View.VISIBLE);      //If the clock is invisible, make it different
                 } else {
                     item.setIcon(R.drawable.clockicon);
-
                     clock.setVisibility(View.INVISIBLE);
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
+                    cal.set(Calendar.MINUTE, timePicker.getMinute());
+                    cal.set(Calendar.SECOND,0);
+                    cal.set(Calendar.MILLISECOND,0);
+
+                    Calendar mCalendar = new GregorianCalendar();
+                    TimeZone mTimeZone = mCalendar.getTimeZone();
+                    long offset = mTimeZone.getRawOffset() + (mTimeZone.inDaylightTime(cal.getTime()) ? mTimeZone.getDSTSavings() : 0);
+                    long hourOffset = TimeUnit.MILLISECONDS.toHours(offset);
+                    long minuteOffset = TimeUnit.MILLISECONDS.toMinutes(offset) % TimeUnit.HOURS.toMinutes(1);
+                    cal.add(Calendar.HOUR, (int) -hourOffset);
+                    cal.add(Calendar.MINUTE, (int) -minuteOffset);
+                    AbsoluteDate selectedDate = new AbsoluteDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), cal.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
+
+                    GeodeticPoint point = updatePosition(selectedDate, 0);
+                    double latitude = point.getLatitude() * 180 / Math.PI;
+                    double longitude = point.getLongitude() * 180 / Math.PI;
+                    addMarker(latitude, longitude, selectedDate);        //Calls update map to update with the clock selected time
                 }
-
-//                sat_Name = findViewById(R.id.satName);
-
-                try {
-                    updateMap();        //Calls update map to update with the clock selected time
-                } catch (OrekitException e) {
-                    e.printStackTrace();
-                }
-
                 return true;
 
             case R.id.actionbar_fav: // Handles the clicking of the favorite button
@@ -213,30 +228,28 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         return super.onOptionsItemSelected(item);
     }
 
-    public String getCurrentTime(final Date d) {
-        String currentTime;
-
-        TimePicker timePicker = findViewById(R.id.timePicker);
-
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int i, int i1) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(d);
-                calendar.set(Calendar.HOUR_OF_DAY, i);
-                calendar.set(Calendar.MINUTE, i1);
-                System.out.println("Hours: " + i + "Minutes: " + i1);
-                //if (i1 != 0){
-                //   timePicker.setVisibility(View.INVISIBLE);
-                // }
-
-            }
-        });
-        currentTime = "Current Time: " + timePicker.getHour() + ":" + timePicker.getMinute();
-
-        return currentTime;
+    private void addMarker(double latitude, double longitude, AbsoluteDate date) {
+        TimeScale utc = null;
+        try {
+            utc = TimeScalesFactory.getUTC();
+        } catch (OrekitException e) {
+            e.printStackTrace();
+        }
+        LatLng point = new LatLng(latitude, longitude);
+        MarkerOptions marker = new MarkerOptions().position(point);
+        Calendar myCal = new GregorianCalendar();
+        myCal.setTime(date.toDate(utc));
+        int hour = myCal.get(Calendar.HOUR_OF_DAY);
+        int minute = myCal.get(Calendar.MINUTE);
+        int second = myCal.get(Calendar.SECOND);
+        String markerTime = String.format("%02d:%02d:%02d", hour, minute, second);
+        marker.title(selectedSat.get(0).getName().trim() + " at " + markerTime + " UTC");
+        Marker mark = mMap.addMarker(marker);
+        float color = 130;
+        mark.setIcon(BitmapDescriptorFactory.defaultMarker(140));
+        markers.add(mark);
     }
+
 
     /**
      * Manipulates the map once available.
@@ -338,7 +351,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             this.initializeFrames();        //Initializes orbit information
 
-            this.updatePosition(date, 0);
+            pointPlot = updatePosition(date, 0);
 
             String velocityString = df.format(selectedSat.get(i).getVelocity() * 3.6);  //Text to be set as Velocity in UI
 
@@ -361,6 +374,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             TextView satLatitude = findViewById(R.id.satLatitude);      //Latitude Position textbox (UI)
             satLatitude.setText(latitudeString);                //Sets textbox to Latitude String
 
+            //Finds Altitude
             double altitude = pointPlot.getAltitude() / 1000;              //Determines the entities altitude at the current date and time
             TextView satAltitude = findViewById(R.id.satAltitude);  //Specifies the textbox to output the Altitude information to the UI
             String altitudeString = "Altitude: " + df.format(altitude) + "km";
@@ -373,7 +387,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             for (int k = 0; k < 300; k++) {     //Plots 300 points of the entities location - The equivalent of 3 orbits of the earth
 
                 System.out.println("DATE: " + date);
-                this.updatePosition(date, i);
+                pointPlot = updatePosition(date, i);
                 System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());      //Prints the size of the map to the console
                 longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude and converts to degrees
                 latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude and converts to degrees
@@ -383,9 +397,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerOptions pointA = new MarkerOptions().position(point_a);   //Creates a marker
 
                 if (k == 0) {       //If the point is the current position of the satellite
-                    mMap.clear();       //Clears all markers and polylines on the map
-                    pointA.title(selectedSat.get(i).getName()); //Creates a marker of the entities current location and names it correspondingly
-                    mMap.addMarker(pointA);     //Adds a new marker to the Google map
+                    if(currentMarker != null) {
+                        currentMarker.remove();
+                    }
+                    if(line != null) {
+                        line.remove();
+                    }
+//                    mMap.clear();       //Clears all markers and polylines on the map
+//                    for (Marker marker : markers) {
+//                        mMap.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+//                    }
+                    pointA.title(selectedSat.get(i).getName().trim() + " Current Location"); //Creates a marker of the entities current location and names it correspondingly
+                    currentMarker = mMap.addMarker(pointA);     //Adds a new marker to the Google map
                     if (initial) {              //Only move the camera when the map first loads
                         initial = false;        //Prevent the camera from being moved when the map is updating every 10 seconds
                         mMap.moveCamera(CameraUpdateFactory.newLatLng(point_a));        //Moves the camera to the entities current position when the map first loads
@@ -396,13 +419,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
             //Creates Polyline to be plotted on the map (Plots Expected Orbit)
-            Polyline line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
+            line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
             line.setWidth(5);                                                               //Sets width of polyline
             line.setColor(Color.RED);                                                       //Sets color of polyline
         }
     }
 
-    private void initializeFrames() {        //AbsoluteDate date, int i) {
+        private void initializeFrames() {        //AbsoluteDate date, int i) {
 
         try {
             Frame f;
@@ -424,40 +447,22 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * @param date AbsoluteDate object representing what time the data should be extrapolated to
      * @param i    What satellite in the selectedSat list is being updated
      */
-    private void updatePosition(AbsoluteDate date, int i) {
-
-        scs = selectedSat.get(i).updateState(date);     //Returns current SpaceCraftState
+    private GeodeticPoint updatePosition(AbsoluteDate date, int i) {
+        GeodeticPoint point = null;
+        //Declares variable to hold state of the current entity
+        SpacecraftState scs = selectedSat.get(i).updateState(date);
         System.out.println(scs);
         System.out.println(scs.getPVCoordinates().getPosition());       //Uses SpaceCraftState to print the coordinates to the console
         System.out.println(scs.getDate());
         System.out.println(earthFixedFrame);
 
         try {
-            pointPlot = earth.transform(selectedSat.get(i).getVector(date), earthFixedFrame, date);     //Finds the Cartesian position of the satellite, then converts to a Geodetic Point
+            point = earth.transform(selectedSat.get(i).getVector(date), earthFixedFrame, date);     //Finds the Cartesian position of the satellite, then converts to a Geodetic Point
         } catch (OrekitException e) {
             System.out.println("FAILED CARTESIAN POINT CONVERSION");
             e.printStackTrace();
         }
-
-    }
-
-    private AbsoluteDate getTime() {
-
-        TimeScale timeZone = null;
-
-        try {
-            timeZone = TimeScalesFactory.getUTC(); // get UTC time scale
-        } catch (OrekitException e) {
-            System.out.println("ERROR IN getTime() METHOD");
-            e.printStackTrace();
-        }
-
-        Date date = new Date(); //creates date
-        Calendar calendar = GregorianCalendar.getInstance(); //sets calendar
-        calendar.setTime(date); //updates date and time
-
-        //Returns Orekit specific date format
-        return new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), Objects.requireNonNull(timeZone));
+        return point;
     }
 
     /**
