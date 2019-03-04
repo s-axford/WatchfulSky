@@ -6,6 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navbar"
     tools:context="ca.mun.engi5895.watchfulsky.Activities.SatelliteSelectActivity">
 
     <ProgressBar

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navbar"
     tools:context="ca.mun.engi5895.watchfulsky.Activities.HeliocentricActivity">
 
     <ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,14 +17,8 @@
 
         <com.androidplot.xy.XYPlot
             android:id="@+id/plot"
-            style="@style/APDefacto.Dark"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            ap:domainTitle="domain"
-            ap:lineLabelRotationBottom="-90"
-            ap:lineLabels="left|bottom"
-            ap:rangeTitle="range"
-            ap:title="A Simple XY Plot" />
+            android:layout_height="fill_parent" />
 
     </ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.SquareLayout>
 
@@ -32,12 +27,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/layout"
         android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/planetButtons"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
@@ -48,17 +43,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonMercury"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickMercury"
                     android:text="Mercury" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonJupiter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickJupiter"
                     android:text="Jupiter" />
 
@@ -70,17 +69,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonVenus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickVenus"
                     android:text="@string/venus" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonSaturn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickSaturn"
                     android:text="@string/saturn" />
 
@@ -92,17 +95,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonEarth"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickEarth"
                     android:text="@string/earth" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonUranus"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickUranus"
                     android:text="@string/uranus" />
 
@@ -114,17 +121,21 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonMars"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickMars"
                     android:text="@string/mars" />
 
-                <Button
+                <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonNeptune"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:backgroundTint="@color/buttonCust"
+                    android:textColor="@color/buttonText"
                     android:onClick="clickNeptune"
                     android:text="@string/neptune" />
 
@@ -140,7 +151,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout"
-        android:visibility="invisible">
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -149,10 +161,10 @@
 
             <TextView
                 android:id="@+id/PlanetName"
-                android:layout_centerHorizontal = "true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name"/>
+                android:layout_centerHorizontal="true"
+                android:text="@string/name" />
 
             <TextView
                 android:id="@+id/PlanetPosition"
@@ -179,17 +191,20 @@
                 android:id="@+id/PlanetVelocityValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/PlanetPositionValue" />
+                android:layout_below="@+id/PlanetPositionValue"
+                android:layout_alignParentEnd="true" />
 
-            
-                <Button
-                    android:id="@+id/back"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/earth_icon"
-                    android:onClick="clickBack"
-                    android:text="@string/back" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/earth_icon"
+                android:backgroundTint="@color/buttonCust"
+                android:textColor="@color/buttonText"
+                android:onClick="clickBack"
+                android:text="@string/back"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView
                 android:id="@+id/earth_icon"
@@ -229,7 +244,7 @@
 
             <ImageView
                 android:id="@+id/jupiter_icon"
-                android:layout_width="73dp"
+                android:layout_width="80dp"
                 android:layout_height="65dp"
                 android:layout_below="@+id/PlanetName"
                 android:layout_centerHorizontal="true"

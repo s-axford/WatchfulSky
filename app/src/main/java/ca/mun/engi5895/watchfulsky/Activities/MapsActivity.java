@@ -2,6 +2,7 @@ package ca.mun.engi5895.watchfulsky.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -19,9 +20,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dash;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -41,9 +46,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -75,6 +82,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected GeodeticPoint pointPlot = null;
     protected Marker currentMarker = null;
     protected Polyline line = null;
+    protected Polyline pastLine = null;
+    public static final int PATTERN_DASH_LENGTH_PX = 20;
+    public static final int PATTERN_GAP_LENGTH_PX = 20;
+    public static final PatternItem DOT = new Dot();
+    public static final PatternItem DASH = new Dash(PATTERN_DASH_LENGTH_PX);
+    public static final PatternItem GAP = new Gap(PATTERN_GAP_LENGTH_PX);
+    public static final List<PatternItem> PATTERN_POLYGON_ALPHA = Arrays.asList(GAP, DASH);
     protected ArrayList<Marker> markers = new ArrayList<>();
 
     boolean initial = true;
@@ -245,7 +259,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         String markerTime = String.format("%02d:%02d:%02d", hour, minute, second);
         marker.title(selectedSat.get(0).getName().trim() + " at " + markerTime + " UTC");
         Marker mark = mMap.addMarker(marker);
-        float color = 130;
         mark.setIcon(BitmapDescriptorFactory.defaultMarker(140));
         markers.add(mark);
     }
@@ -308,6 +321,30 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private void setPastLine(AbsoluteDate date, double satPeriod) {
+        ArrayList<LatLng> plotPoints = new ArrayList<>();       //Holds values to later create polyline
+        for (int k = 0; k < 50; k++) {
+            int period = (int) Math.round(satPeriod);               //Rounded to the nearest second - Required for methods that require int
+            int periodMin = (period / 100);
+            System.out.println("DATE: " + date);
+            pointPlot = updatePosition(date, 0);
+            System.out.println("FRAGMENT (width, height): " + findViewById(R.id.map).getWidth() + "   " + findViewById(R.id.map).getHeight());      //Prints the size of the map to the console
+            double longitude = pointPlot.getLongitude() * 180 / Math.PI;       //Finds longitude and converts to degrees
+            double latitude = pointPlot.getLatitude() * 180 / Math.PI;         //Finds latitude and converts to degrees
+
+            //Creates map objects
+            LatLng point_a = new LatLng(latitude, longitude);           //Creates map point
+            MarkerOptions point = new MarkerOptions().position(point_a);   //Creates a marker
+
+            plotPoints.add(point_a);                            //Adds point to polyline
+            date = new AbsoluteDate(date, -periodMin);           //Moves the date ahead to the next point
+        }
+        //Creates Polyline to be plotted on the map (Plots Expected Orbit)
+        pastLine = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
+        pastLine.setWidth(5);//Sets width of polyline
+        pastLine.setPattern(PATTERN_POLYGON_ALPHA);
+        pastLine.setColor(Color.RED); //Sets color of polyline
+    }
 
     private Date getCreatedTime() {  //Creates a new date with the current time and returns it
         return new Date();
@@ -403,6 +440,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if(line != null) {
                         line.remove();
                     }
+                    if(pastLine != null) {
+                        pastLine.remove();
+                    }
 //                    mMap.clear();       //Clears all markers and polylines on the map
 //                    for (Marker marker : markers) {
 //                        mMap.addMarker(marker).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -417,11 +457,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 plotPoints.add(point_a);                            //Adds point to polyline
                 date = new AbsoluteDate(date, periodMin);           //Moves the date ahead to the next point
             }
-
+            date = new AbsoluteDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND), utc); //creates orekit absolute date from calender
+            setPastLine(date, satPeriod);
             //Creates Polyline to be plotted on the map (Plots Expected Orbit)
             line = mMap.addPolyline(new PolylineOptions().addAll(plotPoints));     //Plots polyline (Orbit)
             line.setWidth(5);                                                               //Sets width of polyline
-            line.setColor(Color.RED);                                                       //Sets color of polyline
+            line.setColor(Color.RED); //Sets color of polyline
         }
     }
 
