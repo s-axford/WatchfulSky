@@ -1,6 +1,7 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -69,6 +70,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     expandableListView.setVisibility(View.VISIBLE); // Set the main list to visible
                     expandableListView_fav.setVisibility(View.INVISIBLE); // set the favorites list to invisible
 
+                    findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.DKGRAY);
+                    findViewById(R.id.navigation_home).setBackgroundColor(Color.GRAY);
+
                     return true;
 
                 case R.id.navigation_dashboard: // Clicking the "favorites" button
@@ -77,6 +81,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     if (ab != null) {
                         ab.setTitle("Favorites");
                     }
+
+                    findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.GRAY);
+                    findViewById(R.id.navigation_home).setBackgroundColor(Color.DKGRAY);
 
                     System.out.println("Clicked Favourites");
                     expandableListView.setVisibility(View.INVISIBLE);
@@ -101,6 +108,10 @@ public class SatelliteSelectActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_satellite_sel);
+
+        findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.DKGRAY);
+        findViewById(R.id.navigation_home).setBackgroundColor(Color.GRAY);
+
 
         ab = getSupportActionBar();
         if (ab != null) {

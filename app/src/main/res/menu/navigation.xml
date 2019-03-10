@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent">
 
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/satelliteicon"
-        android:title="@string/title_satellites" />
+        android:title="@string/title_satellites"
+        android:layout_width="fill_parent"/>
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/favoritesicon"
-        android:title="@string/title_favorites" />
+        android:title="@string/title_favorites"
+        android:layout_width="fill_parent"/>
 
 </menu>

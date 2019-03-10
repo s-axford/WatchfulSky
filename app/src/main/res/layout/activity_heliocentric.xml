@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/navbar"
+    android:background="@drawable/stars"
     tools:context="ca.mun.engi5895.watchfulsky.Activities.HeliocentricActivity">
 
-    <ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:ap="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -20,33 +19,36 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
-    </ca.mun.engi5895.watchfulsky.AndroidAestheticAdditions.SquareLayout>
+    </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/topButtons"
-        android:layout_width="match_parent"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/planets"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="visible">
+        android:background="@color/ap_gray"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/planetButtons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonMercury"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickMercury"
@@ -55,7 +57,8 @@
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonJupiter"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickJupiter"
@@ -65,14 +68,16 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonVenus"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickVenus"
@@ -81,7 +86,8 @@
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonSaturn"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickSaturn"
@@ -91,14 +97,16 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonEarth"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickEarth"
@@ -107,7 +115,8 @@
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonUranus"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickUranus"
@@ -117,14 +126,16 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:weightSum="2"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonMars"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickMars"
@@ -133,7 +144,8 @@
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/buttonNeptune"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/buttonCust"
                     android:textColor="@color/buttonText"
                     android:onClick="clickNeptune"
@@ -143,14 +155,10 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
-
-
     <RelativeLayout
         android:id="@+id/PlanetInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -281,6 +289,7 @@
 
         </RelativeLayout>
     </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 </RelativeLayout>
 
 

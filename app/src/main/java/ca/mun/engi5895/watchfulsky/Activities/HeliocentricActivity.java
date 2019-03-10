@@ -1,13 +1,23 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PanZoom;
@@ -15,6 +25,7 @@ import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.orekit.bodies.CelestialBody;
 import org.orekit.bodies.CelestialBodyFactory;
@@ -64,7 +75,9 @@ public class HeliocentricActivity extends AppCompatActivity {
         XYPlot plot = findViewById(R.id.plot);
         plot.getLegend().setVisible(false);
 //        plot.setDomainLabel("Astronomical Units");
-        plot.getOuterLimits().set(-40, 40, -40, 40);
+        plot.getOuterLimits().set(-40, 40, -80, 80);
+        plot.setRangeBoundaries(-80, 80, BoundaryMode.FIXED);
+        plot.setDomainBoundaries(-80, 80, BoundaryMode.FIXED);
         PanZoom.attach(plot); //make plot able to pan and zoom
         //this removes the vertical lines
         plot.getGraph().setDomainGridLinePaint(null);
@@ -86,6 +99,10 @@ public class HeliocentricActivity extends AppCompatActivity {
 
         //No Margins
         plot.setPlotMargins(0,0,0,0);
+
+        //No Axis Lines
+        plot.getGraph().getDomainOriginLinePaint().setColor(Color.TRANSPARENT);
+        plot.getGraph().getRangeOriginLinePaint().setColor(Color.TRANSPARENT);
 
         plot.setBorderPaint(null);
 
@@ -253,10 +270,30 @@ public class HeliocentricActivity extends AppCompatActivity {
 
     }
 
-    //Operation for swapping buttons for planet info
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {     //Creates action bar in the MapsActivity UI
+
+        MenuInflater item = getMenuInflater();     //Specifies the item fit
+        item.inflate(R.menu.helio_actionbar, menu);   //Fits the menu to the item fit
+        setTitle("WatchfulSky");                  //Sets the action bar title
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
+        ConstraintLayout planetInfo = findViewById(R.id.planets);
+        if (planetInfo.getVisibility() == View.INVISIBLE) {
+            planetInfo.setVisibility(View.VISIBLE);
+        } else {
+            planetInfo.setVisibility(View.INVISIBLE);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+        //Operation for swapping buttons for planet info
     private void clickPlanet(CelestialBody body, String name) throws OrekitException {
        //setting relevant visibilities
-        RelativeLayout buttons = findViewById(R.id.topButtons);
+        LinearLayout buttons = findViewById(R.id.planetButtons);
         buttons.setVisibility(View.GONE);
         RelativeLayout info = findViewById(R.id.PlanetInfo);
         info.setVisibility(View.VISIBLE);
@@ -313,7 +350,7 @@ public class HeliocentricActivity extends AppCompatActivity {
 
     //Sets relevant visibilities when back buttons is pushed
     public void clickBack(View view) {
-        RelativeLayout buttons = findViewById(R.id.topButtons);
+        LinearLayout buttons = findViewById(R.id.planetButtons);
         buttons.setVisibility(View.VISIBLE);
         RelativeLayout info = findViewById(R.id.PlanetInfo);
         info.setVisibility(View.INVISIBLE);
