@@ -1,13 +1,9 @@
 package ca.mun.engi5895.watchfulsky.Activities;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +21,6 @@ import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.orekit.bodies.CelestialBody;
 import org.orekit.bodies.CelestialBodyFactory;
@@ -47,7 +42,6 @@ public class HeliocentricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heliocentric);
-//        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         setTitle("The Solar System");
 
         //Set up planet images
@@ -275,7 +269,7 @@ public class HeliocentricActivity extends AppCompatActivity {
 
         MenuInflater item = getMenuInflater();     //Specifies the item fit
         item.inflate(R.menu.helio_actionbar, menu);   //Fits the menu to the item fit
-        setTitle("WatchfulSky");                  //Sets the action bar title
+        setTitle("The Solar System");                  //Sets the action bar title
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -340,11 +334,11 @@ public class HeliocentricActivity extends AppCompatActivity {
         //Calculating planet information
         double[] position = findPlanetPosition(body);
         double radius = Math.sqrt(Math.pow(mtoAU(position)[0],2) + Math.pow(mtoAU(position)[1],2));
-        double velocity = getPlanetVelocity(body);
+        double velocity = getPlanetVelocity(body) * 3.6;
 
         //set textViews
         pos.setText(String.format("%.2f", radius) + "AU");
-        vel.setText(String.format("%.2f", velocity) + "m/s");
+        vel.setText(String.format("%.2f", velocity) + "km/h");
         n.setText(name);
     }
 

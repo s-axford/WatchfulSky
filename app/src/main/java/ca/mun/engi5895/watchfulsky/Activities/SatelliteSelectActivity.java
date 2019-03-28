@@ -2,11 +2,16 @@ package ca.mun.engi5895.watchfulsky.Activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
@@ -51,6 +56,9 @@ public class SatelliteSelectActivity extends AppCompatActivity {
     List<String> expandableListTitle_fav;
     HashMap<String, List<String>> expandableListDetail_fav;
     private ActionBar ab;
+    private Menu menu;
+    BottomNavigationView navigation;
+
 
 
     // Bottom navigation bar
@@ -66,24 +74,29 @@ public class SatelliteSelectActivity extends AppCompatActivity {
                     if (ab != null) {
                         ab.setTitle("Satellites");
                     }
+                    Drawable satDraw = getDrawable(R.drawable.satelliteicon);
+                    satDraw.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.MULTIPLY);
+                    item.setIcon(satDraw);
+                    Drawable fav = getDrawable(R.drawable.favoritesicon);
+                    fav.setColorFilter(Color.parseColor("#808080"), PorterDuff.Mode.MULTIPLY);
+                    navigation.getMenu().getItem(1).setIcon(fav);
 
                     expandableListView.setVisibility(View.VISIBLE); // Set the main list to visible
                     expandableListView_fav.setVisibility(View.INVISIBLE); // set the favorites list to invisible
-
-                    findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.DKGRAY);
-                    findViewById(R.id.navigation_home).setBackgroundColor(Color.GRAY);
 
                     return true;
 
                 case R.id.navigation_dashboard: // Clicking the "favorites" button
 
+                    item.setIcon(R.drawable.favoritesicon_filled);
+                    Drawable sat = getDrawable(R.drawable.satelliteicon);
+                    sat.setColorFilter(Color.parseColor("#808080"), PorterDuff.Mode.MULTIPLY);
+                    navigation.getMenu().getItem(0).setIcon(sat);
+
                     ab = getSupportActionBar();
                     if (ab != null) {
                         ab.setTitle("Favorites");
                     }
-
-                    findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.GRAY);
-                    findViewById(R.id.navigation_home).setBackgroundColor(Color.DKGRAY);
 
                     System.out.println("Clicked Favourites");
                     expandableListView.setVisibility(View.INVISIBLE);
@@ -109,17 +122,17 @@ public class SatelliteSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_satellite_sel);
 
-        findViewById(R.id.navigation_dashboard).setBackgroundColor(Color.DKGRAY);
-        findViewById(R.id.navigation_home).setBackgroundColor(Color.GRAY);
-
-
         ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle("Satellites");
         }
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener); // Set click lsitener for bottom navbar
+
+        Drawable fav = getDrawable(R.drawable.favoritesicon);
+        fav.setColorFilter(Color.parseColor("#808080"), PorterDuff.Mode.MULTIPLY);
+        navigation.getMenu().getItem(1).setIcon(fav);
 
         // Find the expandable list views, one for all satellites and one for favorite satellites
         expandableListView = findViewById(R.id.expandableListView);
