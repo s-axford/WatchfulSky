@@ -93,8 +93,6 @@ public class celestrakData {
         if (test1.exists()) { // If the file exists, aka there is data in the favorites file
             List<String> stationsList = getNames("favorites_stations.txt", context); // Populate a variable with all the names of the file
             stations.addAll(stationsList);
-        } else if (!test1.exists()) { // If file doesn't exist, add "no data" to the map
-            stations.add("No data");
         }
 
 
@@ -102,40 +100,30 @@ public class celestrakData {
         if (test2.exists()) {
             List<String> thirtyDaysList = getNames("favorites_tle-new.txt", context);
             thirtyDays.addAll(thirtyDaysList);
-        } else if (!test2.exists()) {
-            thirtyDays.add(" No data");
         }
 
         List<String> gps = new ArrayList<>();
         if (test3.exists()) {
             List<String> gpsList = getNames("favorites_gps-ops.txt", context);
             gps.addAll(gpsList);
-        } else if (!test3.exists()) {
-            gps.add(" No data");
         }
 
         List<String> intelsat = new ArrayList<>();
         if (test4.exists()) {
             List<String> intelsatList = getNames("favorites_intelsat.txt", context);
             intelsat.addAll(intelsatList);
-        } else if (!test4.exists()) {
-            intelsat.add(" No data");
         }
 
         List<String> geo = new ArrayList<>();
         if (test5.exists()) {
             List<String> geoList = getNames("favorites_geo.txt", context);
             geo.addAll(geoList);
-        } else if (!test5.exists()) {
-            geo.add(" No data");
         }
 
         List<String> science = new ArrayList<>();
         if (test6.exists()) {
             List<String> scienceList = getNames("favorites_science.txt", context);
             science.addAll(scienceList);
-        } else if (!test6.exists()) {
-            science.add(" No data");
         }
 
         // Add lists to the hash map with corresponding keys for list categories

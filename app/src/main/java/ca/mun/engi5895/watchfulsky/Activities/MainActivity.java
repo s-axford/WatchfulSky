@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         Picasso.get().load(R.drawable.earthicon).resize(76,70).centerCrop().into(earth_icon);
         Picasso.get().load(R.drawable.sunicon).resize(72,66).centerCrop().into(sun_icon);
-        Picasso.get().load(R.drawable.earth_bg).resize(500, 500).centerCrop().into(earth_bg);
+        Picasso.get().load(R.drawable.earth_bg).fit().centerCrop().into(earth_bg);
     }
 
 

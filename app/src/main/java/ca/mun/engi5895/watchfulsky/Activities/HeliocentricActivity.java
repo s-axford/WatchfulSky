@@ -2,12 +2,18 @@ package ca.mun.engi5895.watchfulsky.Activities;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PanZoom;
@@ -36,7 +42,6 @@ public class HeliocentricActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heliocentric);
-//        getWindow().getDecorView().setBackgroundColor(Color.BLACK);
         setTitle("The Solar System");
 
         //Set up planet images
@@ -64,7 +69,9 @@ public class HeliocentricActivity extends AppCompatActivity {
         XYPlot plot = findViewById(R.id.plot);
         plot.getLegend().setVisible(false);
 //        plot.setDomainLabel("Astronomical Units");
-        plot.getOuterLimits().set(-40, 40, -40, 40);
+        plot.getOuterLimits().set(-40, 40, -80, 80);
+        plot.setRangeBoundaries(-80, 80, BoundaryMode.FIXED);
+        plot.setDomainBoundaries(-80, 80, BoundaryMode.FIXED);
         PanZoom.attach(plot); //make plot able to pan and zoom
         //this removes the vertical lines
         plot.getGraph().setDomainGridLinePaint(null);
@@ -86,6 +93,10 @@ public class HeliocentricActivity extends AppCompatActivity {
 
         //No Margins
         plot.setPlotMargins(0,0,0,0);
+
+        //No Axis Lines
+        plot.getGraph().getDomainOriginLinePaint().setColor(Color.TRANSPARENT);
+        plot.getGraph().getRangeOriginLinePaint().setColor(Color.TRANSPARENT);
 
         plot.setBorderPaint(null);
 
@@ -253,10 +264,30 @@ public class HeliocentricActivity extends AppCompatActivity {
 
     }
 
-    //Operation for swapping buttons for planet info
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {     //Creates action bar in the MapsActivity UI
+
+        MenuInflater item = getMenuInflater();     //Specifies the item fit
+        item.inflate(R.menu.helio_actionbar, menu);   //Fits the menu to the item fit
+        setTitle("The Solar System");                  //Sets the action bar title
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {       //Called when icon in the action bar is selected
+        ConstraintLayout planetInfo = findViewById(R.id.planets);
+        if (planetInfo.getVisibility() == View.INVISIBLE) {
+            planetInfo.setVisibility(View.VISIBLE);
+        } else {
+            planetInfo.setVisibility(View.INVISIBLE);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+        //Operation for swapping buttons for planet info
     private void clickPlanet(CelestialBody body, String name) throws OrekitException {
        //setting relevant visibilities
-        RelativeLayout buttons = findViewById(R.id.topButtons);
+        LinearLayout buttons = findViewById(R.id.planetButtons);
         buttons.setVisibility(View.GONE);
         RelativeLayout info = findViewById(R.id.PlanetInfo);
         info.setVisibility(View.VISIBLE);
@@ -303,17 +334,17 @@ public class HeliocentricActivity extends AppCompatActivity {
         //Calculating planet information
         double[] position = findPlanetPosition(body);
         double radius = Math.sqrt(Math.pow(mtoAU(position)[0],2) + Math.pow(mtoAU(position)[1],2));
-        double velocity = getPlanetVelocity(body);
+        double velocity = getPlanetVelocity(body) * 3.6;
 
         //set textViews
         pos.setText(String.format("%.2f", radius) + "AU");
-        vel.setText(String.format("%.2f", velocity) + "m/s");
+        vel.setText(String.format("%.2f", velocity) + "km/h");
         n.setText(name);
     }
 
     //Sets relevant visibilities when back buttons is pushed
     public void clickBack(View view) {
-        RelativeLayout buttons = findViewById(R.id.topButtons);
+        LinearLayout buttons = findViewById(R.id.planetButtons);
         buttons.setVisibility(View.VISIBLE);
         RelativeLayout info = findViewById(R.id.PlanetInfo);
         info.setVisibility(View.INVISIBLE);

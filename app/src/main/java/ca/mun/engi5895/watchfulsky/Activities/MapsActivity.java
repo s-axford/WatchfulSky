@@ -3,6 +3,8 @@ package ca.mun.engi5895.watchfulsky.Activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
@@ -98,6 +100,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
 
+        Drawable fav = getDrawable(R.drawable.favoritesicon);
+        fav.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.MULTIPLY);
+
         selectedSat = SatelliteSelectActivity.getSelectedSat(); //Pulls a list of selected satellites from the previous activity
         System.out.println(selectedSat.get(0).getName());
 
@@ -174,7 +179,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     }
                 });
 
-                item.setIcon(android.R.drawable.ic_menu_save);
+                Drawable save = getDrawable(android.R.drawable.ic_menu_save);
+                save.setColorFilter(Color.parseColor("#FFFFFF"), PorterDuff.Mode.MULTIPLY);
+                item.setIcon(save);
                 View clock = findViewById(R.id.timePicker);         //Sets a view to the clock
 
                 if (clock.getVisibility() == View.INVISIBLE) {
@@ -243,24 +250,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     private void addMarker(double latitude, double longitude, AbsoluteDate date) {
-        TimeScale utc = null;
+        TimeScale utc;
         try {
             utc = TimeScalesFactory.getUTC();
+            LatLng point = new LatLng(latitude, longitude);
+            MarkerOptions marker = new MarkerOptions().position(point);
+            Calendar myCal = new GregorianCalendar();
+            myCal.setTime(date.toDate(utc));
+            int hour = myCal.get(Calendar.HOUR_OF_DAY);
+            int minute = myCal.get(Calendar.MINUTE);
+            int second = myCal.get(Calendar.SECOND);
+            String markerTime = String.format("%02d:%02d:%02d", hour, minute, second);
+            marker.title(selectedSat.get(0).getName().trim() + " at " + markerTime + " UTC");
+            Marker mark = mMap.addMarker(marker);
+            mark.setIcon(BitmapDescriptorFactory.defaultMarker(140));
+            markers.add(mark);
         } catch (OrekitException e) {
             e.printStackTrace();
         }
-        LatLng point = new LatLng(latitude, longitude);
-        MarkerOptions marker = new MarkerOptions().position(point);
-        Calendar myCal = new GregorianCalendar();
-        myCal.setTime(date.toDate(utc));
-        int hour = myCal.get(Calendar.HOUR_OF_DAY);
-        int minute = myCal.get(Calendar.MINUTE);
-        int second = myCal.get(Calendar.SECOND);
-        String markerTime = String.format("%02d:%02d:%02d", hour, minute, second);
-        marker.title(selectedSat.get(0).getName().trim() + " at " + markerTime + " UTC");
-        Marker mark = mMap.addMarker(marker);
-        mark.setIcon(BitmapDescriptorFactory.defaultMarker(140));
-        markers.add(mark);
     }
 
 
